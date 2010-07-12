@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %title #{@title} Docs
+    %link{:href => 'favicon.ico', :rel => "shortcut icon"}
+    <link rel='stylesheet' href='/stylesheets/docs.css' type='text/css' media="screen, projection">
+  %body
+    %header#header
+      #header_image
+    
+    #middle
+      #container
+        #sidebar
+          %ul
+            - @docs.each do |title, location|
+              %li
+                %a{:href => location}= title
+          
+        #content
+          = @body
+    
+    %footer#footer
+      #details
+        © cloudmailin.com

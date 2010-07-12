@@ -1,0 +1,199 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import blueprint/reset
+
+// To configure blueprint, edit the partials/_base.sass file.
+@import partials/base
+
+// Import all the default blueprint modules so that we can access their mixins.
+@import blueprint
+
+// Import the non-default scaffolding module.
+//@import blueprint/scaffolding
+
+// Generate the blueprint framework according to your configuration:
++blueprint-typography
+@import "compass/css3/border-radius"
+@import "compass/layout/sticky-footer"
+@import "compass/css3/gradient"
+@import "compass/css3/box-shadow"
+@import "fancy-buttons"
+@import "compass/utilities/lists/bullets"
+@import "compass/utilities/lists/inline-list"
+
+$darkblue: rgb(77, 122, 186)
+$strongblue: rgb(63, 169, 245)
+$lightblue: rgb(221, 233, 244)
+$mediumblue: #C3D9FF
+$test: rgb(23, 119, 189)
+
+$orange: #f90
+$green: rgb(122, 201, 67)
+
+$headercolor: $darkblue
+
+body
+  //background-color: #DDE9F4 //rgb(77, 122, 186)
+  color: #333
+  background-color: #fff
+  
+  table tr:first-child th:first-child
+    -moz-border-radius-topleft: 5px
+    -webkit-border-top-left-radius: 5px
+    border-top-left-radius: 5px
+
+  table tr:first-child th:last-child
+    -moz-border-radius-topright: 5px
+    -webkit-border-top-right-radius: 5px
+    border-top-right-radius: 5px
+  
+  table tr:last-child td:first-child
+    -moz-border-radius-bottomleft: 5px
+    -webkit-border-bottom-left-radius: 5px
+    border-bottom-left-radius: 5px
+
+  table tr:last-child td:last-child
+    -moz-border-radius-bottomright: 5px
+    -webkit-border-bottom-right-radius: 5px
+    border-bottom-right-radius: 5px
+  
+  th
+    background-color: $lightblue
+  
+  td
+    background-color: #fff
+    
+  h2, h3, h4
+    color: $headercolor
+    
+  h3, h4
+    margin: 2px 0px
+    padding: 0px
+  
+  #header
+    display: block
+    margin-bottom: 10px
+    background-color: $headercolor
+    +box-shadow
+    
+    #header_image
+      +container
+  
+  #nav
+    display: block
+    color: #fff
+    background-color: #666
+    text-align: right
+    
+    ul
+      margin: 0px
+      //padding: 3px 0px
+      +container
+      list-style: none
+      padding: 4px 0px
+      
+      li
+        display: inline-block
+        
+        a
+          color: #fff
+          padding: 4px 4px
+          text-decoration: none
+  
+  #middle
+    padding-top: 20px
+    background-color: $lightblue
+    +linear-gradient(color-stops(#fff, $lightblue))
+  
+  #container
+    +container
+    //+showgrid
+    min-height: 500px
+    
+    .content
+      //+prepend(1)
+      +column(18)
+      
+    
+    #sidebar
+      +column(6, true)
+      
+      .sidebar
+        //+border-radius
+        //+box-shadow
+        //background-color: $orange
+  
+  #footer
+    display: block
+    +sticky-footer(120px)
+    background: $lightblue url('/images/cloudbg.png') repeat-x bottom
+    
+    #details
+      color: #999
+      text-align: right
+      padding-top: 100px
+      +container
+
+
+
+
+#errors
+  +error
+  +no-bullets
+
+.field_with_errors
+  display: inline
+
+.button, input[type=submit]
+  +fancy-button-matte($strongblue, 15px, 4px, 0px)
+
+input[type=text]
+  font-size: 1.2em
+
+.no_share, .sidebar
+  margin: 2px 2px 20px 2px
+  padding: 10px
+  //border: 1px solid $headercolor
+  background-color: $lightblue
+  +border-radius
+  //+box-shadow
+
+
+// Target Image
+#target_image
+  margin: 20px 0px
+  //text-align: center
+  color: #4D7ABA
+  font-size: 14px
+
+  #address, #target
+    height: 40px
+    padding: 0px 10px
+    display: inline-block
+    +border-radius
+    background-color: $lightblue
+    line-height: 40px
+    
+  #arrow
+    height: 40px
+    width: 60px
+    display: inline-block
+    line-height: 40px
+    background: transparent url('/images/arrow.gif') no-repeat bottom
+
+
+// SIGN IN / UP
+
+
+// ADDRESSES
+#address #buttons
+  margin: 0px 0px 20px 0px
+
+#address_form
+  label
+    display: block
+    
+  input[type=text]
+    width: 300px
+
+  ol
+    +inline-list
