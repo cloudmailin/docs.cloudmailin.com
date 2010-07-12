@@ -30,7 +30,7 @@ get '/:id' do
     @docs = Hash[*Dir["docs/*.txt"].sort.map do |d|
       match = d.match(/([^\/]*).txt/)
       if match
-        [match[1][0].upcase + match[1][1..-1].gsub('_', ' '), match[1]]
+        [match[1][0].upcase + match[1][1..-1].gsub('_', ' git '), match[1]]
       else
         []
       end
