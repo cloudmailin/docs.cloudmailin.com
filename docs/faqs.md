@@ -7,6 +7,10 @@ How long does it take for a message to arrive?
 -
 Your emails should arrive within seconds (actually we aim for it to be less than a few milliseconds). Because we have written our own custom smtp server we don't poll for your emails, instead receive them as soon as they are sent to the server. A little bit of processing and they're sent straight on to your app.
 
+How do I change the website that my email is posted to
+-
+The CloudMailin website allows you to view all of your email addresses and to change the target location. Click [here](http://cloudmailin.com/addresses) to view and edit your addresses.
+
 How can I use my own domain name or email@mydomain.com instead of a CloudMailin address.
 -
 The easiest way to do this is to get your current email server to forward any mail sent to example@mydomain.com to your cloudmailin address.

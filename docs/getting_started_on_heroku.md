@@ -60,7 +60,7 @@ Rails 3 already makes use of mail instead of using TMail that was default in Rai
 
 Notice the call to `skip_before_filter :verify_authenticity_token` to make sure that rails doesn't raise an exception because we have no way of knowing the token.
 
-Make sure your target is set to http://example.com/incoming_mails and thats it!
+Make sure your target is set to http://yourdomain.com/incoming_mails and thats it!
 
 ### Rails (2.3.x)
 First we are going to use the [mail gem](http://github.com/mikel/mail/) you could of course use TMail but we personally think mail's much nicer.
@@ -90,7 +90,7 @@ Then create a controller `script/generate controller incoming_mails`, you are fr
 
 Notice the call to `skip_before_filter :verify_authenticity_token` to make sure that rails doesn't raise an exception because we have no way of knowing the token.
 
-Make sure your target is set to http://example.com/incoming_mails and thats it!
+Make sure your target is set to http://yourdomain.com/incoming_mails and thats it!
 
 
 ### Sinatra
@@ -104,7 +104,7 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
       'success'
     end
 
-Make sure your target is set to http://example.com/incoming_mail and thats it!
+Make sure your target is set to http://yourdomain.com/incoming_mail and thats it!
 
 ## More Details
 More details and an FAQ can be found on the [CloudMailin Docs Website](http://docs.cloudmailin.com)

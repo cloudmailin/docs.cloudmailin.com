@@ -16,11 +16,14 @@
       #container
         #sidebar
           %ul
+            %li
+              %a{:href => 'http://cloudmailin.com'} Return to Main Site
             - @docs.each do |title, location|
               %li
                 %a{:href => location}= title
-          
+            
         #content
+          %h1= @title
           -# needs to be ugly so that its not indented by haml
           :plain
             #{@body}
