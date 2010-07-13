@@ -21,7 +21,9 @@
                 %a{:href => location}= title
           
         #content
-          = @body
+          -# needs to be ugly so that its not indented by haml
+          :plain
+            #{@body}
     
     %footer#footer
       #details

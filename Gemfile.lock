@@ -1,0 +1,53 @@
+--- 
+hash: 27686dde78cb2bc0bb9da58a886b59bf9f7099e6
+sources: 
+- Rubygems: 
+    uri: http://rubygems.org
+specs: 
+- activesupport: 
+    version: 2.3.8
+- haml: 
+    version: 3.0.13
+- compass: 
+    version: 0.10.2
+- fancy-buttons: 
+    version: 0.5.4
+- mime-types: 
+    version: "1.16"
+- polyglot: 
+    version: 0.3.1
+- treetop: 
+    version: 1.4.8
+- mail: 
+    version: 2.2.5
+- rack: 
+    version: 1.2.1
+- rdiscount: 
+    version: 1.6.5
+- sinatra: 
+    version: "1.0"
+dependencies: 
+  sinatra: 
+    version: ">= 0"
+    group: 
+    - :default
+  haml: 
+    version: ">= 0"
+    group: 
+    - :default
+  compass: 
+    version: ">= 0"
+    group: 
+    - :default
+  fancy-buttons: 
+    version: ">= 0"
+    group: 
+    - :default
+  rdiscount: 
+    version: ">= 0"
+    group: 
+    - :default
+  mail: 
+    version: ">= 0"
+    group: 
+    - :default

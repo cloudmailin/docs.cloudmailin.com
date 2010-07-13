@@ -4,6 +4,12 @@ require 'sass'
 require 'compass'
 require 'fancy-buttons'
 require 'rdiscount'
+require 'mail'
+
+#require 'coderay'
+#require 'rack/codehighlighter'
+#use Rack::Codehighlighter, :coderay, :markdown => true,
+#  :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i, :logging => false
 
 configure do
   Compass.configuration do |config|
@@ -16,6 +22,10 @@ configure do
 end
 
 H1_FORMAT = /<h1>(.*)<\/h1>/i
+
+get '/' do
+  redirect '/faqs'
+end
 
 get '/:id' do
   if get_path(params[:id])
@@ -36,8 +46,6 @@ get '/:id' do
       end
     end.flatten]
     
-    puts @docs.inspect
-    
     haml :doc
   else
     pass
@@ -47,6 +55,11 @@ end
 get '/stylesheets/docs.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :docs
+end
+
+post /\/incoming_mail\/?/i do
+  mail = Mail.new(params[:message])
+  mail.subject
 end
 
 def get_path(file_name)
