@@ -63,5 +63,5 @@ post /\/incoming_mail\/?/i do
 end
 
 def get_path(file_name)
-  File.join(File.dirname(__FILE__), "docs/#{file_name.gsub(/d+_/, '')}.md")
+  File.join(File.dirname(__FILE__), "docs/#{file_name}.md")
 end

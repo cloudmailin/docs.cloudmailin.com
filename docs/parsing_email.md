@@ -2,7 +2,7 @@
 ## Ruby
 
 ### Rails 3.0 beta_x
-Rails 3 already makes use of mail instead of using TMail that was default in Rails 2.x. In Rails 3 we just have to rails generate controller incoming_mails to generate our controller and add a create method.
+Rails 3 already makes use of mail instead of using TMail that was default in Rails 2.x. In Rails 3 we just have to `rails generate controller incoming_mails` to generate our controller and add a create method.
 
     class IncomingMailsController < ApplicationController    
       require 'mail'
@@ -32,7 +32,7 @@ Once mail is installed lets add it to the environment.config
 
     config.gem 'mail'
 
-Then create a controller script/generate controller incoming_mails, you are free to call the controller anything you like. Make sure you add your controller to your routes file (resources :incoming_mails) and then setup the create method like so.
+Then create a controller `script/generate controller incoming_mails`, you are free to call the controller anything you like. Make sure you add your controller to your routes file (resources :incoming_mails) and then setup the create method like so.
 
     class IncomingMailsController < ApplicationController    
       require 'mail'
