@@ -14,7 +14,7 @@ This will automatically create you a CloudMailin account and create an address t
 
     reply_to = env['CLOUDMAILIN_FORWARD_ADDRESS']
 
-You can also retreive this from your command line using the Heroku Gem by issuing the follwowing command:
+You can also retrieve this from your command line using the Heroku Gem by issuing the following command:
 
     heroku config --long
 
