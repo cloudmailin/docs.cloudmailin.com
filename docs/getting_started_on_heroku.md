@@ -5,7 +5,7 @@
 
 When you install the CloudMailin Add-on you will be automatically given an email address to send email to. Any email sent to that address will automatically be forwarded to the web address of your choice.
 
-## Getting Started
+## Getting Started on Heroku
 To get started simply install the CloudMailin Add-on using the following command:
 
     heroku addons:add cloudmailin
@@ -19,7 +19,7 @@ You can also retreive this from your command line using the Heroku Gem by issuin
     heroku config --long
 
 ## Setting the Target Location
-By default CloudMailin email addresses will simply forward to a default end point. This location will simply accept the message and do nothing with it. In order to forward your email to your own website login to the [CloudMailin website](http://cloudmailin.com) using the username and password that can also be found in the configuration. You can then click on the address and then choose edit target to set the delivery location.
+By default CloudMailin email addresses will forward to a default end point. This location will simply accept the message and do nothing with it. In order to forward your email to your own website login to the [CloudMailin website](http://cloudmailin.com) using the username and password that can also be found in the configuration. You can then click on the address and then choose edit target to set the delivery location.
 
 Alternatively you can choose the Add-on from the Heroku Add-ons menu and click through to edit the website that your CloudMailin address will deliver to.
 
@@ -35,9 +35,6 @@ The CloudMailin server will send each email as an HTTP POST request. The HTTP **
 * _subject_ - The subject of the message extracted from the message itself.
 
 **Note**: the message is not sent as a file instead it is as if the user pasted the message contents into a textfield.
-
-## Rejecting the Message
-If your web app accepts the message and returns a response code of 200 the server will assume everything was ok and the message was saved. However if the server receives a 404 response it will tell the server not to retry the delivery of this message. Any other response will result in a redelivery of the message after an interval.
 
 ## Parsing the message in Ruby
 ### Rails 3.0 beta_x
@@ -105,6 +102,9 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
     end
 
 Make sure your target is set to http://yourdomain.com/incoming_mail and thats it!
+
+## Rejecting the Message
+If your web app accepts the message and returns a response code of 200 the server will assume everything was ok and the message was saved. However if the server receives a 404 response it will tell the server not to retry the delivery of this message. Any other response will result in a redelivery of the message after an interval.
 
 ## More Details
 More details and an FAQ can be found on the [CloudMailin Docs Website](http://docs.cloudmailin.com)
