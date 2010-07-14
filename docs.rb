@@ -11,6 +11,8 @@ require 'mail'
 #use Rack::Codehighlighter, :coderay, :markdown => true,
 #  :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i, :logging => false
 
+H1_FORMAT = /<h1>(.*)<\/h1>/i
+
 configure do
   Compass.configuration do |config|
     config.project_path = File.dirname(__FILE__)
@@ -21,7 +23,9 @@ configure do
   set :sass, Compass.sass_engine_options
 end
 
-H1_FORMAT = /<h1>(.*)<\/h1>/i
+use Rack::Auth::Basic do |username, password|
+  [username, password] == ['docs', 'preview']
+end
 
 get '/' do
   redirect '/faqs'
