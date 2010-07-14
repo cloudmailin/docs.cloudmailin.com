@@ -5,7 +5,7 @@ The following are some of the frequently asked questions. Please get in contact 
 
 How long does it take for a message to arrive?
 -
-Your emails should arrive within seconds (actually we aim for it to be less than a few milliseconds). Because we have written our own custom smtp server we don't poll for your emails, instead receive them as soon as they are sent to the server. A little bit of processing and they're sent straight on to your app.
+Your emails should arrive within seconds (actually we aim for it to be milliseconds). Because we have written our own custom smtp server we don't poll for your emails, instead receive them as soon as they are sent to the server. A little bit of processing and they're sent straight on to your app.
 
 How do I change the website that my email is posted to
 -
