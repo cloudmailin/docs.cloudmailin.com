@@ -12,7 +12,7 @@ To get started simply install the CloudMailin Add-on using the following command
     
 This will automatically create you a CloudMailin account and create an address that will forward to the default location. Your CloudMailin email address will be stored in your Heroku Environment which can be obtained from your app by calling:
 
-    reply_to = env['CLOUDMAILIN_FORWARDING_ADDRESS']
+    reply_to = env['CLOUDMAILIN_FORWARD_ADDRESS']
 
 You can also retreive this from your command line using the Heroku Gem by issuing the follwowing command:
 
