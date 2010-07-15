@@ -24,7 +24,7 @@ Notice the call to `skip_before_filter :verify_authenticity_token` to make sure 
 Make sure your target is set to http://yourdomain.com/incoming_mails and thats it! 
 
 ### Rails (2.3.x)
-First we are going to use the [mail gem](http://github.com/mikel/mail/) you could of course use TMail but we personally think mail's much nicer.
+First we are going to use the [mail gem](http://github.com/mikel/mail/). You could of course use TMail but we personally think mail's much nicer.
 
     gem install mail
 
@@ -32,7 +32,7 @@ Once mail is installed lets add it to the environment.config
 
     config.gem 'mail'
 
-Then create a controller `script/generate controller incoming_mails`, you are free to call the controller anything you like. Make sure you add your controller to your routes file (resources :incoming_mails) and then setup the create method like so.
+Then create a controller `script/generate controller incoming_mails`. You are free to call the controller anything you like. Make sure you add your controller to your routes file (resources :incoming_mails) and then setup the create method like so.
 
     class IncomingMailsController < ApplicationController    
       require 'mail'
