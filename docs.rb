@@ -23,8 +23,18 @@ configure do
   set :sass, Compass.sass_engine_options
 end
 
-use Rack::Auth::Basic do |username, password|
-  [username, password] == ['docs', 'preview']
+helpers do
+  def protected!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Testing HTTP Auth")
+      throw(:halt, [401, "Not authorized\n"])
+    end
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['docs', 'preview']
+  end
 end
 
 get '/' do
@@ -32,6 +42,8 @@ get '/' do
 end
 
 get '/:id' do
+  protected! if params[:id][0..0] == '_' # protect files that start underscored
+  
   if get_path(params[:id])
     doc = RDiscount.new(File.read(get_path(params[:id])), :autolink)
     html = doc.to_html
@@ -43,7 +55,7 @@ get '/:id' do
     
     @docs = Hash[*Dir[File.join(File.dirname(__FILE__), "docs/*.md")].sort.map do |d|
       match = d.match(/([^\/]*).md/)
-      if match && match[1][0..0] != '_'
+      if match && match[1][0..0] != '_' # only if there is a match and this is not underscored to protect
         [match[1][0..0].upcase + match[1][1..-1].gsub('_', ' '), match[1]]
       else
         []
