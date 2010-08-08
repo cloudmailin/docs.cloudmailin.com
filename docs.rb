@@ -43,7 +43,7 @@ get '/:id' do
     
     @docs = Hash[*Dir[File.join(File.dirname(__FILE__), "docs/*.md")].sort.map do |d|
       match = d.match(/([^\/]*).md/)
-      if match
+      if match && match[1][0..0] != '_'
         [match[1][0..0].upcase + match[1][1..-1].gsub('_', ' '), match[1]]
       else
         []
