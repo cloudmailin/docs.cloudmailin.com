@@ -19,7 +19,9 @@ You can also retrieve this from your command line using the Heroku Gem by issuin
     heroku config --long
 
 ## Setting the Target Location
-By default CloudMailin email addresses will forward to a default end point. This location will simply accept the message and do nothing with it. In order to forward your email to your own website login to the [CloudMailin website](http://cloudmailin.com) using the username and password that can also be found in the configuration. You can then click on the address and then choose edit target to set the delivery location.
+By default CloudMailin email addresses will forward the CloudMailin web servers. This location will simply accept the message and do nothing with it.
+
+In order to forward your email to your own website login to the [CloudMailin website](http://cloudmailin.com) using the username and password that can also be found in the configuration (heroku config --long). You can then click on the address and then choose edit target to set the url you would like the HTTP Post to be sent to.
 
 Alternatively you can choose the Add-on from the Heroku Add-ons menu and click through to edit the website that your CloudMailin address will deliver to.
 
