@@ -8,7 +8,7 @@ When you install the CloudMailin Add-on you will be automatically given an email
 ## Getting Started on Heroku
 To get started simply install the CloudMailin Add-on using the following command:
 
-    heroku addons:add cloudmailin
+    $ heroku addons:add cloudmailin
     
 This will automatically create you a CloudMailin account and create an address that will forward to the default location. Your CloudMailin email address will be stored in your Heroku Environment which can be obtained from your app by calling:
 
@@ -16,7 +16,7 @@ This will automatically create you a CloudMailin account and create an address t
 
 You can also retrieve this from your command line using the Heroku Gem by issuing the following command:
 
-    heroku config --long
+    $ heroku config --long
 
 ## Setting the Target Location
 By default CloudMailin email addresses will forward the CloudMailin web servers. This location will simply accept the message and do nothing with it.
@@ -64,7 +64,7 @@ Make sure your target is set to http://yourdomain.com/incoming_mails and thats i
 ### Rails (2.3.x)
 First we are going to use the [mail gem](http://github.com/mikel/mail/) you could of course use TMail but we personally think mail's much nicer.
 
-    gem install mail
+    $ gem install mail
 
 Once mail is installed lets add it to the environment.config
 
