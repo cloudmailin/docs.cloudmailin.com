@@ -28,7 +28,7 @@ helpers do
 
   def authorized?
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['docs', 'preview']
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['docs', ENV["DOCS_PASSWORD"] || 'preview']
   end
 end
 
