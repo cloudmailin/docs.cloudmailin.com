@@ -19,7 +19,9 @@ How can I give each of my users a unique email address to send to?
 -
 At the moment we recommend forwarding email from your own domain to your cloudmailin address in order to achieve this. You can then look at the message envelope to see which address the message was sent to.
 
-We are looking into the option of using a plus in the address to also do this. Please contact us if this is something you would really like.
+You can also use a plus in your email address to create a disposable email address. Disposable email addresses allow you to use a unique email address for each user. As an example a user given an email address in the form example@example.com could use example+something@example.com or example+1.2.3@example.com.
+
+The disposable part of each address will be delivered as a paramater within the [post format](post_format).
 
 What format will the message arrive in?
 -

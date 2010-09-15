@@ -10,6 +10,8 @@ When an email arrives at the CloudMailin server, an HTTP **POST** will be sent a
 
 * _to_ - The recipient as specified by the server. This will be the CloudMailin email address. This could be different to the _TO_ address specified in the message itself. If you are forwarding email from your domain you will want to extract the recipient from the email.
 
+* _disposable_ - The disposable part of the email address if it exists. For example if your email address was example+something@example.com, the disposable would contain 'something'.
+
 * _from_ - The sender as specified by the server. This can differ from the sender specified within the message.
 
 * _subject_ - The subject of the message extracted from the message itself.
