@@ -52,7 +52,7 @@ In exactly the same way that servers will retry if our system is down the same w
 * If we can't reach your server. We will tell the user's mail server that there has been a temporary problem so try again later. This will be shown as 000 in the delivery status pages.
 * If you give us an http status of *200* - Everything is good we will tell the mail server the message has been delivered
 * If you give us an http status of *404* - The message will be rejected and the sender will be notified of this problem.
-* If you give us an http status of *420* - The message will be rejected and the sender will be notified of this problem.
+* If you give us an http status of *422* - The message will be rejected and the sender will be notified of this problem.
 * If you give us an http status of *500* - we will tell the mail server to try again later.
 * Any other status and we will also tell the mail server to try again later.
 
