@@ -17,3 +17,6 @@ If you give us an http status of *500* - we will tell the mail server to try aga
 
 ### Anything else
 Any other status and we will also tell the mail server to try again later.
+
+## Custom Error Messages
+You can send a custom error message when you reject a message by making sure the content type of your response is set to _text/plain_. This text will then be sent as part of the error message given by the server.

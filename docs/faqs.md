@@ -73,3 +73,9 @@ We have wired up a few fake targets you can use to test your emails.
 * http://cloudmailin.com/target/200 - will simulate a 200 response. This simulates the message successfully being delivered.
 * http://cloudmailin.com/target/404 - will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target.
 * http://cloudmailin.com/target/500 - will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later.
+
+How Can I reject messages and send a custom error message?
+-
+Certain HTTP status codes can be used to reject messages and alert the sender such as 403, 404 and 422.
+
+If you give a status code that rejects the message such as 422 you can also set a message to go with it. Simply set the content type of this response to _text/plain_ and your HTTP response will be included in the error message sent to the server.
