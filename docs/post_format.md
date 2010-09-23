@@ -16,6 +16,8 @@ When an email arrives at the CloudMailin server, an HTTP **POST** will be sent a
 
 * _subject_ - The subject of the message extracted from the message itself.
 
+* _signature_ - The signature of the message encoded with your private key. You can use this to ensure that the HTTP POST data has come from CloudMailin. See [here](validating_the_sender) for more details.
+
 **Note**: The message is not sent as a file. Instead it is as if the user pasted the message contents into a textfield.
 
 For more details relating to parsing the message click [here](parsing_email).
