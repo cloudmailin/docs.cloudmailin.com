@@ -13,7 +13,9 @@ The CloudMailin website allows you to view all of your email addresses and to ch
 
 How can I use my own domain name or email@mydomain.com instead of a CloudMailin address.
 -
-The easiest way to do this is to get your current email server to forward any mail sent to example@mydomain.com to your cloudmailin address.
+There are two ways to do this. The first is to use a [custom domain](custom_domains). This allows you to receive email on any account at the specified domain name.
+
+If you only need a single address the easiest way to do this is to get your current email server to forward any mail sent to example@mydomain.com to your cloudmailin address.
 
 How can I give each of my users a unique email address to send to?
 -
