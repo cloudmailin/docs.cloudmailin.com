@@ -8,6 +8,10 @@ When an email arrives at the CloudMailin server, an HTTP **POST** will be sent a
 
 * _message_ - The message itself. This will be the entire message and will need to be manually parsed by your code. Take a look at the [parsing email](parsing_email) documentation to see how you can do this if you are not familiar with email messages.
 
+* _plain_ - The plain text extracted from the raw message. This will be the first text/plain part of the email if the message is multipart and the body if the content is not multipart.
+
+* _html_ - The html text extracted from the raw message. This will be the first text/html part of an email if the message is multipart.
+
 * _to_ - The recipient as specified by the server. This will be the CloudMailin email address. This could be different to the _TO_ address specified in the message itself. If you are forwarding email from your domain you will want to extract the recipient from the email.
 
 * _disposable_ - The disposable part of the email address if it exists. For example if your email address was example+something@example.com, the disposable would contain 'something'.
