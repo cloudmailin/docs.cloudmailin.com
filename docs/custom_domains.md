@@ -8,6 +8,8 @@ The next step is to add a record to your Domain Name Server (DNS) to state that 
 
 Note that both of these methods will prevent you from receiving regular email on this domain so we recommend using a subdomain such as mail.example.com. If you only want to receive email one one email address we recommend you [set up a forwarding account](forwarding) on your domain.
 
+You can also setup wildcard DNS entries to point to CloudMailin. For example you could enter \*.example.com as your custom domain so long as there is a DNS entry for \*.example.com that is either a CNAME or has MX records pointing to CloudMailin.
+
 ## Adding a CNAME
 Using a CNAME is the preferred method of pointing your domain at our email servers. This method means that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. To add use this method create a CNAME record pointing to:
 
@@ -32,3 +34,7 @@ You can check your configuration with the host command:
     ..
     mail.example.com mail is handled by 10 client2.cloudmailin.net.
     mail.example.com mail is handled by 5 client1.cloudmailin.net.
+
+## Validating the MX and CNAME Records
+Please make sure that you setup your DNS entries before trying to enter a custom domain in the CloudMailin system. If you try to register your CustomDomain before creating the DNS entries then the CloudMailin system will not validate your custom domain and it cannot be used.
+

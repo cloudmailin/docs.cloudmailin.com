@@ -17,6 +17,10 @@ There are two ways to do this. The first is to use a [custom domain](custom_doma
 
 If you only need a single address the easiest way to do this is to get your current email server to forward any mail sent to example@mydomain.com to your cloudmailin address.
 
+Can I create a Wildcard DNS entry or subdomain for my Custom Domain?
+-
+Yes. Just make sure you create the DNS records first following [these](custom_domains) instructions. When you create your custom domain simply enter \*. in front of the domain name such as \*.example.com.
+
 How can I give each of my users a unique email address to send to?
 -
 At the moment we recommend forwarding email from your own domain to your cloudmailin address in order to achieve this. You can then look at the message envelope to see which address the message was sent to.
@@ -81,3 +85,7 @@ How Can I reject messages and send a custom error message?
 Certain HTTP status codes can be used to reject messages and alert the sender such as 403, 404 and 422.
 
 If you give a status code that rejects the message such as 422 you can also set a message to go with it. Simply set the content type of this response to _text/plain_ and your HTTP response will be included in the error message sent to the server.
+
+I am receiving an error trying to create my custom domain?
+-
+You must make sure that your setup your DNS entries with either a CNAME or MX records pointing to CloudMailin before trying to enter a custom domain in the control panel. If you try to enter your custom domain first it will fail to validate stating that the DNS records cannot be found. Take a look [here](custom_domains) for more information about setting up your custom domains.
