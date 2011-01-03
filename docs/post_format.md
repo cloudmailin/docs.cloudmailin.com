@@ -24,4 +24,21 @@ When an email arrives at the CloudMailin server, an HTTP **POST** will be sent a
 
 **Note**: The message is not sent as a file. Instead it is as if the user pasted the message contents into a textfield.
 
+
 For more details relating to parsing the message click [here](parsing_email).
+
+## Attachments
+It is possible to have CloudMailin extract the attachments from your email and send those attachments directly to an S3 bucket.
+If you choose to use this functionality the following additional parameters will be delivered with index being the number of the current attachment.
+
+* _attachments[index][file_name]_ - The original file name of the attachment
+
+* _attachments[index][content_type]_ - The content type of the attachment
+
+* _attachments[index][url]_ - The url of the file uploaded to S3. This can be used to extract the bucket, path and filename if required.
+
+Some frameworks will automatically extract these nested parameters using the brackets into an array or hash. In Rails for example these attachments will form a hash like the following:
+    {'attachments' => {'0' => {'file_name' => 'test.jpg'}}}
+    puts params[:attachments]['0'][:file_name] #outputs test.jpg
+    
+More details about configuring S3 attachments can be found [here](send_attachments_to_S3).

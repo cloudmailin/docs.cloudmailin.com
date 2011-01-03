@@ -8,5 +8,5 @@ rescue LoadError
   Bundler.setup
 end
 
-require 'docs'
+require ::File.expand_path('docs.rb')
 run Sinatra::Application
