@@ -1,7 +1,21 @@
-Sending Email Attachments to Amazon S3
+Working with Large Attachments
 =
 
-#Sending Email Attachments to Amazon S3
+# Working with Large Attachments
+#-
+
+## Large Attachments and Timeouts
+When a large attachment, or multiple attachments, are included within an email message the message parameter sent to the target website can become quite large.
+
+When the content is large it can take considerable time to send this message to the target.
+On a standard website you would place something like a progress bar within the page to show the user this process is occurring.
+When CloudMailin delivers an email to your website there is no need to show any status but it is still important to consider the implications of receiving large files.
+
+**Large requests can tie up the web server** for long periods of time and can often result in timeouts or unreachable errors as the server cannot cope with receiving that amount of data.
+In addition it can prevent other requests from reaching the server.
+If you experience issues like this when sending larger files it is worth considering having your files sent to S3, a system dedicated to working with files of this size.
+
+## Sending Email Attachments to Amazon S3
 #-
 
 It is possible to configure CloudMailin to send message attachments to Amazons S3 as an email is received.
