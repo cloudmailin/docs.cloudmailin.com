@@ -1,5 +1,13 @@
 # Parsing Email
-## Ruby
+
+  * [Ruby](#ruby)
+  * [Python](#python)
+  * [.Net](#net)
+  * [PHP](#php)
+  * [Java](#java)
+  * [Anything Else](#others)
+
+## Ruby <a id="ruby"></a>
 
 ### Rails 3.0 beta_x
 Rails 3 already makes use of mail instead of using TMail that was default in Rails 2.x. In Rails 3 we just have to `rails generate controller incoming_mails` to generate our controller and add a create method.
@@ -67,3 +75,20 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
     end
 
 Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it! 
+
+## Other Languages
+We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
+If our examples started to define variables in the wrong way of not follow the best practice we wouldn't really be helping our users out at all.
+
+For this reason we decided to make our documentation system available on [Github](http://github.com/cloudmailin/docs.cloudmailin.com).
+Please help us and the other people using your language out and contribute some examples and send us a pull request!
+
+## Python <a name="python"></a>
+
+## .Net <a name="net"></a>
+
+## PHP <a name="php"></a>
+
+## Java <a name="java"></a>
+
+## And the rest! <a name="others"></a>
