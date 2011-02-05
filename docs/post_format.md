@@ -37,6 +37,10 @@ If you choose to use this functionality the following additional parameters will
 
 * _attachments[index][url]_ - The url of the file uploaded to S3. This can be used to extract the bucket, path and filename if required.
 
+* _attachments[index][size]_ - The length of the attachment store in S3 sent in bytes
+
+* _attachments[index][disposition]_ - The content disposition of the attachment. This is useful for determining if the attachment was inline. *Note:* this will only be passed if the disposition is **not attachment**
+
 Some frameworks will automatically extract these nested parameters using the brackets into an array or hash. In Rails for example these attachments will form a hash like the following:
     {'attachments' => {'0' => {'file_name' => 'test.jpg'}}}
     puts params[:attachments]['0'][:file_name] #outputs test.jpg
