@@ -18,8 +18,8 @@ Rails 3 already makes use of mail instead of using TMail that was default in Rai
   
       def create
         message = Mail.new(params[:message])
-        Rails.logger.log message.subject #print the subject to the logs
-        Rails.logger.log message.body.decoded #print the decoded body to the logs
+        Rails.logger.log Logger::INFO, message.subject #print the subject to the logs
+        Rails.logger.log Logger::INFO, message.body.decoded #print the decoded body to the logs
     
         # Do some other stuff with the mail message
     
@@ -49,8 +49,8 @@ Then create a controller `script/generate controller incoming_mails`. You are fr
       
       def create
         message = Mail.new(params[:message])
-        Rails.logger.log message.subject #print the subject to the logs
-        Rails.logger.log message.body.decoded #print the decoded body to the logs
+        Rails.logger.add Logger::INFO, message.subject #print the subject to the logs
+        Rails.logger.add Logger::INFO, message.body.decoded #print the decoded body to the logs
         
         # Do some other stuff with the mail message
         
