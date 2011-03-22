@@ -96,3 +96,6 @@ Please help us and the other people using your language out and contribute some 
 ## Java <a name="java"></a>
 
 ## And the rest! <a name="others"></a>
+
+### Redmine
+There is also a Redmine plugin for CloudMailin to allow you to [patch Redmine to use CloudMailin](http://github.com/mtah/redmine_cloudmailin_handler) to receive your incoming email.
