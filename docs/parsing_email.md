@@ -74,7 +74,13 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
       'success'
     end
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it! 
+Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it!
+
+## Python <a name="python"></a>
+### Django
+[Jeremy Carbaugh](https://github.com/jcarbaugh) at Sunlight Foundation constructed a Django client for CloudMailin so that you can use CloudMailin to receive email easily from within your Django Apps.
+
+The code and usage examples are up on [Github](https://github.com/CloudMailin/django-cloudmailin) so we suggest you take a look and try it out for yourself!
 
 ## Other Languages
 We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
@@ -82,8 +88,6 @@ If our examples started to define variables in the wrong way of not follow the b
 
 For this reason we decided to make our documentation system available on [Github](http://github.com/cloudmailin/docs.cloudmailin.com).
 Please help us and the other people using your language out and contribute some examples and send us a pull request!
-
-## Python <a name="python"></a>
 
 ## .Net <a name="net"></a>
 
