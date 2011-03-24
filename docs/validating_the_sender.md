@@ -19,7 +19,7 @@ __Note:__ It is important to realise that this does not prevent users from const
 
 ## Examples:
 ### Rails
-The following code can be used to validate the signature in Rails. We recommend using a before filter to run this code. More details can be found in [this commit](http://github.com/CloudMailin/cloudmailin-rails3/commit/77556d1959cc33c6f3b0669fa908c72ec732b1f9) to the [Rails Sample App](http://github.com/CloudMailin/cloudmailin-rails3).
+The following code can be used to validate the signature in Rails.
 
     def verify_signature
       provided = request.request_parameters.delete(:signature)
@@ -30,3 +30,5 @@ The following code can be used to validate the signature in Rails. We recommend 
         return false 
       end
     end
+
+We recommend using a before filter to run this code. More details can be found in [this example](https://github.com/CloudMailin/cloudmailin-rails3/blob/master/app/controllers/incoming_mails_controller.rb) in the [Rails Sample App](http://github.com/CloudMailin/cloudmailin-rails3). The CloudMailin incoming mail example on Github contains with a more detailed example that will flatten the parameters for validation when attachments are also included.
