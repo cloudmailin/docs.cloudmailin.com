@@ -33,6 +33,10 @@ There are a couple of experimental parameters that have the possibility of chang
 
 * _x_sender_ - This will send the x-sender header from the mail message if it is present. This parameter will likely always be experimental as only some servers will include this header.
 
+* _x_header_to_ - This is a new header that is being tested and we would appreciate feedback for. The to addresses found in the message header will be listed separated by a comma.
+
+* _x_header_cc_ - This is a new header that is being tested and we would appreciate feedback for. The CC addresses found in the message header will be listed separated by a comma.
+
 ## Attachments
 It is possible to have CloudMailin extract the attachments from your email and send those attachments directly to an S3 bucket.
 If you choose to use this functionality the following additional parameters will be delivered with index being the number of the current attachment.
