@@ -24,8 +24,14 @@ When an email arrives at the CloudMailin server, an HTTP **POST** will be sent a
 
 **Note**: The message is not sent as a file. Instead it is as if the user pasted the message contents into a textfield.
 
-
 For more details relating to parsing the message click [here](parsing_email).
+
+### Experimental Parameters
+There are a couple of experimental parameters that have the possibility of changing or may not be present with every request. They are as follows:
+
+* _x_forwarded_for_ - This will send the x-forwarded-for header from the mail message if it is present. This is often included by forwarding email servers to show the original to address the message was sent to. This parameter will likely always be experimental as only some servers will include this header.
+
+* _x_sender_ - This will send the x-sender header from the mail message if it is present. This parameter will likely always be experimental as only some servers will include this header.
 
 ## Attachments
 It is possible to have CloudMailin extract the attachments from your email and send those attachments directly to an S3 bucket.
