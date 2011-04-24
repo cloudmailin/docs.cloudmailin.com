@@ -2,14 +2,14 @@
 Custom Domains is a new feature that lets you use your own domain for receiving email through CloudMailin.
 With Custom Domains you can create a DNS entry in your own domain name to allow CloudMailin to accept all email on that domain and forward it onto your website just like your regular CloudMailin address.
 
-Each of your CloudMailin addresses can have it's own custom domain allowing you to use the feature for any number of websites.
+Each of your CloudMailin addresses can have its own custom domain allowing you to use the feature for any number of websites.
 
 ## Setting up Custom Domains
 The first step is to go to the [CloudMailin](http://cloudmailin.com) and go to the address page for the address you wish to add the custom domain for. Once you are on the page you can click the custom domains button to add your domain name to the address. Any email sent to the CloudMailin servers with a to address with that domain will now be sent to your website.
 
 The next step is to add a record to your Domain Name Server (DNS) to state that the CloudMailin server should be the server to receive your email. There are two options for this, using a CNAME, the preferred method and adding MX records manually.
 
-Note that both of these methods will prevent you from receiving regular email on this domain so we recommend using a subdomain such as mail.example.com. If you only want to receive email one one email address we recommend you [set up a forwarding account](forwarding) on your domain.
+Note that both of these methods will prevent you from receiving regular email on this domain so we recommend using a subdomain such as mail.example.com. If you only want to receive email on one email address we recommend you [set up a forwarding account](forwarding) on your domain.
 
 You can also setup wildcard DNS entries to point to CloudMailin. For example you could enter \*.example.com as your custom domain so long as there is a DNS entry for \*.example.com that is either a CNAME or has MX records pointing to CloudMailin.
 
