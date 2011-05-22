@@ -82,14 +82,31 @@ Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your a
 
 The code and usage examples are up on [Github](https://github.com/CloudMailin/django-cloudmailin) so we suggest you take a look and try it out for yourself!
 
-## Other Languages
-We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
-If our examples started to define variables in the wrong way of not follow the best practice we wouldn't really be helping our users out at all.
-
 For this reason we decided to make our documentation system available on [Github](http://github.com/cloudmailin/docs.cloudmailin.com).
 Please help us and the other people using your language out and contribute some examples and send us a pull request!
 
 ## .Net <a name="net"></a>
+### ASP.NET C#
+This is an extremely simple version of getting the CloudMailin HTTP POST parameters from an ASP.net application. Any help expanding this example would be greatly appreciated. This example has only been tested in .net version 2.0 which is now a little dated.
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <%@ Page Language="C#" ContentType="text/html" ResponseEncoding="UTF-8" validateRequest=false %>
+      <script language="C#" runat="server">
+        void Page_Load(object sender, EventArgs e) {
+          String from = Request.Form["from"];
+          String plain = Request.Form["plain"];
+          String html = Request.Form["html"];
+        }
+      </script>
+    </html>
+
+In this example the message parameter is ignored although you could use a mime parsing component to read in the full message if required.
+
+## Other Languages
+We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
+If our examples started to define variables in the wrong way of not follow the best practice we wouldn't really be helping our users out at all.
 
 ## PHP <a name="php"></a>
 
