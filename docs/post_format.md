@@ -55,4 +55,4 @@ Some frameworks will automatically extract these nested parameters using the bra
     {'attachments' => {'0' => {'file_name' => 'test.jpg'}}}
     puts params[:attachments]['0'][:file_name] #outputs test.jpg
     
-More details about configuring S3 attachments can be found [here](send_attachments_to_S3).
+More details about configuring S3 attachments can be found [here](working_with_large_attachments).
