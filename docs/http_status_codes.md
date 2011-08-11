@@ -9,7 +9,7 @@ If we can't reach your server. We will tell the user's mail server that there ha
 ### 200, 201 (or any other 2xx errors)
 If you give us an http status of *200* - Everything is good we will tell the mail server the message has been delivered
 
-### 403, 404 or 422
+### 403, 404 or 422 (or any other 4xx errors)
 If you give us an http status of *403, 404 or 422* - The message will be rejected and the sender will be notified of this problem.
 
 ### 500
