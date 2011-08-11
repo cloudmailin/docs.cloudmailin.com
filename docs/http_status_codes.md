@@ -6,7 +6,7 @@ Depending on the status code we receive from your app when we send you the HTTP 
 ### If we cannot reach your server
 If we can't reach your server. We will tell the user's mail server that there has been a temporary problem so try again later. This will be shown as 000 in the delivery status pages.
 
-### 200
+### 200, 201 (or any other 2xx errors)
 If you give us an http status of *200* - Everything is good we will tell the mail server the message has been delivered
 
 ### 403, 404 or 422
