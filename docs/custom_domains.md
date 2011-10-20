@@ -40,4 +40,5 @@ You can check your configuration with the host command:
 
 ## Validating the MX and CNAME Records
 Please make sure that you setup your DNS entries before trying to enter a custom domain in the CloudMailin system. If you try to register your CustomDomain before creating the DNS entries then the CloudMailin system will not validate your custom domain and it cannot be used.
+If you need to ensure a transfer from one mail server to the CloudMailin system please contact us and we can setup the custom domain before you change your DNS records.
 
