@@ -86,6 +86,15 @@ Certain HTTP status codes can be used to reject messages and alert the sender su
 
 If you give a status code that rejects the message such as 422, you can also set a message to go with it. Simply set the content type of this response to _text/plain_ and your HTTP response will be included in the error message sent to the server.
 
+How can I see the response my server returned
+-
+On the address page within CloudMailin you should see the message and the status that your server returned to CloudMailin. Clicking on the details tab will also show additional information.
+The details also include the first 2kb of any failed response so that you can determine what may have gone wrong with your server.
+
+My server had a temporary problem and a message was delayed, how can I see if it was delivered?
+-
+You can use the details page for a delivery status to see all delivery attempts with the same message ID. Hopefully one of these is green.
+
 I am receiving an error trying to create my custom domain?
 -
 You must make sure that your setup your DNS entries with either a CNAME or MX records pointing to CloudMailin before trying to enter a custom domain in the control panel. If you try to enter your custom domain first, it will fail to validate stating that the DNS records cannot be found. Take a look [here](custom_domains) for more information about setting up your custom domains.
