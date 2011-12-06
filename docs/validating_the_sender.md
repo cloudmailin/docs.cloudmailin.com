@@ -64,3 +64,72 @@ A more advanced example can also flatten the parameters passed to the signature 
     end
 
 We recommend using a before filter to run this code. More details can be found in [this example](https://github.com/CloudMailin/cloudmailin-rails3/blob/master/app/controllers/incoming_mails_controller.rb) in the [Rails Sample App](http://github.com/CloudMailin/cloudmailin-rails3). The CloudMailin incoming mail example on Github contains with a more detailed example that will flatten the parameters for validation when attachments are also included.
+
+
+### Play!
+
+These utility methods verify the signature on Cloudmailin's HTTP POST. See `Mail.incomingMail` for example usage:
+
+    public class Mail extends Controller {
+
+        public static void incomingMail(String to, String from, String disposable, List<Map> attachments) {
+            boolean verified = verifySignature(params);
+            if (verified == true) {
+              // Do something with mail
+            } else {
+              badRequest();
+            }
+        }
+
+        @Util
+        public static boolean verifySignature(Params params) {
+            java.util.SortedMap<String,String> sortedParams = new java.util.TreeMap<String,String>(params.allSimple());
+            String provided = sortedParams.remove("signature");
+            String created = createSignature(sortedParams);
+            return created.equals(provided);
+        }
+
+        @Util
+        static String createSignature(java.util.SortedMap params) {
+            params.remove("signature");
+            Collection values = params.values();
+            StringBuilder valuesString = new StringBuilder();
+            for (Object v : values) {
+                valuesString.append((String) v);
+            }
+            valuesString.append(CLOUDMAILIN_SECRET);
+            return md5(valuesString.toString());
+        }
+
+        @Util
+        static String md5(String inputString) {
+            byte[] inputBytes = {};
+            java.security.MessageDigest md5 = null;
+            try {
+                inputBytes = inputString.toString().getBytes("UTF-8");
+                md5 = java.security.MessageDigest.getInstance("MD5");
+            } catch (java.security.NoSuchAlgorithmException e) {
+                Logger.error(e.getMessage());
+            } catch (UnsupportedEncodingException e) {
+                Logger.error(e.getMessage());
+            }
+            byte[] digestBytes = md5.digest(inputBytes);
+
+            // Generate a 32-char hex string from the bytes. Each byte must be
+            // represented by a 2-char string. For bytes whose value is less than
+            // 0x10, pad string with a leading "0", e.g. "09" instead of "9"
+            StringBuilder result = new StringBuilder();
+            for (byte b : digestBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    result.append("0");
+                }
+                result.append(hex);
+            }
+            return result.toString();
+        }
+    }
+
+
+
+
