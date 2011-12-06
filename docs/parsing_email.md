@@ -74,7 +74,7 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
       'success'
     end
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it!
+Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!
 
 ## Python <a name="python"></a>
 ### Django
@@ -106,7 +106,7 @@ In this example the message parameter is ignored although you could use a mime p
 
 ## Other Languages
 We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
-If our examples started to define variables in the wrong way of not follow the best practice we wouldn't really be helping our users out at all.
+If our examples started to define variables in the wrong way or not follow the best practice we wouldn't really be helping our users out at all.
 
 ## PHP <a name="php"></a>
 
