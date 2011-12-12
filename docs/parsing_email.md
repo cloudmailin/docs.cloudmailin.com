@@ -104,11 +104,31 @@ This is an extremely simple version of getting the CloudMailin HTTP POST paramet
 
 In this example the message parameter is ignored although you could use a mime parsing component to read in the full message if required.
 
+## PHP <a name="php"></a>
+In PHP POST variables are available containing the fields posted by CloudMailin.
+
+    <?php
+      $from = $_POST['from'];
+      $to = $_POST['to'];
+      $plain_text = $_POST['plain'];
+
+      header("Content-type: text/plain");
+
+      if ($to == 'allowed@example.com'){
+        header("HTTP/1.0 200 OK");
+        echo('success');
+      }else{
+        header("HTTP/1.0 403 OK");
+        echo('user not allowed here');
+      }
+      exit;
+    ?>
+
+In this example if the recipient doesn't match the known user we are bouncing the message using a 403 error.
+
 ## Other Languages
 We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
 If our examples started to define variables in the wrong way of not follow the best practice we wouldn't really be helping our users out at all.
-
-## PHP <a name="php"></a>
 
 ## Java <a name="java"></a>
 
