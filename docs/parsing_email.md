@@ -1,6 +1,7 @@
 # Parsing Email
 
   * [Ruby](#ruby)
+  * [Node.js](#node)
   * [Python](#python)
   * [.Net](#net)
   * [PHP](#php)
@@ -75,6 +76,10 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
     end
 
 Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it!
+
+## Node.JS <a name="node"></a>
+### Express
+With express you will need to install some helpers in order to use CloudMailin's multipart form body format. In express there are two options you can either use the [connect-form](https://github.com/visionmedia/connect-form) middleware or, if you prefer, you can use the [node-formidable](https://github.com/felixge/node-formidable) module that connect-form relies on behind the scenes.
 
 ## Python <a name="python"></a>
 ### Django
