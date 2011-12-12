@@ -2,7 +2,7 @@
 
 Developing locally has always been a difficult task when relying on WebHooks and remote services.
 
-In order to help with the development of CloudMailin enabled services we developed the [HookDebugger](http://webhooks.no.de/).
+In order to help with the development of CloudMailin enabled services we developed the [HookDebugger](http://webhooks.cloudmailin.com/).
 
 The hook debugger is an external service that uses WebSockets in order to allow you to debug any webhook and see the parameters that are being passed.
 The great thing about the hook debugger though is that it can then take the parameters that it is passed and generate a `curl` command that can be used to mimic the request locally.
