@@ -4,8 +4,8 @@
   * [Node.js](#node)
   * [Python](#python)
   * [.Net](#net)
-  * [PHP](#php)
   * [Java](#java)
+  * [PHP](#php)
   * [Anything Else](#others)
 
 ## Ruby <a id="ruby"></a>
@@ -131,13 +131,27 @@ In PHP POST variables are available containing the fields posted by CloudMailin.
 
 In this example if the recipient doesn't match the known user we are bouncing the message using a 403 error.
 
-## Other Languages
-We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
-If our examples started to define variables in the wrong way or not follow the best practice we wouldn't really be helping our users out at all.
-
 ## Java <a name="java"></a>
 
-## And the rest! <a name="others"></a>
+### Play! 1.2.4
+
+Here's an example of how to extract parameters from the Cloudmailin HTTP POST. First, set up a route to your controller's action in `conf/routes`:
+
+    POST    /incoming_mail                       Mail.incomingMail
+
+In the action method's signature, you can specify whichever parameters are relevant for your app. This example assigns `to`, `from`, `disposable`, and a list of `attachments`. All of the parameters are still available via the `params` object.
+
+    public class Mail extends Controller {
+
+        public static void incomingMail(String to, String from, String disposable, List<Map> attachments) {
+            // Do something with mail
+        }
+    }
+
+Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!
+
+## Other Languages <a name="others"></a>
+If your favourite framework is missing please let us know and we'll try to create an example. We would love to provide examples for every these languages but we feel that examples should come from people who really know the language well and with your help we can achieve that!
 
 ### Redmine
 There is also a Redmine plugin for CloudMailin to allow you to [patch Redmine to use CloudMailin](http://github.com/mtah/redmine_cloudmailin_handler) to receive your incoming email.
