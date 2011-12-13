@@ -75,7 +75,7 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
       'success'
     end
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it!
+Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!
 
 ## Node.JS <a name="node"></a>
 ### Express
@@ -133,7 +133,7 @@ In this example if the recipient doesn't match the known user we are bouncing th
 
 ## Other Languages
 We would love to provide examples for all these languages but we feel that examples should come from people who really know the language well.
-If our examples started to define variables in the wrong way of not follow the best practice we wouldn't really be helping our users out at all.
+If our examples started to define variables in the wrong way or not follow the best practice we wouldn't really be helping our users out at all.
 
 ## Java <a name="java"></a>
 
