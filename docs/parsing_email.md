@@ -110,7 +110,7 @@ This is an extremely simple version of getting the CloudMailin HTTP POST paramet
 In this example the message parameter is ignored although you could use a mime parsing component to read in the full message if required.
 
 ## PHP <a name="php"></a>
-In PHP POST variables are available containing the fields posted by CloudMailin.
+In PHP POST variables are available containing the fields posted by CloudMailin. Create the file `incoming_mail.php` and add the following
 
     <?php
       $from = $_POST['from'];
@@ -130,6 +130,8 @@ In PHP POST variables are available containing the fields posted by CloudMailin.
     ?>
 
 In this example if the recipient doesn't match the known user we are bouncing the message using a 403 error.
+
+Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail.php and thats it!
 
 ## Java <a name="java"></a>
 
