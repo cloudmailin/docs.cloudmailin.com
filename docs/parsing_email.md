@@ -81,6 +81,27 @@ Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your a
 ### Express
 With express you will need to install some helpers in order to use CloudMailin's multipart form body format. In express there are two options you can either use the [connect-form](https://github.com/visionmedia/connect-form) middleware or, if you prefer, you can use the [node-formidable](https://github.com/felixge/node-formidable) module that connect-form relies on behind the scenes.
 
+The following is a really simple express app that parses the multipart content using node-formidable and outputs the to, from and subject to the console.
+
+    var express = require('express');
+
+    var app = module.exports = express.createServer()
+      , formidable = require('formidable')
+
+    app.post('/incoming_mail', function(req, res){
+      var form = new formidable.IncomingForm()
+      form.parse(req, function(err, fields, files) {
+        console.log(fields.to)
+        console.log(fields.from)
+        console.log(fields.subject)
+        res.writeHead(200, {'content-type': 'text/plain'})
+        res.end('Message Received. Thanks!\r\n')
+      })
+    })
+
+    app.listen(8080);
+    
+
 ## Python <a name="python"></a>
 ### Django
 [Jeremy Carbaugh](https://github.com/jcarbaugh) at Sunlight Foundation constructed a Django client for CloudMailin so that you can use CloudMailin to receive email easily from within your Django Apps.
