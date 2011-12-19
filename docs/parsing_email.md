@@ -101,6 +101,8 @@ The following is a really simple express app that parses the multipart content u
 
     app.listen(8080);
     
+The following [gist](https://gist.github.com/1495479) (by [jafar-](https://github.com/jafar-)) may also be of help when dealing with errors from Node.js applications and presenting the correct parameters.
+    
 
 ## Python <a name="python"></a>
 ### Django
