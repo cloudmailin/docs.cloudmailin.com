@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+
+# A few helpful tips about the Rules file:
+#
+# * The string given to #compile and #route are matching patterns for
+#   identifiers--not for paths. Therefore, you can’t match on extension.
+#
+# * The order of rules is important: for each item, only the first matching
+#   rule is applied.
+#
+# * Item identifiers start and end with a slash (e.g. “/about/” for the file
+#   “content/about.html”). To select all children, grandchildren, … of an
+#   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
+#   because “*” matches zero or more characters.
+
+require 'compass'
+
+Compass.add_project_configuration 'config/compass.rb' # when using Compass 0.10
+
+compile '/guide/' do
+  filter :haml
+end
+
+compile '*' do
+  if item.binary?
+    item.identifier.chop + '.' + item[:extension]
+  else
+    ext = item[:extension].nil? ? nil : item[:extension].split('.').last
+    case ext
+    when 'markdown', 'md'
+      filter :erb unless item.attributes[:skip_erb]
+      filter :kramdown
+      # filter :colorize_syntax, :colorizers => { :ruby => :coderay }
+      layout 'application'
+    when 'sass'
+      filter :sass, Compass.sass_engine_options.merge!(:style => :expanded)
+    when 'coffee'
+      filter :coffeescript
+    when 'js'
+      item.identifier.chop + '.' + item[:extension]
+    when 'haml'
+      filter :haml, :format => :html5
+      layout 'application'
+    when 'xml'
+      filter :erb
+    when 'txt', 'json'
+      
+    else
+      raise "Unknown filetype #{item[:extension]}"
+      item.identifier.chop + '.' + item[:extension]
+    end
+  end
+end
+
+route '*' do
+  if item.binary?
+    item.identifier.chop + '.' + item[:extension]
+  else
+    ext = item[:extension].nil? ? nil : item[:extension].split('.').last
+    case ext
+    when 'sass'
+      item.identifier.chop + '.css'
+    when 'coffee'
+      item.identifier.chop + '.js'
+    when 'js'
+      item.identifier.chop + '.' + item[:extension]
+    when 'xml'
+      item.identifier.chop + '.xml'
+    else
+      item.identifier + 'index.html'
+    end
+  end
+end
+
+layout '/application/', :haml, :format => :html5, :encoding => 'utf-8'
+layout '*', :erb

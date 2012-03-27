@@ -1,0 +1,153 @@
+@import url('https://cloudmailin.com/stylesheets/screen.css')
+
+@import blueprint
+@import fancy-buttons
+@import "compass/css3/border-radius"
+@import "compass/typography/vertical_rhythm"
+
+
+$base-font-size: 13px
+$base-line-height: 20px
++establish-baseline
+
+// TODO: FONTS, HEADINGS, TEXT-SHADOW, NAVIGATION
+
+body#application
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+  font-weight: 300
+  //font-size: 0.8em
+
+h1, h2, h3, body#application h1, body#application h2, body#application h3
+  color: #333
+  font-family: 'museo'
+
+h1
+  font-size: 2.2em
+
+h2
+  font-size: 1.8em
+
+h3
+  font-size: 1.4em
+
+iframe
+  margin: 10px 0px 20px 0px
+
+table
+  border-collapse: collapse
+
+th, td
+  border: 1px solid #999
+
+pre
+  //margin: 0px
+  //padding: 0px
+
+  code
+    //margin: 0px
+    padding: 10px
+    display: block
+    border: 1px solid #EAEAEA
+    background-color: #F3F3F3
+    max-height: 250px
+    overflow: auto
+
+p, table, li
+  code
+    margin: 0px 2px
+    padding: 2px 5px
+    background-color: #F3F3F3
+    color: #333
+    border: 1px solid #EAEAEA
+    +border-radius(3px)
+    line-height: 25px
+    white-space: nowrap
+
+#sidebar
+  /* Thanks to Jeremy Jarvis at Brightbox.com for the divider idea. */
+  background: url('/assets/images/divider.png') no-repeat 70% 0%
+  +column(7)
+  +append(1)
+  
+  a
+    text-decoration: none
+    color: #333
+    font-weight: 300
+  
+  ul
+    list-style: none
+    padding-left: 5px
+    margin-bottom: 10px
+
+    li
+      list-style-image: none
+      list-style-type: none
+      margin-left: 0px
+      font-weight: bold
+      
+      li
+        font-weight: normal
+        
+        a:before
+          content: '- '
+    
+    ul ul
+      padding-left: 10px
+      margin: 0px
+    
+    .return_to_site
+      margin-bottom: 20px
+
+      a
+        +fancy-button-matte(#eee, 12px)
+
+.documentation_content
+  +column(16, true)
+
+  img
+    border: 1px solid transparentize(#999, 0.5)
+    +single-box-shadow(transparentize(#999, 0.5), 0px, 1px, 5px)
+
+//#cloudmailin_documentation
+ol
+  margin: 0px 0px 10px 0px
+  border: 1px solid #EAEAEA
+  background-color: #F3F3F3
+  
+  li
+    margin: 5px 20px
+    list-style: decimal
+
+ul
+  margin: 0px 0px 20px 0px
+  padding: 0px
+  
+  li, p
+    margin: 0px
+    padding: 0px
+
+li
+  list-style: none
+
+// Override default styles from the main stylesheet
+
+body#application
+  #middle
+    background: none
+
+  table th
+    background-color: #eee
+
+  #footer
+    background: none
+
+  #footer #details
+    padding-top: 20px
+
+// Example size guide
+#size_guide
+  margin: 0px 5px
+  background-color: #000
+  width: 1280px
+  height: 720px
+  overflow: visible

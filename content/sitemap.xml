@@ -1,0 +1,1 @@
+<%= xml_sitemap :items => @items.reject{ |item| item.identifier =~ /^\/assets|^\/sitemap/ || item.binary? } %>
