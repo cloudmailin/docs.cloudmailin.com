@@ -7,9 +7,13 @@ module Nanoc3
         self.attributes[:filename].split('/').last.gsub(/_/, "\s").split('.').first
       end
     end
-    
+
     def name
       self.attributes[:name] || title
+    end
+
+    def disable_comments?
+      self.attributes[:disable_comments]
     end
   end
 end

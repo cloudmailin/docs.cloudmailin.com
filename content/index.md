@@ -1,5 +1,6 @@
 ---
 title: CloudMailin Documentation
+disable_comments: true
 ---
 
 # CloudMailin Documentation
