@@ -13,9 +13,10 @@ The original HTTP POST Format transfers emails to your web app using `multipart/
 | `html`            | The html text extracted from the raw message. This will be the first text/html part of an email if the message is multipart. |
 | `to`              | The form header as specified in the envelope by the sending server. This could be different to the to address specified in the message itself. If you are forwarding email from your domain you will want to extract the recipient from the email using the `x_header_to` parameter. |
 | `disposable`      | The disposable part of the email address if it exists. For example if your email address was example+something@example.com, the disposable would contain 'something'. |
-| `x_header_to`     | The to addresses found in the message itself will be listed separated by a comma. |
-| `x_header_cc`     | This is a new header that is being tested and we would appreciate feedback for. The CC addresses found in the message header will be listed separated by a comma.
+| `x_to_header`     | The to addresses found in the message itself and will be listed separated by a comma. |
+| `x_cc_header`     | This is a new header that is being tested and we would appreciate feedback for. The CC addresses found in the message header will be listed separated by a comma.
 | `from`            | The form header as specified in the envelope by the sending server. |
+| `x_from_header`   | The from addresses found in the message itself and will be listed separated by a comma.
 | `x_sender`        | This will send the x-sender header from the mail message if it is present. This parameter will likely always be experimental as only some servers will include this header. |
 | `subject`         | The subject of the message extracted from the message itself. |
 | `x_forwarded_for `| This will send the x-forwarded-for header from the mail message if it is present. This is often included by forwarding email servers to show the original to address the message was sent to. This parameter will likely always be experimental as only some servers will include this header.
