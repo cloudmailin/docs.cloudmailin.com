@@ -8,8 +8,53 @@ CloudMailin has the ability to make additional callbacks as well as just sending
 
 | Callback Type             | Information                                                           |
 |---------------------------|-----------------------------------------------------------------------|
+| `Authorization Callbacks` | Authorization callbacks allow you to interact with the authorization of messages before any content is transmitted. They let your app act like the mail server and decide who is and isn't allowed in the sender and to fields. |
 | `Error Callbacks`         | Error callbacks fire whenever CloudMailin receives a [HTTP status code](/receiving_email/http_status_codes) that isn't in the `2xx` range. They can be used to alert you whenever something isn't right. |
-<%# | `Authorization Callbacks` | Authorization callbacks allow you to interact with the authorization of messages before any content is transmitted. The let your app act like the mail server and decide who is and isn't allowed in the sender and to fields. | -%>
+
+## Authorization Callbacks
+
+Authorization callbacks fire before any data is received by our server. They send an HTTP POST to your app containing details about the message and let your app decide who is and isn't allowed to send emails to your server. Depending on how you respond the server will either accept the message and continue, reject the message, or mark it as delayed. If you don't specify an authorization callback then the app will just accept the messages like it does by default.
+
+The authorization callback sends the following parameters to your app
+
+| Parameter     | Description                                                                                             |
+|-------------------------------------------------------------------------------------------------------------------------|
+| `to`          | The message recipient, this could be your CloudMailin email address or custom domain email.             |
+| `from`        | The message sender's email address.                                                                     |
+| `size`        | The size of the message the user is trying to send. This isn't always available as it relies on SIZE being sent to our servers with the message sender. |
+| `remote_ip`   | The IP address of the server that is sending this message to the CloudMailin servers                    |
+| `helo_domain` | The domain that the remote server authenticated with when it connected to the CloudMailin email Servers |
+
+The callback is available in `URL Encoded`, `JSON` and `XML` formats. Each representation will all present the above parameters but the xml format will wrap these in a node called `parameters`, examples can be seen below.
+
+The acceptance of the message will be determined by the HTTP Status code that you send back to CloudMailin. The table shows the status codes your app can send and the action that will be taken by the CloudMailin servers:
+
+| Status Code | Action Taken by CloudMailin                                                               |
+|---------------------------------------------------------------------------------------------------------|
+| `2xx`       | The message will be accepted and the server will be asked to continue sending it's data.  |
+| `3xx`       | CloudMailin will attempt to follow redirects up to 3 times.                               |
+| `4xx`       | The message will be rejected and the remote server informed that it should not retry delivery. This will normally result in a bounce message being sent to the sender (SMTP `550`). |
+| `5xx`       | The message will be delayed. We will inform the server that an error occurred contacting the authorization server (SMTP `450`) |
+
+### Examples
+An example `application/x-www-form-urlencoded` callback is as follows:
+
+    size=102400&to=to%example.net&from=from%2Btest%40example.com&helo_domain=localhost&remote_ip=127.0.0.1
+
+An example `application/json` callback is as follows:
+
+    {"size":102400,"to":"to@example.net","from":"from+test@example.com","helo_domain":"localhost","remote_ip":"127.0.0.1"}
+
+An example `application/xml` callback is as follows:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <parameters>
+      <size type="integer">102400</size>
+      <to>to@example.net</to>
+      <from>from+test@example.com</from>
+      <helo-domain>localhost</helo-domain>
+      <remote-ip>127.0.0.1</remote-ip>
+    </parameters>
 
 ## Error Callbacks
 
