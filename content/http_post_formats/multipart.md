@@ -8,7 +8,7 @@ The JSON and multipart formats are incredibly similar. It's only the transport m
 
 | parameter     | details                 | description                                                                   |
 |-------------------------------------------------------------------------------------------------------------------------|
-| `envelope`    | [details](#body)        | This is the message envelope. The details that our server receives from the sending server.   |
+| `envelope`    | [details](#envelope)        | This is the message envelope. The details that our server receives from the sending server.   |
 | `headers`     | [details](#headers)     | These are the email headers they use the notation headers[field_name] to represent the array. |
 | `plain`       | [details](#body)        | The email body as plain-text.                                                 |
 | `html`        | [details](#body)        | The email as HTML (if a HTML version is available).                           |
@@ -102,6 +102,14 @@ The following is complete example Multipart message:
 
     127.0.0.1
     ------cloudmailinboundry
+    Content-Disposition: form-data; name="envelope[spf][result]"
+
+    pass
+    ------cloudmailinboundry
+    Content-Disposition: form-data; name="envelope[spf][domain]"
+
+    example.com
+    ------cloudmailinboundry
     Content-Disposition: form-data; name="attachments[0]"; filename="file1.txt"
     Content-Type: text/plain
 
@@ -121,8 +129,9 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 |---------------|-------------------------------------------------------------------------------------|
 | `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
 | `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
-| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo' command. |
+| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
 | `remote_ip`   | The remote IP address of the sending server if available.                           |
+| `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain.               |
 
 The following is an example envelope:
 
@@ -142,6 +151,14 @@ The following is an example envelope:
     Content-Disposition: form-data; name="envelope[remote_ip]"
 
     127.0.0.1
+    ------cloudmailinboundry
+    Content-Disposition: form-data; name="envelope[spf][result]"
+
+    pass
+    ------cloudmailinboundry
+    Content-Disposition: form-data; name="envelope[spf][domain]"
+
+    example.com
 
 ## Headers
 

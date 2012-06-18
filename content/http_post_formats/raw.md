@@ -19,5 +19,6 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 |---------------|-------------------------------------------------------------------------------------|
 | `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
 | `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
-| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo' command. |
+| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
 | `remote_ip`   | The remote IP address of the sending server if available.                           |
+| `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain. Passed as `spf['result']` and `spf['domain']`. |

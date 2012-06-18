@@ -21,6 +21,7 @@ The original HTTP POST Format transfers emails to your web app using `multipart/
 | `subject`         | The subject of the message extracted from the message itself. |
 | `x_forwarded_for `| This will send the x-forwarded-for header from the mail message if it is present. This is often included by forwarding email servers to show the original to address the message was sent to. This parameter will likely always be experimental as only some servers will include this header.
 | `signature`       | The signature of the message encoded with your private key. You can use this to ensure that the HTTP POST data has come from CloudMailin. See [here](#validating_the_sender) for more details.
+| `spf`             | The [SPF](/features/spf/) result for the given IP address and Domain. Passed as `spf['result']` and `spf['domain']`. |
 
 ## Attachments
 

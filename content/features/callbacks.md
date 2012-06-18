@@ -24,6 +24,7 @@ The authorization callback sends the following parameters to your app
 | `size`        | The size of the message the user is trying to send. This isn't always available as it relies on SIZE being sent to our servers with the message sender. |
 | `remote_ip`   | The IP address of the server that is sending this message to the CloudMailin servers                    |
 | `helo_domain` | The domain that the remote server authenticated with when it connected to the CloudMailin email Servers |
+| `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain.                                   |
 
 The callback is available in `URL Encoded`, `JSON` and `XML` formats. Each representation will all present the above parameters but the xml format will wrap these in a node called `parameters`, examples can be seen below.
 
@@ -39,11 +40,11 @@ The acceptance of the message will be determined by the HTTP Status code that yo
 ### Examples
 An example `application/x-www-form-urlencoded` callback is as follows:
 
-    size=102400&to=to%example.net&from=from%2Btest%40example.com&helo_domain=localhost&remote_ip=127.0.0.1
+    size=102400&to=to%example.net&from=from%2Btest%40example.com&helo_domain=localhost&remote_ip=127.0.0.1&spf[result]=pass&spf[domain]=example.com
 
 An example `application/json` callback is as follows:
 
-    {"size":102400,"to":"to@example.net","from":"from+test@example.com","helo_domain":"localhost","remote_ip":"127.0.0.1"}
+    {"size":102400,"to":"to@example.net","from":"from+test@example.com","helo_domain":"localhost","remote_ip":"127.0.0.1","spf":{"result":"pass","domain":"example.com"}}
 
 An example `application/xml` callback is as follows:
 
@@ -54,6 +55,10 @@ An example `application/xml` callback is as follows:
       <from>from+test@example.com</from>
       <helo-domain>localhost</helo-domain>
       <remote-ip>127.0.0.1</remote-ip>
+      <spf>
+        <result>pass</result>
+        <domain>example.com</domain>
+      </spf>
     </parameters>
 
 ## Error Callbacks

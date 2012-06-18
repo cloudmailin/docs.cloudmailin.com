@@ -8,7 +8,7 @@ The JSON and multipart formats are incredibly similar. It's only the transport m
 
 | parameter     | details                 | description                                                                   |
 |-------------------------------------------------------------------------------------------------------------------------|
-| `envelope`    | [details](#body)        | This is the message envelope. The details that our server receives from the sending server.   |
+| `envelope`    | [details](#envelope)        | This is the message envelope. The details that our server receives from the sending server.   |
 | `headers`     | [details](#headers)     | These are the email headers as an array of JSON objects of keys and values.   |
 | `plain`       | [details](#body)        | The email body as plain-text.                                                 |
 | `html`        | [details](#body)        | The email as HTML (if a HTML version is available).                           |
@@ -40,7 +40,11 @@ The following is complete example JSON message:
         "to": "to@example.com",
         "from": "from@example.com",
         "helo_domain": "localhost",
-        "remote_ip": "127.0.0.1"
+        "remote_ip": "127.0.0.1",
+        "spf": {
+          "result": "pass",
+          "domain": "example.com"
+        }
       },
       "plain": "Test with HTML.",
       "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>",
@@ -70,8 +74,9 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 |---------------|-------------------------------------------------------------------------------------|
 | `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
 | `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
-| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo' command. |
+| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
 | `remote_ip`   | The remote IP address of the sending server if available.                           |
+| `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain.               |
 
 The following is an example envelope:
 
@@ -79,7 +84,11 @@ The following is an example envelope:
       "to": "to@example.com",
       "from": "from@example.com",
       "helo_domain": "localhost",
-      "remote_ip": "127.0.0.1"
+      "remote_ip": "127.0.0.1",
+      "spf": {
+        "result": "pass",
+        "domain": "example.com"
+      }
     }
 
 ## Headers
