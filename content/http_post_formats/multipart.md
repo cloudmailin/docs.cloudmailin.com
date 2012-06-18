@@ -230,21 +230,19 @@ Attachments in the new message formats come in three different forms:
 
 | No Attachments        | If there are no attachments then an empty array will always be passed to the attachments parameter. |
 | URL Attachments       | URL Attachments are attachments that have been sent to an [attachment store](/receiving_email/attachments/). In these cases the message content is stored remotely and a URL to the attachment plus the attachment details are provided. |
-| Embedded Attachments  | With embedded attachments the attachment content is passed in `base-64` encoding to the `content` parameter of the attachment |
+| Embedded Attachments  | Attachments will be sent as multipart/form-data attachments. No decoding should be required and some frameworks will automatically create temporary files for these attachements |
 
-The attachments will contain the following parameters:
+### URL Attachments
+
+URL based attachments will contain the following parameters:
 
 | Field           | Description                                                                                          |
 |------------------------------------------------------------------------------------------------------------------------|
-| `content`       | The content of the attachment in `base-64` encoding, if the message isn't using an attachment store. |
 | `url`           | A URL to the attachment if the attachment is within an attachment store.                             |
 | `file_name`     | The original file name of the attachment.                                                            |
 | `content_type`  | The content type of the attachment.                                                                  |
 | `size`          | The size of the attachment.                                                                          |
 | `disposition`   | The disposition of the attachment either `attachment` or `inline`                                    |
-
-
-### URL Attachments
 
 URL attachments are attachments that have been sent to a message store. Instead of content they will contain a link to allow you to retrieve that content. URL attachments will be formatted as an array of attachment details. The following is an attachments parameter containing URL attachments:
 
@@ -305,4 +303,4 @@ Embedded attachments are attachments that send the attachment content direct to 
 
     testfile
 
-Embedded attachments are sent using `base-64` encoding. The example above contains two attachments named file1.txt and file2.txt both containing the plain text 'testfile' as their content.
+Embedded attachments are sent using binary encoding. The example above contains two attachments named file1.txt and file2.txt both containing the plain text 'testfile' as their content.
