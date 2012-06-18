@@ -5,7 +5,7 @@ name: Getting Started on Heroku
 
 # Getting Started On Heroku
 
-[CloudMailin](http://cloudmailin.com) allows you to receive incoming email messages in your web app via an HTTP POST request.
+[CloudMailin](http://www.cloudmailin.com) allows you to receive incoming email messages in your web app via an HTTP POST request.
 
 When you install the CloudMailin Add-on you will be automatically given an email address to send email to. Any email sent to that address will automatically be forwarded to the web address of your choice.
 
@@ -29,15 +29,15 @@ You can also retrieve this from your terminal (along with your CloudMailin email
 
 ## Setting the Target Location
 
-By default CloudMailin email addresses will forward to the CloudMailin [200 target](http://cloudmailin.com/target/200). This location will simply return a 200 status code causing the server to believe the message has been accepted and do nothing else with it.
+By default CloudMailin email addresses will forward to the CloudMailin [200 target](http://www.cloudmailin.com/target/200). This location will simply return a 200 status code causing the server to believe the message has been accepted and do nothing else with it.
 
-In order to forward your email to your own website you need login to the [CloudMailin Dashboard](http://cloudmailin.com). There are three different ways to do this:
+In order to forward your email to your own website you need login to the [CloudMailin Dashboard](http://www.cloudmailin.com). There are three different ways to do this:
 
 | Method                          | Logging In                                                                            |
 |---------------------------------|---------------------------------------------------------------------------------------|
 | Using the Terminal              | Use the gem and enter `$ heorku addons:open cloudmailin` into the terminal.           |
 | Using the Heroku Website        | Just login to [Heroku](http://heroku.com) and select CloudMailin from the Add-On menu for your application. |
-| Using a Username and Password   | First, obtain your CloudMailin Username and Password using `$ heroku config --long`. Then head to  [CloudMailin.com](http://cloudmailin.com) and login using these credentials. |
+| Using a Username and Password   | First, obtain your CloudMailin Username and Password using `$ heroku config --long`. Then head to  [CloudMailin.com](http://www.cloudmailin.com) and login using these credentials. |
 
 Once you're logged in you must set the target location for each HTTP POST containing your email and choose your HTTP POST Format. Click on the edit target button, here you can set the URL and choose the POST Format. For more details about the format that CloudMailin will send your email in see [HTTP Post Formats](/http_post_formats/).
 

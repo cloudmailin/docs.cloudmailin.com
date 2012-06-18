@@ -20,4 +20,4 @@ In the action method's signature, you can specify whichever parameters are relev
         }
     }
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!
+Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!

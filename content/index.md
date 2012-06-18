@@ -5,7 +5,7 @@ disable_comments: true
 
 # CloudMailin Documentation
 
-Thanks for trying out CloudMailin. We've done our best to create documentation that's helpful and contains the information you need. If you do need any help though feel free to [contact us](http://cloudmailin.com/contact_us).
+Thanks for trying out CloudMailin. We've done our best to create documentation that's helpful and contains the information you need. If you do need any help though feel free to [contact us](http://www.cloudmailin.com/contact_us).
 
 Remember, all the documentation is also open source, so if you think there's something you could improve feel free to also send us a pull request to the [github](https://github.com/CloudMailin/docs.cloudmailin.com/) account.
 

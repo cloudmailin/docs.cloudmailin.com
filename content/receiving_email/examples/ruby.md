@@ -45,7 +45,7 @@ Alternatively Rails can handle the parsed versions of CloudMailin's [HTTP POST F
       end
     end
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it! 
+Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it! 
 
 
 ## Rails (2.3.x)
@@ -76,7 +76,7 @@ Then create a controller `script/generate controller incoming_mails`. You are fr
 
 Notice the call to `skip_before_filter :verify_authenticity_token` to make sure that rails doesn't raise an exception because we have no way of knowing the token.
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it!
+Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mails and thats it!
 
 
 ## Sinatra
@@ -90,4 +90,4 @@ Parsing incoming mail in Sinatra is really simple. Just make sure the mail gem i
       'success'
     end
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!
+Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail and thats it!

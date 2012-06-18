@@ -26,4 +26,4 @@ In PHP POST variables are available containing the fields posted by CloudMailin.
 
 In this example if the recipient doesn't match the known user we are bouncing the message using a 403 error. The example is based upon the original format's parameters but could easily be extended to work with the new features.
 
-Then log into [CloudMailin](http://cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail.php and thats it!
+Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to deliver to http://yourdomain.com/incoming_mail.php and thats it!

@@ -9,7 +9,7 @@ The following are some of the most frequently asked questions at CloudMailin. We
 Your emails should arrive within seconds (actually we aim for it to be milliseconds). Our email server doesn't poll for your emails, they will be received as soon as they are sent to the server. A little bit of processing and they're sent straight on to your app.
 
 ### How do I change the website that my email is posted to
-The CloudMailin website allows you to view all of your email addresses and to change the target location. Click [here](http://cloudmailin.com/addresses) to view and edit your addresses.
+The CloudMailin website allows you to view all of your email addresses and to change the target location. Click [here](http://www.cloudmailin.com/addresses) to view and edit your addresses.
 
 ### How can I use my own domain name or email@mydomain.com instead of a CloudMailin address.
 Absolutely check out [Forwarding and Custom Domains](/receiving_email/forwarding_and_custom_domains/) for more details.
@@ -41,9 +41,9 @@ We have wired up a few fake targets you can use to test your emails.
 
 | URL                               | Description                                                                            |
 |----------------------------------------------------------------------------------------------------------------------------|
-| http://cloudmailin.com/target/200 | will simulate a 200 response. This simulates the message successfully being delivered. |
-| http://cloudmailin.com/target/404 | will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target. |
-| http://cloudmailin.com/target/500 | will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later. |
+| http://www.cloudmailin.com/target/200 | will simulate a 200 response. This simulates the message successfully being delivered. |
+| http://www.cloudmailin.com/target/404 | will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target. |
+| http://www.cloudmailin.com/target/500 | will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later. |
 
 ### How can I see the response my server returned
 On the address page within CloudMailin you should see the message and the status that your server returned to CloudMailin. Clicking on the details tab will also show additional information.
@@ -56,4 +56,4 @@ You can use the details page for a delivery status to see all delivery attempts 
 You must make sure that your setup your DNS entries with either a CNAME or MX records pointing to CloudMailin before trying to enter a custom domain in the control panel. If you try to enter your custom domain first, it will fail to validate stating that the DNS records cannot be found. Take a look [here](/receiving_email/forwarding_and_custom_domains/) for more information about setting up your custom domains.
 
 ### Where are your servers based?
-Our servers predominantly based in EC2's US-EAST region (it is most likely these are the servers you will reach). This is to allow low latency and cut costs for the majority of our users. We do however make use of several other hosting providers to provide redundancy can add others upon request if required. [Contact us](http://cloudmailin.com/contact_us) for more details.
+Our servers predominantly based in EC2's US-EAST region (it is most likely these are the servers you will reach). This is to allow low latency and cut costs for the majority of our users. We do however make use of several other hosting providers to provide redundancy can add others upon request if required. [Contact us](http://www.cloudmailin.com/contact_us) for more details.

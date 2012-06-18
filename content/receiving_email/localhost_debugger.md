@@ -29,4 +29,4 @@ You may also need to update the host header in order to ensure that your app rec
 
     ... -H 'host:localhost:3000' ...
 
-If for some reason WebSockets are unavailable the debugger should revert to using long polling. The debugger is a bit of a side project, and it still has a few kinks that need working out, but if you encounter any issues with the debugger be sure to [contact us](http://cloudmailin.com/contact_us).
+If for some reason WebSockets are unavailable the debugger should revert to using long polling. The debugger is a bit of a side project, and it still has a few kinks that need working out, but if you encounter any issues with the debugger be sure to [contact us](http://www.cloudmailin.com/contact_us).

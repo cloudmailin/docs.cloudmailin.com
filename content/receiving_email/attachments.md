@@ -13,7 +13,7 @@ CloudMailin has the ability to extract the attachments from your email and deliv
 It is possible to configure CloudMailin to stream message attachments to Amazons S3 as an email is received.
 This can help reduce the overhead on the end server and allow you to easily save away the attachments sent by your customers. In order to set up S3 attachments:
 
-  1. Log into your [address dashboard](http://cloudmailin.com/addresses) and choose the address you wish to manage.
+  1. Log into your [address dashboard](http://www.cloudmailin.com/addresses) and choose the address you wish to manage.
   2. Select add attachment store.
   3. Enter your amazon S3 bucket name and an optional path to place before each file. In the format bucket_name/path_prefix.
   4. Select the permission that you wish for files to be created with `bucket-owner-full-control` or `public-read`.
