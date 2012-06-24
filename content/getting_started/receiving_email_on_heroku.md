@@ -17,7 +17,7 @@ You can install the CloudMailin Add-on from the Heroku website or the terminal. 
     
 This will automatically create you a CloudMailin account and create an address that will forward to the default location. To create a different CloudMailin plan just pass the plan name. For example to create the starter plan type:
 
-    $ heorku addons:add cloudmailin:starter
+    $ heroku addons:add cloudmailin:starter
 
 Your CloudMailin email address will be stored in your Heroku Environment, for more details see [config vars in the Heroku documentation](https://devcenter.heroku.com/articles/config-vars). Heroku makes these config variables available within your apps environment. For example in Ruby you can retrieve them like so:
 
@@ -35,7 +35,7 @@ In order to forward your email to your own website you need login to the [CloudM
 
 | Method                          | Logging In                                                                            |
 |---------------------------------|---------------------------------------------------------------------------------------|
-| Using the Terminal              | Use the gem and enter `$ heorku addons:open cloudmailin` into the terminal.           |
+| Using the Terminal              | Use the gem and enter `$ heroku addons:open cloudmailin` into the terminal.           |
 | Using the Heroku Website        | Just login to [Heroku](http://heroku.com) and select CloudMailin from the Add-On menu for your application. |
 | Using a Username and Password   | First, obtain your CloudMailin Username and Password using `$ heroku config --long`. Then head to  [CloudMailin.com](http://www.cloudmailin.com) and login using these credentials. |
 
