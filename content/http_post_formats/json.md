@@ -8,10 +8,11 @@ The JSON and multipart formats are incredibly similar. It's only the transport m
 
 | parameter     | details                 | description                                                                   |
 |-------------------------------------------------------------------------------------------------------------------------|
-| `envelope`    | [details](#envelope)        | This is the message envelope. The details that our server receives from the sending server.   |
+| `envelope`    | [details](#envelope)    | This is the message envelope. The details that our server receives from the sending server.   |
 | `headers`     | [details](#headers)     | These are the email headers as an array of JSON objects of keys and values.   |
 | `plain`       | [details](#body)        | The email body as plain-text.                                                 |
 | `html`        | [details](#body)        | The email as HTML (if a HTML version is available).                           |
+| `reply_plain` | [details](#body)        | The plain text reply extracted from this message is present / found.          |
 | `attachments` | [details](#attachments) | The message attachments.                                                      |
 
 The following is complete example JSON message:
@@ -48,6 +49,7 @@ The following is complete example JSON message:
       },
       "plain": "Test with HTML.",
       "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>",
+      "reply_plain": "Message reply if found.",
       "attachments": [
         {
           "content": "dGVzdGZpbGU=",
@@ -116,6 +118,9 @@ CloudMailin will send the message body in both plain and html formats if they're
 
     "plain": "Test with HTML.",
     "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>"
+    "reply_plain": "Message reply if found."
+
+For more details about the extracted reply see [reply parsing](/features/extracting_replies_from_email/).
 
 ## Attachments
 

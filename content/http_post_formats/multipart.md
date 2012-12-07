@@ -8,10 +8,11 @@ The JSON and multipart formats are incredibly similar. It's only the transport m
 
 | parameter     | details                 | description                                                                   |
 |-------------------------------------------------------------------------------------------------------------------------|
-| `envelope`    | [details](#envelope)        | This is the message envelope. The details that our server receives from the sending server.   |
+| `envelope`    | [details](#envelope)    | This is the message envelope. The details that our server receives from the sending server.   |
 | `headers`     | [details](#headers)     | These are the email headers they use the notation headers[field_name] to represent the array. |
 | `plain`       | [details](#body)        | The email body as plain-text.                                                 |
 | `html`        | [details](#body)        | The email as HTML (if a HTML version is available).                           |
+| `reply_plain` | [details](#body)        | The plain text reply extracted from this message is present / found.          |
 | `attachments` | [details](#attachments) | The message attachments.                                                      |
 
 The following is complete example Multipart message:
@@ -30,6 +31,11 @@ The following is complete example Multipart message:
     </body>
     </html>
     ------cloudmailinboundry
+    Content-Disposition: form-data; name="reply_plain"
+
+    Message reply if found.
+    ------cloudmailinboundry
+
     Content-Disposition: form-data; name="headers[Return-Path]"
 
     from@example.com
@@ -240,6 +246,12 @@ CloudMailin will send the message body in both plain and html formats if they're
     Test with <span style="font-weight: bold;">HTML</span>.<br>
     </body>
     </html>
+    ------cloudmailinboundry
+    Content-Disposition: form-data; name="reply_plain"
+
+    Message reply if found.
+
+For more details about the extracted reply see [reply parsing](/features/extracting_replies_from_email/).
 
 ## Attachments
 
