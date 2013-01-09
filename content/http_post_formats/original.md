@@ -16,7 +16,7 @@ The original HTTP POST Format transfers emails to your web app using `multipart/
 | `x_to_header`     | The to addresses found in the message itself and will be listed separated by a comma. |
 | `x_cc_header`     | This is a new header that is being tested and we would appreciate feedback for. The CC addresses found in the message header will be listed separated by a comma.
 | `from`            | The form header as specified in the envelope by the sending server. |
-| `x_from_header`   | The from addresses found in the message itself and will be listed separated by a comma.
+| `x_from_header`   | The from addresses found in the message itself and will be listed separated by a comma. This is sent as a JSON representation of an Array of emails (e.g. "[\"joe@domain.com\", \"jane@domain.com\"]").
 | `x_sender`        | This will send the x-sender header from the mail message if it is present. This parameter will likely always be experimental as only some servers will include this header. |
 | `subject`         | The subject of the message extracted from the message itself. |
 | `x_forwarded_for `| This will send the x-forwarded-for header from the mail message if it is present. This is often included by forwarding email servers to show the original to address the message was sent to. This parameter will likely always be experimental as only some servers will include this header.
