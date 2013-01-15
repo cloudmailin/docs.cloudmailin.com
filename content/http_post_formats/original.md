@@ -11,11 +11,11 @@ The original HTTP POST Format transfers emails to your web app using `multipart/
 | `message`         | The message itself. This will be the entire message and will need to be manually parsed by your code if you wish to make use of this parameter. | 
 | `plain`           | The plain text extracted from the raw message. This will be the first text/plain part of the email if the message is multipart and the body if the content is not multipart. |
 | `html`            | The html text extracted from the raw message. This will be the first text/html part of an email if the message is multipart. |
-| `to`              | The form header as specified in the envelope by the sending server. This could be different to the to address specified in the message itself. If you are forwarding email from your domain you will want to extract the recipient from the email using the `x_header_to` parameter. |
+| `to`              | The form header as specified in the envelope by the sending server. This could be different to the to address specified in the message itself. If you are forwarding email from your domain you will want to extract the recipient from the email using the `x_to_header` parameter. |
 | `disposable`      | The disposable part of the email address if it exists. For example if your email address was example+something@example.com, the disposable would contain 'something'. |
 | `x_to_header`     | The to addresses found in the message itself and will be listed separated by a comma. |
 | `x_cc_header`     | This is a new header that is being tested and we would appreciate feedback for. The CC addresses found in the message header will be listed separated by a comma.
-| `from`            | The form header as specified in the envelope by the sending server. |
+| `from`            | The from header as specified in the envelope by the sending server. If you are forwarding email from your domain you will want to extract the sender from the email using the `x_from_header` parameter. |
 | `x_from_header`   | The from addresses found in the message itself and will be listed separated by a comma. This is sent as a JSON representation of an Array of emails (e.g. "[\"joe@domain.com\", \"jane@domain.com\"]").
 | `x_sender`        | This will send the x-sender header from the mail message if it is present. This parameter will likely always be experimental as only some servers will include this header. |
 | `subject`         | The subject of the message extracted from the message itself. |
