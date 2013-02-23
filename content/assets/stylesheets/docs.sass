@@ -1,4 +1,4 @@
-@import url('http://www.cloudmailin.com/assets/application.css')
+@import url('http://assets.cloudmailin.com/assets/application.css')
 
 @import blueprint
 @import fancy-buttons
@@ -12,12 +12,12 @@ $base-line-height: 20px
 
 // TODO: FONTS, HEADINGS, TEXT-SHADOW, NAVIGATION
 
-body#application
+body#documentation
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
   font-weight: 300
   //font-size: 0.8em
 
-h1, h2, h3, body#application h1, body#application h2, body#application h3
+h1, h2, h3, body#documentation h1, body#documentation h2, body#documentation h3
   color: #333
   font-family: 'museo'
 
@@ -68,12 +68,12 @@ p, table, li
   background: url('/assets/images/divider.png') no-repeat 70% 0%
   +column(7)
   +append(1)
-  
+
   a
     text-decoration: none
     color: #333
     font-weight: 300
-  
+
   ul
     list-style: none
     padding-left: 5px
@@ -84,17 +84,17 @@ p, table, li
       list-style-type: none
       margin-left: 0px
       font-weight: bold
-      
+
       li
         font-weight: normal
-        
+
         a:before
           content: '- '
-    
+
     ul ul
       padding-left: 10px
       margin: 0px
-    
+
     .return_to_site
       margin-bottom: 20px
 
@@ -113,7 +113,7 @@ ol
   margin: 0px 0px 10px 0px
   border: 1px solid #EAEAEA
   background-color: #F3F3F3
-  
+
   li
     margin: 5px 20px
     list-style: decimal
@@ -121,7 +121,7 @@ ol
 ul
   margin: 0px 0px 20px 0px
   padding: 0px
-  
+
   li, p
     margin: 0px
     padding: 0px
@@ -134,7 +134,7 @@ li
 
 // Override default styles from the main stylesheet
 
-body#application
+body#documentation
   #middle
     background: none
 
