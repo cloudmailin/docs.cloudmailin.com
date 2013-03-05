@@ -257,7 +257,7 @@ For more details about the extracted reply see [reply parsing](/features/extract
 
 Attachments in the new message formats come in three different forms:
 
-| No Attachments        | If there are no attachments then an empty array will always be passed to the attachments parameter. |
+| No Attachments        | If there are no attachments the attachments parameter will not be present for the multipart format. |
 | URL Attachments       | URL Attachments are attachments that have been sent to an [attachment store](/receiving_email/attachments/). In these cases the message content is stored remotely and a URL to the attachment plus the attachment details are provided. |
 | Embedded Attachments  | Attachments will be sent as multipart/form-data attachments. No decoding should be required and some frameworks will automatically create temporary files for these attachements |
 
