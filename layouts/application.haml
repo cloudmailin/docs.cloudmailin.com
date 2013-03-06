@@ -9,7 +9,7 @@
     %header#header
       #header_image
         = link_to image_tag('logo_trans.png', :alt => 'cloudmailin logo, incoming email for your web app'), 'http://www.cloudmailin.com'
-    
+
     #middle
       #container
         -# %h1= @item.title
@@ -51,6 +51,7 @@
                     %li= link_to 'Error Callbacks', '/features/callbacks/#error-callbacks'
                 %li= link_to 'SPF (Sender Policy Framework)', '/features/spf/'
                 %li= link_to 'Delivery Status API', '/features/delivery_status_api/'
+                %li= link_to 'Securing HTTP Posts', '/receiving_email/securing_your_email_url_target/'
             %li
               Local Development and Testing
               %ul
@@ -75,14 +76,14 @@
                 %li
                   = link_to 'More', '/receiving_email/examples/more/'
 
-            
+
         .documentation_content{:id => @item.name.downcase.gsub(/[^a-z0-9\_]+/i, '_')}
           = find_and_preserve(yield)
           = render 'comments' unless @item.disable_comments?
-    
+
     %footer#footer
       #details
         &copy; cloudmailin.com
-    
+
     <a href="https://github.com/cloudmailin/docs.cloudmailin.com"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
     = render 'analytics'
