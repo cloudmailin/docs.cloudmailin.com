@@ -42,6 +42,10 @@ The following is complete example JSON message:
         "from": "from@example.com",
         "helo_domain": "localhost",
         "remote_ip": "127.0.0.1",
+        "recipients": [
+          "to@example.com",
+          "another@example.com"
+        ],
         "spf": {
           "result": "pass",
           "domain": "example.com"
@@ -75,6 +79,7 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 | field         | Details
 |---------------|-------------------------------------------------------------------------------------|
 | `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
+| `recipients`  | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/). |
 | `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
 | `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
 | `remote_ip`   | The remote IP address of the sending server if available.                           |
@@ -84,6 +89,10 @@ The following is an example envelope:
 
     "envelope": {
       "to": "to@example.com",
+      "recipients": [
+          "to@example.com",
+          "another@example.com"
+        ],
       "from": "from@example.com",
       "helo_domain": "localhost",
       "remote_ip": "127.0.0.1",

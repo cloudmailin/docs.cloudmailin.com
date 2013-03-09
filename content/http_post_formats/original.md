@@ -12,6 +12,7 @@ The original HTTP POST Format transfers emails to your web app using `multipart/
 | `plain`           | The plain text extracted from the raw message. This will be the first text/plain part of the email if the message is multipart and the body if the content is not multipart. |
 | `html`            | The html text extracted from the raw message. This will be the first text/html part of an email if the message is multipart. |
 | `to`              | The form header as specified in the envelope by the sending server. This could be different to the to address specified in the message itself. If you are forwarding email from your domain you will want to extract the recipient from the email using the `x_to_header` parameter. |
+| `recipients`      | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/). This is sent as a JSON representation of an Array of emails (e.g. "[\"joe@domain.com\", \"jane@domain.com\"]"). |
 | `disposable`      | The disposable part of the email address if it exists. For example if your email address was example+something@example.com, the disposable would contain 'something'. |
 | `x_to_header`     | The to addresses found in the message itself and will be listed separated by a comma. |
 | `x_cc_header`     | This is a new header that is being tested and we would appreciate feedback for. The CC addresses found in the message header will be listed separated by a comma.

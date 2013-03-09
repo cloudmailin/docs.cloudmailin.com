@@ -13,7 +13,7 @@ The raw message format sends an entire message as a single field within a `multi
 
 ## Envelope
 
-The envelope contains the data sent or gathered from the remote server. It doesn't contain any of the message content. It contains details of the transaction that took place between the sending server and CloudMailin.
+The envelope contains the data sent or gathered from the remote server. It doesn't contain any of the message content. It contains details of the transaction that took place between the sending server and CloudMailin. The data sent within the envelope is identical to that in the [multipart format](/http_post_formats/multipart/#envelope).
 
 | Field         | Details
 |---------------|-------------------------------------------------------------------------------------|

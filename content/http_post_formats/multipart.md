@@ -96,6 +96,10 @@ The following is complete example Multipart message:
 
     to@example.com
     ------cloudmailinboundry
+    Content-Disposition: form-data; name="envelope[recipients][0]"
+
+    to@example.com
+    ------cloudmailinboundry
     Content-Disposition: form-data; name="envelope[from]"
 
     from@example.com
@@ -134,6 +138,7 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 | field         | Details
 |---------------|-------------------------------------------------------------------------------------|
 | `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
+| `recipients`  | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/). |
 | `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
 | `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
 | `remote_ip`   | The remote IP address of the sending server if available.                           |
@@ -143,6 +148,10 @@ The following is an example envelope:
 
     ------cloudmailinboundry
     Content-Disposition: form-data; name="envelope[to]"
+
+    to@example.com
+    ------cloudmailinboundry
+    Content-Disposition: form-data; name="envelope[recipients][0]"
 
     to@example.com
     ------cloudmailinboundry
