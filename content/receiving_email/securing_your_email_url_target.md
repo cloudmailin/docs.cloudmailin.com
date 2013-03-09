@@ -1,3 +1,7 @@
+---
+title: Securing HTTP POSTS you receive from CloudMailin emails
+---
+
 # Ensuring that the Email and HTTP POST comes from CloudMailin
 
 CloudMailin will send your email as an HTTP POST, but how can you ensure that the POST is actually coming from CloudMailin and not from another source attempting to send messages on our behalf?
