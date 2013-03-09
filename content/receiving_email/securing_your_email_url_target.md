@@ -27,6 +27,34 @@ The string `dXNlcjpteXBhc3M=` is simply a Base64 encoded representation of `user
       http_basic_authenticate_with :name => "user", :password => "mypass"
     end
 
+
+### URL Encoding Usernames and Passwords
+
+It's important to remember that you're specifying your username and password as part of a URL. Therefore if you want to use usernames and passwords that contain certain symbols (such as the `@` symbol) you'll need to URL encode them.
+
+For example `youremail@yourdomain.com` should be encoded as `youremail%40yourdomain.com`. This would make the URL something like the following:
+
+    https://youremail%40yourdomain.com:password@yourdomain.com/incoming_mails/
+
+Note that the actual `@` character is used to show that we're passing credentials and the `:` is used to seperate the username and password. If you need help converting to the URL encoded format checkout [this converter](http://meyerweb.com/eric/tools/dencoder/) by Eric Meyer. We've also included a few common characters in the table below:
+
+| Character | URL Encoded Version |
+|-----------|---------------------|
+| `!`       | `%21`               |
+| `[space]` | `%20`               |
+| `@`       | `%40`               |
+| `$`       | `%24`               |
+| `%`       | `%25`               |
+| `^`       | `%5E`               |
+| `&`       | `%26`               |
+| `*`       | `%2A`               |
+| `(`       | `%28`               |
+| `)`       | `%29`               |
+| `?`       | `%3F`               |
+| `,`       | `%2C`               |
+| `=`       | `%3D`               |
+
+
 ## Signed Requests
 
 The original POST format also includes a signature parameter. We no longer recommend the use of this signature and instead we recommend HTTPS and basic authentication.
