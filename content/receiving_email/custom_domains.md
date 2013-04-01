@@ -10,12 +10,12 @@ Each of your CloudMailin addresses can have its own custom domain allowing you t
 
 ## Setting up Custom Domains
 
-The first step is to add a record to your Domain Name Server (DNS) to state that the CloudMailin server should be the server to receive your email. There are two options for this, using a CNAME (the preferred method) and adding MX records manually.
+The first step is to add a record to your Domain Name Server (DNS) to state that the CloudMailin server should be the server to receive your email. There are two options for this, using a CNAME or adding MX records manually. We recommend adding the MX records directly to your account. This may mean that you have to update the records if CloudMailin ever changes it's defaults however, using a CNAME can cause issues in some edge cases so it's generally worth the overhead.
 
-| Type                                              | Advantages                                          | Downsides       |
-|---------------------------------------------------------------------------------------------------------------------------|
-| `CNAME Records` [Adding a CNAME](#adding-a-cname) | CNAME Records make management of your domain much easier, your entire domain will be given the DNS records that we specifiy for clients.cloudmailin.net and will be updated whenever we change these entries automatically. | However, there are a few edge cases where this doesn't work, or when you need to be able to control other records, for example if you also host a website on this domain name. |
+| Type                                                     | Advantages                                                    | Downsides       |
+|----------------------------------------------------------|---------------------------------------------------------------|-----------------|
 | `MX Records` [Adding MX Records](#setting-up-mx-records) | Using MX Records provides a lot more flexibility and allow you host other records on the same domain. | However, they require you to update each of your MX records if ever CloudMailin change the defaults. |
+| `CNAME Records` [Adding a CNAME](#adding-a-cname)        | CNAME Records make management of your domain much easier, your entire domain will be given the DNS records that we specifiy for clients.cloudmailin.net and will be updated whenever we change these entries automatically. | However, there are a few edge cases where this doesn't work, or when you need to be able to control other records, for example if you also host a website on this domain name. |
 
 ## Adding Your Custom Domain
 
@@ -24,16 +24,6 @@ Once your DNS records are setup The next step is to go to the [CloudMailin](http
 Note that both of these methods will prevent you from receiving regular email on this domain so we recommend using a subdomain such as mail.example.com. If you only want to receive email on one email address we recommend you [set up a forwarding account](/receiving_email/email_forwarding/) on your domain.
 
 You can also setup wildcard DNS entries to point to CloudMailin. For example you could enter \*.example.com as your custom domain so long as there is a DNS entry for \*.example.com that is either a CNAME or has MX records pointing to CloudMailin.
-
-## Adding a CNAME
-Using a CNAME is the preferred method of pointing your domain at our email servers. This method means that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. To add use this method create a CNAME record pointing to:
-
-    clients.cloudmailin.net
-
-You can check your configuration with the host command:
-
-    $ host mail.example.com
-    mail.example.com is an alias for clients.cloudmailin.net.
 
 ## Setting Up MX Records
 If it isn't possible to use a CNAME or you need to receive email on your main domain then you can add MX records for your domain.
@@ -49,6 +39,16 @@ You can check your configuration with the host command:
     ..
     mail.example.com mail is handled by 5 client2.cloudmailin.net.
     mail.example.com mail is handled by 5 client1.cloudmailin.net.
+
+## Adding a CNAME
+Using a CNAME is the preferred method of pointing your domain at our email servers. This method means that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. To add use this method create a CNAME record pointing to:
+
+    clients.cloudmailin.net
+
+You can check your configuration with the host command:
+
+    $ host mail.example.com
+    mail.example.com is an alias for clients.cloudmailin.net.
 
 ## Validating the MX and CNAME Records
 
