@@ -29,11 +29,15 @@ compile '*' do
     case ext
     when 'markdown', 'md'
       filter :erb unless item.attributes[:skip_erb]
-      filter :kramdown
-      # filter :colorize_syntax, :colorizers => { :ruby => :coderay }
+      filter :redcarpet, :options => { :tables => true, :fenced_code_blocks => true, :gh_blockcode => true }
+      filter :colorize_syntax, :default_colorizer => :pygmentsrb
       layout 'application'
     when 'sass'
+      filter :erb
       filter :sass, Compass.sass_engine_options.merge!(:style => :expanded)
+    when 'scss'
+      filter :erb
+      filter :sass, Compass.sass_engine_options.merge!(:style => :expanded, :syntax => :scss)
     when 'coffee'
       filter :coffeescript
     when 'js'
@@ -58,7 +62,7 @@ route '*' do
   else
     ext = item[:extension].nil? ? nil : item[:extension].split('.').last
     case ext
-    when 'sass'
+    when 'sass', 'scss'
       item.identifier.chop + '.css'
     when 'coffee'
       item.identifier.chop + '.js'

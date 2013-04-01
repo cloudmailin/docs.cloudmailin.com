@@ -7,7 +7,7 @@ title: Multipart Form Data Hash Format
 The JSON and multipart formats are incredibly similar. It's only the transport method that differs. The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
 
 | parameter     | details                 | description                                                                   |
-|-------------------------------------------------------------------------------------------------------------------------|
+|---------------|-------------------------|-------------------------------------------------------------------------------|
 | `envelope`    | [details](#envelope)    | This is the message envelope. The details that our server receives from the sending server.   |
 | `headers`     | [details](#headers)     | These are the email headers they use the notation headers[field_name] to represent the array. |
 | `plain`       | [details](#body)        | The email body as plain-text.                                                 |
@@ -135,11 +135,11 @@ The following is complete example Multipart message:
 
 The envelope contains the data sent or gathered from the remote server. It doesn't contain any of the message content. It contains details of the transaction that took place between the sending server and CloudMailin.
 
-| field         | Details
+| field         | Details                                                                             |
 |---------------|-------------------------------------------------------------------------------------|
-| `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
-| `recipients`  | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/). |
-| `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
+| `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter.                                               |
+| `recipients`  | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/).                                          |
+| `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter.                                          |
 | `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
 | `remote_ip`   | The remote IP address of the sending server if available.                           |
 | `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain.               |
@@ -266,16 +266,18 @@ For more details about the extracted reply see [reply parsing](/features/extract
 
 Attachments in the new message formats come in three different forms:
 
+| Attachment Type       | Description                                                                                         |
+|-----------------------|-----------------------------------------------------------------------------------------------------|
 | No Attachments        | If there are no attachments the attachments parameter will not be present for the multipart format. |
-| URL Attachments       | URL Attachments are attachments that have been sent to an [attachment store](/receiving_email/attachments/). In these cases the message content is stored remotely and a URL to the attachment plus the attachment details are provided. |
-| Embedded Attachments  | Attachments will be sent as multipart/form-data attachments. No decoding should be required and some frameworks will automatically create temporary files for these attachements |
+| URL Attachments       | URL Attachments are attachments that have been sent to an [attachment store](/receiving_email/attachments/). In these cases the message content is stored remotely and a URL to the attachment plus the attachment details are provided.            |
+| Embedded Attachments  | Attachments will be sent as multipart/form-data attachments. No decoding should be required and some frameworks will automatically create temporary files for these attachements                                                                   |
 
 ### URL Attachments
 
 URL based attachments will contain the following parameters:
 
 | Field           | Description                                                                                          |
-|------------------------------------------------------------------------------------------------------------------------|
+|-----------------|------------------------------------------------------------------------------------------------------|
 | `url`           | A URL to the attachment if the attachment is within an attachment store.                             |
 | `file_name`     | The original file name of the attachment.                                                            |
 | `content_type`  | The content type of the attachment.                                                                  |

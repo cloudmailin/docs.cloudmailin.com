@@ -6,8 +6,8 @@ title: Original HTTP POST Format
 
 The original HTTP POST Format transfers emails to your web app using `multipart/form-data` requests. The POST contains the following parameters:
 
-| Parameter     | Description |
-|------------------------|
+| Parameter         | Description                                                                                                            |
+|-------------------|------------------------------------------------------------------------------------------------------------------------|
 | `message`         | The message itself. This will be the entire message and will need to be manually parsed by your code if you wish to make use of this parameter. |
 | `plain`           | The plain text extracted from the raw message. This will be the first text/plain part of the email if the message is multipart and the body if the content is not multipart. |
 | `html`            | The html text extracted from the raw message. This will be the first text/html part of an email if the message is multipart. |
@@ -35,7 +35,7 @@ If you wish to have attachments parsed and sent directly to your app we suggest 
 However, if you choose to use an attachment store the following additional parameters will be delivered:
 
 | Parameter                           | Description                              |
-|--------------------------------------------------------------------------------|
+|-------------------------------------|------------------------------------------|
 | `attachments[index][file_name]`     | The original file name of the attachment |
 | `attachments[index][content_type]`  | The content type of the attachment |
 | `attachments[index][url]`           | The url of the file uploaded to S3. This can be used to extract the bucket, path and filename if required. |

@@ -18,7 +18,7 @@ Authorization callbacks fire before any data is received by our server. They sen
 The authorization callback sends the following parameters to your app
 
 | Parameter     | Description                                                                                             |
-|-------------------------------------------------------------------------------------------------------------------------|
+|---------------|---------------------------------------------------------------------------------------------------------|
 | `to`          | The message recipient, this could be your CloudMailin email address or custom domain email.             |
 | `from`        | The message sender's email address.                                                                     |
 | `size`        | The size of the message the user is trying to send. This isn't always available as it relies on SIZE being sent to our servers with the message sender. |
@@ -31,7 +31,7 @@ The callback is available in `URL Encoded`, `JSON` and `XML` formats. Each repre
 The acceptance of the message will be determined by the HTTP Status code that you send back to CloudMailin. The table shows the status codes your app can send and the action that will be taken by the CloudMailin servers:
 
 | Status Code | Action Taken by CloudMailin                                                               |
-|---------------------------------------------------------------------------------------------------------|
+|-------------|-------------------------------------------------------------------------------------------|
 | `2xx`       | The message will be accepted and the server will be asked to continue sending it's data.  |
 | `3xx`       | CloudMailin will attempt to follow redirects up to 3 times.                               |
 | `4xx`       | The message will be rejected and the remote server informed that it should not retry delivery. This will normally result in a bounce message being sent to the sender (SMTP `550`). |
@@ -68,11 +68,11 @@ Error callbacks are alerts that fire whenever CloudMailin doesn't receive a `2xx
 When an error callback fires it will contain the following parameters:
 
 | Parameter  | Description                                                                                 |
-|--------------------------------------------------------------------------------------------------------- |
-| `status`   | The HTTP status code returned by your web server.                                            |
+|------------|-------------------------------------------------------------------------------------------- |
+| `status`   | The HTTP status code returned by your web server.                                           |
 | `to`       | The message recipient, this could be your CloudMailin email address or custom domain email. |
 | `from`     | The message sender's email address.                                                         |
-| `response` | The content of the response given by your web server to help with debugging the problem.     |
+| `response` | The content of the response given by your web server to help with debugging the problem.    |
 
 ### Example
 
@@ -89,4 +89,3 @@ An example `JSON` formatted response is as follows:
       'response': '<html><body>An error occurred trying to save this data.</body></html>'
     }
 
-    

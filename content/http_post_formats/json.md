@@ -6,14 +6,14 @@ title: JSON Hash Format
 
 The JSON and multipart formats are incredibly similar. It's only the transport method that differs. The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
 
-| parameter     | details                 | description                                                                   |
-|-------------------------------------------------------------------------------------------------------------------------|
-| `envelope`    | [details](#envelope)    | This is the message envelope. The details that our server receives from the sending server.   |
-| `headers`     | [details](#headers)     | These are the email headers as an array of JSON objects of keys and values.   |
-| `plain`       | [details](#body)        | The email body as plain-text.                                                 |
-| `html`        | [details](#body)        | The email as HTML (if a HTML version is available).                           |
-| `reply_plain` | [details](#body)        | The plain text reply extracted from this message is present / found.          |
-| `attachments` | [details](#attachments) | The message attachments.                                                      |
+| parameter     | details                 | description                                                                                 |
+|---------------|-------------------------|---------------------------------------------------------------------------------------------|
+| `envelope`    | [details](#envelope)    | This is the message envelope. The details that our server receives from the sending server. |
+| `headers`     | [details](#headers)     | These are the email headers as an array of JSON objects of keys and values.                 |
+| `plain`       | [details](#body)        | The email body as plain-text.                                                               |
+| `html`        | [details](#body)        | The email as HTML (if a HTML version is available).                                         |
+| `reply_plain` | [details](#body)        | The plain text reply extracted from this message is present / found.                        |
+| `attachments` | [details](#attachments) | The message attachments.                                                                    |
 
 The following is complete example JSON message:
 
@@ -76,14 +76,14 @@ The following is complete example JSON message:
 
 The envelope contains the data sent or gathered from the remote server. It doesn't contain any of the message content. It contains details of the transaction that took place between the sending server and CloudMailin.
 
-| field         | Details
-|---------------|-------------------------------------------------------------------------------------|
-| `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
-| `recipients`  | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/). |
+| field         | Details                                                                                                 |
+|---------------|---------------------------------------------------------------------------------------------------------|
+| `to`          | The email address the server is sending to. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter.                                                                   |
+| `recipients`  | The full list of recipients that the remote server is attempting to send to in this transaction. For more details see [multiple_recipients](/receiving_email/multiple_recipients/).                                                              |
 | `from`        | The email address that the server was sending from. Note this might not always be the address within the message headers. For that reason you should also look at the `headers` parameter. |
-| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command. |
-| `remote_ip`   | The remote IP address of the sending server if available.                           |
-| `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain.               |
+| `helo_domain` | The domain reported by the sending server as it sends the `helo` or `ehlo` command.                     |
+| `remote_ip`   | The remote IP address of the sending server if available.                                               |
+| `spf`         | The [SPF](/features/spf/) result for the given IP address and Domain.                                   |
 
 The following is an example envelope:
 
@@ -135,14 +135,16 @@ For more details about the extracted reply see [reply parsing](/features/extract
 
 Attachments in the new message formats come in three different forms:
 
+| Attachment Type       | Description                                                                                         |
+|-----------------------|-----------------------------------------------------------------------------------------------------|
 | No Attachments        | If there are no attachments then an empty array will always be passed to the attachments parameter. |
-| URL Attachments       | URL Attachments are attachments that have been sent to an [attachment store](/receiving_email/attachments/). In these cases the message content is stored remotely and a URL to the attachment plus the attachment details are provided. |
+| URL Attachments       | URL Attachments are attachments that have been sent to an [attachment store](/receiving_email/attachments/). In these cases the message content is stored remotely and a URL to the attachment plus the attachment details are provided.            |
 | Embedded Attachments  | With embedded attachments the attachment content is passed in `base-64` encoding to the `content` parameter of the attachment |
 
 The attachments will contain the following parameters:
 
 | Field           | Description                                                                                          |
-|------------------------------------------------------------------------------------------------------------------------|
+|-----------------|------------------------------------------------------------------------------------------------------|
 | `content`       | The content of the attachment in `base-64` encoding, if the message isn't using an attachment store. |
 | `url`           | A URL to the attachment if the attachment is within an attachment store.                             |
 | `file_name`     | The original file name of the attachment.                                                            |

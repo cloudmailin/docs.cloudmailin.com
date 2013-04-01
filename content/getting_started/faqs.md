@@ -39,11 +39,11 @@ Because of the way email and SMTP works most mail servers will try and resend yo
 ### How can I test the different status codes?
 We have wired up a few fake targets you can use to test your emails.
 
-| URL                               | Description                                                                            |
-|----------------------------------------------------------------------------------------------------------------------------|
+| URL                                   | Description                                                                            |
+|---------------------------------------|----------------------------------------------------------------------------------------|
 | http://www.cloudmailin.com/target/200 | will simulate a 200 response. This simulates the message successfully being delivered. |
-| http://www.cloudmailin.com/target/404 | will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target. |
-| http://www.cloudmailin.com/target/500 | will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later. |
+| http://www.cloudmailin.com/target/404 | will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target.                                                                                                              |
+| http://www.cloudmailin.com/target/500 | will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later.                                                                                             |
 
 ### How can I see the response my server returned
 On the address page within CloudMailin you should see the message and the status that your server returned to CloudMailin. Clicking on the details tab will also show additional information.

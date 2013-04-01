@@ -2,13 +2,14 @@ source :rubygems
 
 # Generating
 gem "nanoc"
-gem "kramdown"
+gem "redcarpet"
 gem "haml"
 gem "sass"
 gem "compass"
 gem "fancy-buttons"
 gem "builder"
-gem "coderay"
+gem "coffee-script"
+gem "pygments.rb"
 
 gem 'rack'
 gem 'thin'

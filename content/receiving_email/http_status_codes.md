@@ -7,7 +7,7 @@ CloudMailin will send your email as an HTTP POST request to the url that you spe
 The following table outlines the HTTP status codes and the actions that CloudMailin will take.
 
 | Status Code | Examples                                                            | Action Taken     |
-|------------------------------------------------------------------------------------------------------|
+|-------------|---------------------------------------------------------------------|------------------|
 | 2xx         | `200 - OK`, `201 - Created`                                         | Message receipt was successful.
 | 4xx         | `403 - Forbidden`, `404 - Not Found`, `422 - Unprocessable Entity`  | The message will be rejected and the sender will be notified of this problem. |
 | 5xx         | `500 - Internal Server Error`, `503 - Service Unavailable`          | The message delivery will be delayed. We will tell the mail server to try again later. |
