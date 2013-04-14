@@ -17,60 +17,110 @@ The JSON and multipart formats are incredibly similar. It's only the transport m
 
 The following is complete example JSON message:
 
-    {
-      "headers": {
-        "Return-Path": "from@example.com",
-        "Received": [
-          "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800",
-          "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800",
-          "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"
-        ],
-        "Date": "Mon, 16 Jan 2012 17:00:01 +0000",
-        "From": "Message Sender <sender@example.com>",
-        "To": "Message Recipient<to@example.co.uk>",
-        "Message-ID": "<4F145791.8040802@example.com>",
-        "Subject": "Test Subject",
-        "Mime-Version": "1.0",
-        "Content-Type": "multipart/alternative; boundary=------------090409040602000601080801",
-        "Delivered-To": "to@example.com",
-        "Received-SPF": "neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;",
-        "Authentication-Results": "mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com",
-        "User-Agent": "Postbox 3.0.2 (Macintosh/20111203)"
-      },
-      "envelope": {
-        "to": "to@example.com",
-        "from": "from@example.com",
-        "helo_domain": "localhost",
-        "remote_ip": "127.0.0.1",
-        "recipients": [
-          "to@example.com",
-          "another@example.com"
-        ],
-        "spf": {
-          "result": "pass",
-          "domain": "example.com"
-        }
-      },
-      "plain": "Test with HTML.",
-      "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>",
-      "reply_plain": "Message reply if found.",
-      "attachments": [
-        {
-          "content": "dGVzdGZpbGU=",
-          "file_name": "file.txt",
-          "content_type": "text/plain",
-          "size": 8,
-          "disposition": "attachment"
-        },
-        {
-          "content": "dGVzdGZpbGU=",
-          "file_name": "file.txt",
-          "content_type": "text/plain",
-          "size": 8,
-          "disposition": "attachment"
-        }
-      ]
+```raw
+{
+  "headers": {
+    "Return-Path": "from@example.com",
+    "Received": [
+      "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800",
+      "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800",
+      "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"
+    ],
+    "Date": "Mon, 16 Jan 2012 17:00:01 +0000",
+    "From": "Message Sender <sender@example.com>",
+    "To": "Message Recipient<to@example.co.uk>",
+    "Message-ID": "<4F145791.8040802@example.com>",
+    "Subject": "Test Subject",
+    "Mime-Version": "1.0",
+    "Content-Type": "multipart/alternative; boundary=------------090409040602000601080801",
+    "Delivered-To": "to@example.com",
+    "Received-SPF": "neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;",
+    "Authentication-Results": "mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com",
+    "User-Agent": "Postbox 3.0.2 (Macintosh/20111203)"
+  },
+  "envelope": {
+    "to": "to@example.com",
+    "from": "from@example.com",
+    "helo_domain": "localhost",
+    "remote_ip": "127.0.0.1",
+    "recipients": [
+      "to@example.com",
+      "another@example.com"
+    ],
+    "spf": {
+      "result": "pass",
+      "domain": "example.com"
     }
+  },
+  "plain": "Test with HTML.",
+  "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>",
+  "reply_plain": "Message reply if found.",
+  "attachments": [
+    {
+      "content": "dGVzdGZpbGU=",
+      "file_name": "file.txt",
+      "content_type": "text/plain",
+      "size": 8,
+      "disposition": "attachment"
+    },
+    {
+      "content": "dGVzdGZpbGU=",
+      "file_name": "file.txt",
+      "content_type": "text/plain",
+      "size": 8,
+      "disposition": "attachment"
+    }
+  ]
+}
+```
+```language-ruby
+class IncomingMailsController < ApplicationController
+  def create
+    Rails.logger.info params
+    message = Message.new(
+      :to => params[:envelope][:to],
+      :from => params[:envelope][:from],
+      :subject => params[:headers]['Subject'],
+      :body => params[:plain]
+    )
+    if message.save
+      render :text => 'Success', :status => 200
+    else
+      render :text => message.errors.full_messages, :status => 422, :content_type => Mime::TEXT.to_s
+    end
+  end
+end
+
+#=> {"plain"=>"Test with HTML.", "html"=>"<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>", "reply_plain"=>"Message reply if found.", "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}, "envelope"=>{"to"=>"to@example.com", "recipients"=>{"0"=>"to@example.com"}, "from"=>"from@example.com", "helo_domain"=>"localhost", "remote_ip"=>"127.0.0.1", "spf"=>{"result"=>"pass", "domain"=>"example.com"}}, "attachments"=>"attachments": [{"content": "dGVzdGZpbGU=","file_name": "file.txt","content_type": "text/plain","size": 8,"disposition": "attachment"},{"content": "dGVzdGZpbGU=","file_name": "file.txt","content_type": "text/plain","size": 8,"disposition": "attachment"}]}
+```
+```language-php
+<?php
+  header("Content-type: text/plain");
+
+  $to = $_POST['envelope']['to'];
+  $subject = $_POST['headers']['Subject'];
+  $plain = $_POST['plain'];
+  $html = $_POST['html'];
+  $reply = $_POST['reply_plain'];
+
+  if ($to == 'allowed@example.com'){
+    header("HTTP/1.0 200 OK");
+    echo('success');
+  }else{
+    header("HTTP/1.0 403 OK");
+    echo('user not allowed here');
+  }
+  exit;
+?>
+```
+```language-javascript
+parsedBody = JSON.parse(request.body)
+console.log(parsedBody.from)
+console.log(parsedBody.headers['Subject'])
+console.log(parsedBody.plain)
+console.log(parsedBody.html)
+console.log(parsedBody.reply_plain)
+```
 
 ## Envelope
 
@@ -87,20 +137,53 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 
 The following is an example envelope:
 
-    "envelope": {
-      "to": "to@example.com",
-      "recipients": [
-          "to@example.com",
-          "another@example.com"
-        ],
-      "from": "from@example.com",
-      "helo_domain": "localhost",
-      "remote_ip": "127.0.0.1",
-      "spf": {
-        "result": "pass",
-        "domain": "example.com"
-      }
-    }
+```raw
+"envelope": {
+  "to": "to@example.com",
+  "recipients": [
+      "to@example.com",
+      "another@example.com"
+    ],
+  "from": "from@example.com",
+  "helo_domain": "localhost",
+  "remote_ip": "127.0.0.1",
+  "spf": {
+    "result": "pass",
+    "domain": "example.com"
+  }
+}
+```
+```language-ruby
+  def create
+    Rails.logger.info params[:envelope][:to] #=> "to@example.com"
+    Rails.logger.info params[:envelope][:recipients] #=> ["to@example.com","another@example.com"]
+    Rails.logger.info params[:envelope][:from] #=> "from@example.com"
+    Rails.logger.info params[:envelope][:helo_domain] #=> "from@example.com"
+    Rails.logger.info params[:envelope][:remote_ip] #=> "127.0.0.1"
+    Rails.logger.info params[:envelope][:spf] #=> {"result"=>"pass", "domain"=>"example.com"}
+  end
+```
+```language-php
+<?php
+  $to = $_POST['envelope']['to'];
+  $from = $_POST['envelope']['from'];
+  $recipients = $_POST['envelope']['recipients'];
+  $domain = $_POST['envelope']['helo_domain'];
+  $remote_ip = $_POST['envelope']['remote_ip'];
+  $spf_domain = $_POST['envelope']['spf']['domain'];
+  $spf_result = $_POST['envelope']['spf']['result'];
+?>
+```
+```language-javascript
+parsedBody = JSON.parse(request.body)
+console.log(parsedBody.envelope.to)
+console.log(parsedBody.envelope.from)
+console.log(parsedBody.envelope.recipients)
+console.log(parsedBody.helo_domain)
+console.log(parsedBody.remote_ip)
+console.log(parsedBody.spf.domain)
+console.log(parsedBody.spf.result)
+```
 
 ## Headers
 
@@ -108,26 +191,78 @@ The headers parameter contains all of the message headers extracted from the ema
 
 The following is an example message header:
 
-    "headers": {
-      "Return-Path": "from@example.com",
-      "Received": [
-        "by 10.0.0.1 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800",
-        "by 10.0.10.1 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800",
-      ],
-      "Date": "Mon, 16 Jan 2012 17:00:01 +0000",
-      "From": "Message Sender <sender@example.com>",
-      "To": "Message Recipient<to@example.co.uk>",
-      "Message-ID": "<4F145791.8040802@example.com>",
-      "Subject": "Test Subject"
-    }
+```raw
+"headers": {
+  "Return-Path": "from@example.com",
+  "Received": [
+    "by 10.0.0.1 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800",
+    "by 10.0.10.1 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800",
+  ],
+  "Date": "Mon, 16 Jan 2012 17:00:01 +0000",
+  "From": "Message Sender <sender@example.com>",
+  "To": "Message Recipient<to@example.co.uk>",
+  "Message-ID": "<4F145791.8040802@example.com>",
+  "Subject": "Test Subject"
+}
+```
+```language-ruby
+def create
+  Rails.logger.info params[:headers] #=> "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}
+  Rails.logger.info params[:headers]['Subject'] #=> "Test Subject"
+  Rails.logger.info params[:headers]['To'] #=> "to@example.com"
+  Rails.logger.info params[:headers]['From'] #=> "from@example.com"
+  Rails.logger.info params[:headers]['Received'] #=> {"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}
+  Rails.logger.info params[:headers]['Received']['0'] #=> "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800"
+  Rails.logger.info params[:headers]['Return-Path'] #=> "from@example.com"
+end
+```
+```language-php
+<?php
+  $subject = $_POST['headers']['Subject'];
+  $to = $_POST['headers']['To'];
+  $from = $_POST['headers']['From'];
+  $received = $_POST['headers']['Received'];
+  $return_path = $_POST['headers']['Return-Path'];
+?>
+```
+```language-javascript
+parsedBody = JSON.parse(request.body)
+console.log(fields.headers['Subject'])
+console.log(fields.headers['To'])
+console.log(fields.headers['From'])
+console.log(fields.headers['Received'])
+console.log(fields.headers['Return-Path'])
+```
 
 ## Body
 
 CloudMailin will send the message body in both plain and html formats if they're available. It's always worth using the other parameter as a fallback. If `html` if unavailable then `plain` should always contain the message content. The message body should be encoded into `utf-8` format.
 
-    "plain": "Test with HTML.",
-    "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>"
-    "reply_plain": "Message reply if found."
+```raw
+"plain": "Test with HTML.",
+"html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>"
+"reply_plain": "Message reply if found."
+```
+```language-ruby
+  def create
+    Rails.logger.info params[:plain] #=> "Test with HTML."
+    Rails.logger.info params[:html] #=> "<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>"
+    Rails.logger.info params[:reply_plain] #=> "Message reply if found."
+  end
+```
+```language-php
+<?php
+  $plain = $_POST['plain'];
+  $html = $_POST['html'];
+  $reply = $_POST['reply_plain'];
+?>
+```
+```language-javascript
+parsedBody = JSON.parse(request.body)
+console.log(parsedBody.plain)
+console.log(parsedBody.html)
+console.log(parsedBody.reply_plain)
+```
 
 For more details about the extracted reply see [reply parsing](/features/extracting_replies_from_email/).
 
@@ -157,22 +292,44 @@ The attachments will contain the following parameters:
 
 URL attachments are attachments that have been sent to a message store. Instead of content they will contain a link to allow you to retrieve that content. The following is an attachments parameter containing URL attachments:
 
-    "attachments": [
-      {
-        "file_name": "file1.txt",
-        "content_type": "text/plain",
-        "size": 8,
-        "disposition": "attachment",
-        "url": "http://example.com/file1.txt"
-      },
-      {
-        "file_name": "file2.txt",
-        "content_type": "text/plain",
-        "size": 8,
-        "disposition": "attachment",
-        "url": "http://example.com/file2.txt"
-      }
-    ]
+```raw
+"attachments": [
+  {
+    "file_name": "file1.txt",
+    "content_type": "text/plain",
+    "size": 8,
+    "disposition": "attachment",
+    "url": "http://example.com/file1.txt"
+  },
+  {
+    "file_name": "file2.txt",
+    "content_type": "text/plain",
+    "size": 8,
+    "disposition": "attachment",
+    "url": "http://example.com/file2.txt"
+  }
+]
+```
+```language-ruby
+  def create
+    Rails.logger.info params[:attachments] #=> [{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"},{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}]
+    Rails.logger.info params[:attachments].first #=> {"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}
+    Rails.logger.info params[:attachments][0]['url'] => "http://example.com/file.txt"
+  end
+```
+```language-php
+<?php
+  $attachment = $_POST['attachments'][0];
+  $name = $_POST['attachments'][0]['file_name'];
+  $url = $_POST['attachments'][0]['url'];
+?>
+```
+```language-javascript
+parsedBody = JSON.parse(request.body)
+console.log(parsedBody.attachments[0])
+console.log(parsedBody.attachments[0]['file_name'])
+console.log(parsedBody.attachments[0]['url'])
+```
 
 CloudMailin will upload attachments using a random filename generated by our system. For more details relating to attachment stores see [attachment store](/receiving_email/attachments/).
 
@@ -180,21 +337,46 @@ CloudMailin will upload attachments using a random filename generated by our sys
 
 Embedded attachments are attachments that send the attachment content direct to your email server. The don't recommend that large attachments are sent in this way as they can cause a lot of overhead for your server. The following is an attachments parameter containing embedded attachments:
 
-    "attachments": [
-      {
-        "content": "dGVzdGZpbGU=",
-        "file_name": "file1.txt",
-        "content_type": "text/plain",
-        "size": 8,
-        "disposition": "attachment"
-      },
-      {
-        "content": "dGVzdGZpbGU=",
-        "file_name": "file2.txt",
-        "content_type": "text/plain",
-        "size": 8,
-        "disposition": "attachment"
-      }
-    ]
+```raw
+"attachments": [
+  {
+    "content": "dGVzdGZpbGU=",
+    "file_name": "file1.txt",
+    "content_type": "text/plain",
+    "size": 8,
+    "disposition": "attachment"
+  },
+  {
+    "content": "dGVzdGZpbGU=",
+    "file_name": "file2.txt",
+    "content_type": "text/plain",
+    "size": 8,
+    "disposition": "attachment"
+  }
+]
+```
+```language-ruby
+  def create
+    Rails.logger.info params[:attachments] #=> [{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","content"=>"dGVzdGZpbGU="},{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","content"=>"dGVzdGZpbGU="}]
+    Rails.logger.info params[:attachments].first #=> {"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","content"=>"dGVzdGZpbGU="}
+    raw_content = params[:attachments][0]['content'] => "http://example.com/file.txt"
+    Rails.logger.info Base64.decode64(raw_content)
+  end
+```
+```language-php
+<?php
+  $attachment = $_POST['attachments'][0];
+  $name = $_POST['attachments'][0]['file_name'];
+  $content = $_POST['attachments'][0]['content'];
+  $decoded_content = base64_decode($content)
+?>
+```
+```language-javascript
+parsedBody = JSON.parse(request.body)
+console.log(parsedBody.attachments[0])
+console.log(parsedBody.attachments[0]['file_name'])
+console.log(new Buffer(parsedBody.attachments[0]['url'], 'base64').toString('utf-8'))
+})
+```
 
 Embedded attachments are sent using `base-64` encoding. The example above contains two attachments named file1.txt and file2.txt both containing the plain text 'testfile' as their content.

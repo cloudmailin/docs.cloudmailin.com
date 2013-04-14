@@ -29,7 +29,11 @@ compile '*' do
     case ext
     when 'markdown', 'md'
       filter :erb unless item.attributes[:skip_erb]
-      filter :redcarpet, :options => { :tables => true, :fenced_code_blocks => true, :gh_blockcode => true }
+      filter :redcarpet, {
+        :options => { :tables => true, :fenced_code_blocks => true, :gh_blockcode => true },
+        :renderer => TitleAnchoredHTML,
+        :renderer_options => { :with_toc_data => true}
+      }
       filter :colorize_syntax, :default_colorizer => :pygmentsrb
       layout 'application'
     when 'sass'
@@ -48,7 +52,7 @@ compile '*' do
     when 'xml'
       filter :erb
     when 'txt', 'json'
-      
+
     else
       raise "Unknown filetype #{item[:extension]}"
       item.identifier.chop + '.' + item[:extension]
