@@ -7,6 +7,8 @@ skip_erb: true
 
 ## ASP.NET C Sharp
 
+<div class="warning">This example may be outdated. You can now find examples for newer POST formats within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
+
 This is an extremely simple version of getting the CloudMailin HTTP POST parameters (original format) from an ASP.net application. Any help expanding this example would be greatly appreciated. This example has only been tested in .net version 2.0 which is now a little dated.
 
     <?xml version="1.0" encoding="UTF-8"?>

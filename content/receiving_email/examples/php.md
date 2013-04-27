@@ -5,6 +5,8 @@ skip_erb: true
 
 # Receiving Email with PHP
 
+<div class="warning">This example may be outdated. You can now find examples for newer POST formats within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
+
 In PHP POST variables are available containing the fields posted by CloudMailin. Create the file `incoming_mail.php` and add the following
 
     <?php

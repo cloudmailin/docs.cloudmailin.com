@@ -5,6 +5,8 @@ skip_erb: true
 
 # Receiving Email with Ruby
 
+<div class="warning">This example may be outdated. You can now find examples for newer POST formats within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
+
 ## Rails 3
 
 Rails 3 already makes use of mail instead of using TMail that was default in Rails 2.x. In Rails 3 we just have to `rails generate controller incoming_mails` to generate our controller and add a create method.

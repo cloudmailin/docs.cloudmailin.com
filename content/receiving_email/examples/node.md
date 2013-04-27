@@ -5,6 +5,8 @@ skip_erb: true
 
 # Receiving Email with Node.js
 
+<div class="warning">This example may be outdated. You can now find examples for newer POST formats within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
+
 ## Express
 
 Node.js will automatically parse JSON and provide you with an object to work with. If you need to access 'multipart/form-data' content (for the original format) in Node.js you can use the [node-formidable](https://github.com/felixge/node-formidable) module.
