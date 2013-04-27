@@ -24,5 +24,6 @@ Will result in the following:
 
     Hey this looks great!
 
+Within most of the message formats the reply will be contained within the `reply_plain` paramter. For more details see [HTTP Post Formats](/http_post_formats/).
 
 As with most things email related, things might not be perfect. If you spot something that hasn't been parsed correctly or a reply that contains more or less than you expected please contact us and let us know!
