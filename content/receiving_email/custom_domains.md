@@ -26,7 +26,7 @@ Note that both of these methods will prevent you from receiving regular email on
 You can also setup wildcard DNS entries to point to CloudMailin. For example you could enter \*.example.com as your custom domain so long as there is a DNS entry for \*.example.com that is either a CNAME or has MX records pointing to CloudMailin.
 
 ## Setting Up MX Records
-If it isn't possible to use a CNAME or you need to receive email on your main domain then you can add MX records for your domain.
+Adding MX records directly to your DNS server is our recommended way of mapping your domain to send directly to CloudMailin's servers.
 
 Add the following MX records and priorities:
 
@@ -41,7 +41,7 @@ You can check your configuration with the host command:
     mail.example.com mail is handled by 5 client1.cloudmailin.net.
 
 ## Adding a CNAME
-Using a CNAME is the preferred method of pointing your domain at our email servers. This method means that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. To add use this method create a CNAME record pointing to:
+We no longer recommend that you use a CNAME to setup your custom domain. This method has the advantage that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. However, it has the downside of a few incompatibiliy issues with some servers. To add use this method create a CNAME record pointing to:
 
     clients.cloudmailin.net
 
