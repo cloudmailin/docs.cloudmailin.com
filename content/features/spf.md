@@ -27,4 +27,4 @@ The SPF details passed will comprise of following parts:
 | `result` | The result of the SPF check                                                                                      |
 | `domain` | The domain used to perform the SPF check. This will be the domain in the from address. However, if there is no domain in the from address then the helo_domain will be used instead.                                                                            |
 
-CloudMailin will return an SPF result as part of the envelope that it sends. Please see the [HTTP Post Formats](http://localhost:3002/http_post_formats/) for details of how to retrieve the SPF result within each format.
+CloudMailin will return an SPF result as part of the envelope that it sends. Please see the [HTTP Post Formats](/http_post_formats/) for details of how to retrieve the SPF result within each format.
