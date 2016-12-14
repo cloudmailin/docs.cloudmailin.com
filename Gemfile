@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Generating
 gem "nanoc"
@@ -11,14 +11,8 @@ gem "builder"
 gem "coffee-script"
 gem "pygments.rb"
 
-gem 'rack'
-gem 'thin'
-gem 'mime-types'
-
 group :developement do
   gem 'rake'
-  gem 'guard'
-  gem 'guard-shell'
-  gem 'nokogiri'
   gem 'fog'
+  gem 'adsf'
 end
