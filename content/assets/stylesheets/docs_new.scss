@@ -1,0 +1,130 @@
+$brand-primary: #4d7ABA !default;
+
+$navbar-height: 35px;
+$navbar-default-bg: $brand-primary;
+
+$navbar-default-color: #fff;
+$navbar-default-link-color: #fff;
+$navbar-default-link-hover-color: #fff;
+$navbar-default-link-active-color: #fff;
+$navbar-default-brand-hover-color: #fff;
+
+$pre-bg: mix(lighten($brand-primary, 25), #fff, 5);
+$table-head-bg: mix(darken($brand-primary, 25), #fff, 6);
+$table-bg-accent: $pre-bg;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  background-color: $brand-primary;
+}
+
+nav {
+  @extend .navbar;
+  @extend .navbar-default;
+  box-shadow: 0px 1px 0px lighten($navbar-default-bg, 8);
+
+  border: 0px;
+  border-radius: 0px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+
+  #nav-content {
+    @extend .container;
+  }
+
+  header {
+    @extend .navbar-header;
+    width: inherit;
+
+    #header_image {
+      @extend .navbar-brand;
+      padding-top: 4px;
+      padding-left: 30px
+    }
+  }
+
+  ul.home-nav {
+    @extend .nav;
+    @extend .navbar-nav;
+    padding-top: 2px;
+  }
+}
+
+#middle {
+  background-color: #fff;
+  padding-top: 20px;
+}
+
+#container {
+  @extend .container;
+  background-color: #fff;
+}
+
+#sidebar {
+  @extend .col-md-4;
+  background: url('/assets/images/divider.png') no-repeat 70% 0%;
+
+  &>ul {
+    // @extend .list-unstyled;
+    padding-left: 0;
+    list-style: none;
+
+    li {
+      font-weight: bold;
+      padding-top: 10px;
+
+      ul {
+        padding-left: 10px;
+        list-style-type: none;
+
+        li {
+          padding-top: 0;
+          font-weight: normal
+        }
+      }
+    }
+  }
+}
+
+.documentation_content {
+  @extend .col-md-8;
+}
+
+table {
+  @extend .table;
+  @extend .table-bordered;
+  @extend .table-striped;
+
+  thead {
+    background-color: $table-head-bg;
+  }
+}
+
+.language_list {
+  background-color: $table-head-bg;
+  border: 1px solid $pre-border-color;
+  margin: 0px;
+  padding: 5px;
+
+  .languages {
+    @extend .list-inline;
+    margin: 0px;
+    padding: 0px;
+
+    a {
+      margin-right: 10px;
+    }
+  }
+}
+
+pre {
+  border-radius: 0;
+  max-height: 250px;
+  overflow: auto;
+
+  code {
+    white-space: pre;
+  }
+}

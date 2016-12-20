@@ -8,3 +8,21 @@ The documentation and some examples of how you can receive email in your web fra
 
 Thanks,
 The CloudMailin team.
+
+## Development
+
+### Installation
+
+```bash
+bundle install
+```
+
+### Running in Development Mode
+
+```bash
+bundle exec guard --no-interactions
+```
+
+```bash
+be nanoc view -p 5000
+```

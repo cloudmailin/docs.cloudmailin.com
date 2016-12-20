@@ -1,5 +1,8 @@
 .DS_Store
 .sass-cache
 .bundle
+.fog
+
 output/
 tmp/
+vendor/bundle

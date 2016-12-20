@@ -1,22 +1,3 @@
-#!/usr/bin/env ruby
-
-# A few helpful tips about the Rules file:
-#
-# * The string given to #compile and #route are matching patterns for
-#   identifiers--not for paths. Therefore, you can’t match on extension.
-#
-# * The order of rules is important: for each item, only the first matching
-#   rule is applied.
-#
-# * Item identifiers start and end with a slash (e.g. “/about/” for the file
-#   “content/about.html”). To select all children, grandchildren, … of an
-#   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
-#   because “*” matches zero or more characters.
-
-require 'compass'
-
-Compass.add_project_configuration 'config/compass.rb' # when using Compass 0.10
-
 compile '/guide/' do
   filter :haml
 end
@@ -36,26 +17,21 @@ compile '*' do
       }
       filter :colorize_syntax, :default_colorizer => :pygmentsrb
       layout 'application'
-    when 'sass'
-      filter :erb
-      filter :sass, Compass.sass_engine_options.merge!(:style => :expanded)
     when 'scss'
-      filter :erb
-      filter :sass, Compass.sass_engine_options.merge!(:style => :expanded, :syntax => :scss)
+      # filter :erb
+      # filter :sass, syntax: :scss #, Compass.sass_engine_options.merge!(:style => :expanded, :syntax => :scss)
+      filter :sprockets, css_compressor: :scss
     when 'coffee'
       filter :coffeescript
-    when 'js'
-      item.identifier.chop + '.' + item[:extension]
     when 'haml'
       filter :haml, :format => :html5
       layout 'application'
     when 'xml'
       filter :erb
-    when 'txt', 'json'
-
+    when 'js', 'txt', 'json', 'css'
+      item.identifier.chop + '.' + item[:extension]
     else
       raise "Unknown filetype #{item[:extension]}"
-      item.identifier.chop + '.' + item[:extension]
     end
   end
 end
@@ -66,14 +42,12 @@ route '*' do
   else
     ext = item[:extension].nil? ? nil : item[:extension].split('.').last
     case ext
-    when 'sass', 'scss'
+    when 'scss'
       item.identifier.chop + '.css'
     when 'coffee'
       item.identifier.chop + '.js'
-    when 'js'
+    when 'js', 'txt', 'json', 'css', 'xml'
       item.identifier.chop + '.' + item[:extension]
-    when 'xml'
-      item.identifier.chop + '.xml'
     else
       item.identifier + 'index.html'
     end
@@ -81,4 +55,5 @@ route '*' do
 end
 
 layout '/application/', :haml, :format => :html5, :encoding => 'utf-8'
+layout '/sidebar/', :haml, encoding: 'utf-8'
 layout '*', :erb

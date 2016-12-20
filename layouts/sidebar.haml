@@ -1,0 +1,61 @@
+#sidebar
+  %ul
+    %li= link_to 'Home', '/'
+    %li
+      Getting Started
+      %ul
+        %li= link_to 'Introduction', '/getting_started/'
+        - for item in items_for_section('getting_started/receiving_email')
+          %li= link_to item.title, item.identifier
+        %li= link_to 'FAQs', '/getting_started/faqs/'
+    %li
+      HTTP POST Formats
+      %ul
+        %li= link_to 'Introduction to POST Formats', '/http_post_formats/'
+        %li= link_to 'Original Format', '/http_post_formats/original/'
+        %li= link_to 'JSON Format', '/http_post_formats/json/'
+        %li= link_to 'Multipart Format', '/http_post_formats/multipart/'
+        %li= link_to 'Raw Message Format', '/http_post_formats/raw/'
+    %li
+      Receiving Email
+      %ul
+        %li= link_to 'HTTP Status Codes', '/receiving_email/http_status_codes/'
+        %li
+          = link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/'
+          %ul
+            %li= link_to 'Email Forwarding', '/receiving_email/email_forwarding/'
+            %li= link_to 'Custom Domains', '/receiving_email/custom_domains/'
+        %li= link_to 'Attachment Stores (S3)', '/receiving_email/attachments/'
+        %li= link_to 'Reply Parsing', '/features/extracting_replies_from_email/'
+        %li
+          = link_to 'Callbacks', '/features/callbacks/'
+          %ul
+            %li= link_to 'Authorization Callbacks', '/features/callbacks/#authorization-callbacks'
+            %li= link_to 'Error Callbacks', '/features/callbacks/#error-callbacks'
+        %li= link_to 'SPF (Sender Policy Framework)', '/features/spf/'
+        %li= link_to 'Delivery Status API', '/features/delivery_status_api/'
+        %li= link_to 'Securing HTTP Posts', '/receiving_email/securing_your_email_url_target/'
+        %li= link_to 'IMAP Polling (Legacy Systems)', '/features/imap_collectors/'
+    %li
+      Local Development and Testing
+      %ul
+        %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/'
+        %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/'
+    %li
+      Examples
+      %ul
+        %li= link_to 'Introduction', '/receiving_email/examples/'
+        %li= link_to 'Java', '/receiving_email/examples/java/'
+        %li= link_to '.Net', '/receiving_email/examples/net/'
+        %li= link_to 'Node.js', '/receiving_email/examples/node/'
+        %li= link_to 'PHP', '/receiving_email/examples/php/'
+        %li= link_to 'Python', '/receiving_email/examples/python/'
+        %li
+          = link_to 'Ruby', '/receiving_email/examples/ruby/'
+          %ul
+            %li= link_to 'Rails 3.x', '/receiving_email/examples/ruby/#rails3'
+            %li= link_to 'Rails 2.x', '/receiving_email/examples/ruby/#rails2'
+            %li= link_to 'Sinatra', '/receiving_email/examples/ruby/#sinatra'
+
+        %li
+          = link_to 'More', '/receiving_email/examples/more/'
