@@ -1,4 +1,5 @@
 Bundler.require(:default)
+$:.unshift File.dirname(__FILE__)
 
 include Nanoc::Sprockets::Helper
 include Nanoc3::Helpers::LinkTo

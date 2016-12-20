@@ -19,4 +19,5 @@ group :developement do
   gem 'adsf'
   gem 'guard-nanoc'
   gem 'guard-shell'
+  gem 'mime-types'
 end

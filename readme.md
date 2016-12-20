@@ -26,3 +26,9 @@ bundle exec guard --no-interactions
 ```bash
 be nanoc view -p 5000
 ```
+
+## Deploying
+
+```bash
+FOG_RC=.fog bundle exec nanoc deploy
+```
