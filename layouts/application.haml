@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='/assets/stylesheets/highlight.css' type='text/css' media="screen, projection"/>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="/assets/javascripts/code.js"></script>
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"}
   %body#documentation
     %nav#nav
       #nav-content
@@ -19,11 +20,12 @@
 
     #middle
       #container
-        = render('sidebar')
-
         .documentation_content{:id => @item.name.downcase.gsub(/[^a-z0-9\_]+/i, '_')}
+          %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
           = find_and_preserve(yield)
           = render 'comments' unless @item.disable_comments?
+
+        = render('sidebar')
 
     %footer#footer
       #details

@@ -65,7 +65,11 @@ nav {
 
 #sidebar {
   @extend .col-md-4;
-  background: url('/assets/images/divider.png') no-repeat 70% 0%;
+  @extend .col-md-pull-8;
+
+  @media (min-width: $screen-md-min) {
+    background: url('/assets/images/divider.png') no-repeat 80% 0%;
+  }
 
   &>ul {
     // @extend .list-unstyled;
@@ -89,19 +93,20 @@ nav {
   }
 }
 
+.documentation_content {
+  @extend .col-md-8;
+  @extend .col-md-push-4;
+}
+
+
 #footer {
   margin-top: 20px;
   padding-bottom: 20px;
 
   #details {
-    // text-align: right;
     color: #fff;
     @extend .container;
   }
-}
-
-.documentation_content {
-  @extend .col-md-8;
 }
 
 table {
