@@ -1,10 +1,13 @@
 ---
-title: JSON Hash Format
+title: Normalised JSON Hash Format
 ---
 
-# JSON Hash Email Message Format
+# Normalised JSON Hash Email Message Format
 
-The JSON and multipart formats are incredibly similar. It's only the transport method that differs. The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
+The JSON and multipart formats are incredibly similar. It's only the transport method that differs.
+The normalised version just makes some small adjustments for consistency, for example, within the normalised version the headers are all lowercase with underscores.
+
+The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
 
 | parameter     | details                 | description                                                                                 |
 |---------------|-------------------------|---------------------------------------------------------------------------------------------|
@@ -20,23 +23,23 @@ The following is complete example JSON message:
 ```raw
 {
   "headers": {
-    "Return-Path": "from@example.com",
-    "Received": [
+    "return_path": "from@example.com",
+    "received": [
       "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800",
       "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800",
       "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"
     ],
-    "Date": "Mon, 16 Jan 2012 17:00:01 +0000",
-    "From": "Message Sender <sender@example.com>",
-    "To": "Message Recipient<to@example.co.uk>",
-    "Message-ID": "<4F145791.8040802@example.com>",
-    "Subject": "Test Subject",
-    "Mime-Version": "1.0",
-    "Content-Type": "multipart/alternative; boundary=------------090409040602000601080801",
-    "Delivered-To": "to@example.com",
-    "Received-SPF": "neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;",
-    "Authentication-Results": "mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com",
-    "User-Agent": "Postbox 3.0.2 (Macintosh/20111203)"
+    "date": "Mon, 16 Jan 2012 17:00:01 +0000",
+    "from": "Message Sender <sender@example.com>",
+    "to": "Message Recipient<to@example.co.uk>",
+    "message_id": "<4F145791.8040802@example.com>",
+    "subject": "Test Subject",
+    "mime_version": "1.0",
+    "content_type": "multipart/alternative; boundary=------------090409040602000601080801",
+    "delivered_to": "to@example.com",
+    "received_spf": "neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;",
+    "authentication_results": "mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com",
+    "user_agent": "Postbox 3.0.2 (Macintosh/20111203)"
   },
   "envelope": {
     "to": "to@example.com",
@@ -81,25 +84,25 @@ class IncomingMailsController < ApplicationController
     message = Message.new(
       :to => params[:envelope][:to],
       :from => params[:envelope][:from],
-      :subject => params[:headers]['Subject'],
+      :subject => params[:headers][:subject],
       :body => params[:plain]
     )
     if message.save
-      render :text => 'Success', :status => 200
+      render json: { status: 'success' }
     else
-      render :text => message.errors.full_messages, :status => 422, :content_type => Mime::TEXT.to_s
+      render json: { errors:  message.errors.full_messages }, status: 422, content_type: Mime::TEXT.to_s
     end
   end
 end
 
-#=> {"plain"=>"Test with HTML.", "html"=>"<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>", "reply_plain"=>"Message reply if found.", "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}, "envelope"=>{"to"=>"to@example.com", "recipients"=>{"0"=>"to@example.com"}, "from"=>"from@example.com", "helo_domain"=>"localhost", "remote_ip"=>"127.0.0.1", "spf"=>{"result"=>"pass", "domain"=>"example.com"}}, "attachments"=>"attachments": [{"content": "dGVzdGZpbGU=","file_name": "file.txt","content_type": "text/plain","size": 8,"disposition": "attachment"},{"content": "dGVzdGZpbGU=","file_name": "file.txt","content_type": "text/plain","size": 8,"disposition": "attachment"}]}
+#=> {"plain"=>"Test with HTML.", "html"=>"<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>", "reply_plain"=>"Message reply if found.", "headers"=>{"return_path"=>"from@example.com", "received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "from"=>"Message Sender <sender@example.com>", "to"=>"Message Recipient <to@example.com>", "message_id"=>"<4F145791.8040802@example.com>", "subject"=>"Test Subject", "mime_version"=>"1.0", "delivered_to"=>"to@example.com", "received_spf"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "user-agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}, "envelope"=>{"to"=>"to@example.com", "recipients"=>["to@example.com"], "from"=>"from@example.com", "helo_domain"=>"localhost", "remote_ip"=>"127.0.0.1", "spf"=>{"result"=>"pass", "domain"=>"example.com"}}, "attachments"=>[{"content": "dGVzdGZpbGU=","file_name": "file.txt","content_type": "text/plain","size": 8,"disposition": "attachment"},{"content": "dGVzdGZpbGU=","file_name": "file.txt","content_type": "text/plain","size": 8,"disposition": "attachment"}]}
 ```
 ```language-php
 <?php
   header("Content-type: text/plain");
 
   $to = $_POST['envelope']['to'];
-  $subject = $_POST['headers']['Subject'];
+  $subject = $_POST['headers']['subject'];
   $plain = $_POST['plain'];
   $html = $_POST['html'];
   $reply = $_POST['reply_plain'];
@@ -117,7 +120,7 @@ end
 ```language-javascript
 parsedBody = JSON.parse(request.body)
 console.log(parsedBody.from)
-console.log(parsedBody.headers['Subject'])
+console.log(parsedBody.headers.subject)
 console.log(parsedBody.plain)
 console.log(parsedBody.html)
 console.log(parsedBody.reply_plain)
@@ -153,7 +156,7 @@ The following is an example envelope:
     "result": "pass",
     "domain": "example.com"
   },
-  "tls": true,
+  "tls": true
 }
 ```
 ```language-ruby
@@ -196,45 +199,45 @@ The following is an example message header:
 
 ```raw
 "headers": {
-  "Return-Path": "from@example.com",
-  "Received": [
+  "return_path": "from@example.com",
+  "received": [
     "by 10.0.0.1 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800",
     "by 10.0.10.1 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800",
   ],
-  "Date": "Mon, 16 Jan 2012 17:00:01 +0000",
-  "From": "Message Sender <sender@example.com>",
-  "To": "Message Recipient<to@example.co.uk>",
-  "Message-ID": "<4F145791.8040802@example.com>",
-  "Subject": "Test Subject"
+  "date": "Mon, 16 Jan 2012 17:00:01 +0000",
+  "from": "Message Sender <sender@example.com>",
+  "to": "Message Recipient<to@example.co.uk>",
+  "message_id": "<4F145791.8040802@example.com>",
+  "subject": "Test Subject"
 }
 ```
 ```language-ruby
 def create
-  Rails.logger.info params[:headers] #=> "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}
-  Rails.logger.info params[:headers]['Subject'] #=> "Test Subject"
-  Rails.logger.info params[:headers]['To'] #=> "to@example.com"
-  Rails.logger.info params[:headers]['From'] #=> "from@example.com"
-  Rails.logger.info params[:headers]['Received'] #=> {"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}
-  Rails.logger.info params[:headers]['Received']['0'] #=> "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800"
-  Rails.logger.info params[:headers]['Return-Path'] #=> "from@example.com"
+  Rails.logger.info params[:headers] #=> "headers"=>{"return_path"=>"from@example.com", "received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "from"=>"Message Sender <sender@example.com>", "to"=>"Message Recipient <to@example.com>", "message_id"=>"<4F145791.8040802@example.com>", "subject"=>"Test Subject", "mime_version"=>"1.0", "delivered_to"=>"to@example.com", "[id]: url "title"eceived-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "authentication_results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "user_agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}
+  Rails.logger.info params[:headers][:subject] #=> "Test Subject"
+  Rails.logger.info params[:headers][:to] #=> "to@example.com"
+  Rails.logger.info params[:headers][:from] #=> "from@example.com"
+  Rails.logger.info params[:headers][:received] #=> ["by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"]
+  Rails.logger.info params[:headers]['Received'][0] #=> "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800"
+  Rails.logger.info params[:headers][:return_path] #=> "from@example.com"
 end
 ```
 ```language-php
 <?php
-  $subject = $_POST['headers']['Subject'];
-  $to = $_POST['headers']['To'];
-  $from = $_POST['headers']['From'];
-  $received = $_POST['headers']['Received'];
-  $return_path = $_POST['headers']['Return-Path'];
+  $subject = $_POST['headers']['subject'];
+  $to = $_POST['headers']['to'];
+  $from = $_POST['headers']['from'];
+  $received = $_POST['headers']['received'];
+  $return_path = $_POST['headers']['return_path'];
 ?>
 ```
 ```language-javascript
 parsedBody = JSON.parse(request.body)
-console.log(fields.headers['Subject'])
-console.log(fields.headers['To'])
-console.log(fields.headers['From'])
-console.log(fields.headers['Received'])
-console.log(fields.headers['Return-Path'])
+console.log(fields.headers.subject)
+console.log(fields.headers.to)
+console.log(fields.headers.from)
+console.log(fields.headers.received)
+console.log(fields.headers.return_path)
 ```
 
 ## Body
@@ -317,7 +320,7 @@ URL attachments are attachments that have been sent to a message store. Instead 
   def create
     Rails.logger.info params[:attachments] #=> [{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"},{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}]
     Rails.logger.info params[:attachments].first #=> {"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}
-    Rails.logger.info params[:attachments][0]['url'] => "http://example.com/file.txt"
+    Rails.logger.info params[:attachments][0][:url] => "http://example.com/file.txt"
   end
 ```
 ```language-php

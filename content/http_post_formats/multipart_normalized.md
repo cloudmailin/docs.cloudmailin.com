@@ -1,10 +1,12 @@
 ---
-title: Multipart Form Data Hash Format
+title: Normalised Multipart Form Data Hash Format
 ---
 
-# Multipart/form-data Hash Email Message Format
+# Multipart/form-data Normalised Hash Email Message Format
 
 The JSON and multipart formats are incredibly similar. It's only the transport method that differs. The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
+
+The normalised version just makes some small adjustments for consistency, for example, within the normalised version the headers are all lowercase with underscores and attachments are sent as an array.
 
 | parameter     | details                 | description                                                                   |
 |---------------|-------------------------|-------------------------------------------------------------------------------|
@@ -37,59 +39,59 @@ Content-Disposition: form-data; name="reply_plain"
 Message reply if found.
 ------cloudmailinboundry
 
-Content-Disposition: form-data; name="headers[Return-Path]"
+Content-Disposition: form-data; name="headers[return_path]"
 
 from@example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received][0]"
+Content-Disposition: form-data; name="headers[received][0]"
 
 by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received][1]"
+Content-Disposition: form-data; name="headers[received][1]"
 
 by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received][2]"
+Content-Disposition: form-data; name="headers[received][2]"
 
 from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Date]"
+Content-Disposition: form-data; name="headers[date]"
 
 Mon, 16 Jan 2012 17:00:01 +0000
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[From]"
+Content-Disposition: form-data; name="headers[from]"
 
 Message Sender <sender@example.com>
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[To]"
+Content-Disposition: form-data; name="headers[to]"
 
 Message Recipient <to@example.com>
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Message-ID]"
+Content-Disposition: form-data; name="headers[message_id]"
 
 <4F145791.8040802@example.com>
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Subject]"
+Content-Disposition: form-data; name="headers[subject]"
 
 Test Subject
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Mime-Version]"
+Content-Disposition: form-data; name="headers[mime_version]"
 
 1.0
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Delivered-To]"
+Content-Disposition: form-data; name="headers[delivered_to]"
 
 to@example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received-SPF]"
+Content-Disposition: form-data; name="headers[received_spf]"
 
 neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Authentication-Results]"
+Content-Disposition: form-data; name="headers[authentication_results]"
 
 mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[User-Agent]"
+Content-Disposition: form-data; name="headers[user_agent]"
 
 Postbox 3.0.2 (Macintosh/20111203)
 ------cloudmailinboundry
@@ -121,16 +123,16 @@ Content-Disposition: form-data; name="envelope[spf][domain]"
 
 example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="envelope[tls]]"
+Content-Disposition: form-data; name="envelope[tls]"
 
 true
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0]"; filename="file1.txt"
+Content-Disposition: form-data; name="attachments[]"; filename="file1.txt"
 Content-Type: text/plain
 
 testfile
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1]"; filename="file2.txt"
+Content-Disposition: form-data; name="attachments[]"; filename="file2.txt"
 Content-Type: text/plain
 
 testfile
@@ -143,25 +145,25 @@ class IncomingMailsController < ApplicationController
     message = Message.new(
       :to => params[:envelope][:to],
       :from => params[:envelope][:from],
-      :subject => params[:headers]['Subject'],
+      :subject => params[:headers][:subject],
       :body => params[:plain]
     )
     if message.save
-      render :text => 'Success', :status => 200
+      render text: 'Success', :status => 200
     else
-      render :text => message.errors.full_messages, :status => 422, :content_type => Mime::TEXT.to_s
+      render text: message.errors.full_messages, status: 422, content_type: Mime::TEXT.to_s
     end
   end
 end
 
-#=> {"plain"=>"Test with HTML.", "html"=>"<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>", "reply_plain"=>"Message reply if found.", "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}, "envelope"=>{"to"=>"to@example.com", "recipients"=>{"0"=>"to@example.com"}, "from"=>"from@example.com", "helo_domain"=>"localhost", "remote_ip"=>"127.0.0.1", "spf"=>{"result"=>"pass", "domain"=>"example.com"}}, "attachments"=>{"0"=>#<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[0]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>, "1"=>#<ActionDispatch::Http::UploadedFile:0x007f9bef0aecd0 @original_filename="file2.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[1]\"; filename=\"file2.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-hbuu4r>>}}
+#=> {"plain"=>"Test with HTML.", "html"=>"<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>", "reply_plain"=>"Message reply if found.", "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}, "envelope"=>{"to"=>"to@example.com", "recipients"=>{"0"=>"to@example.com"}, "from"=>"from@example.com", "helo_domain"=>"localhost", "remote_ip"=>"127.0.0.1", "spf"=>{"result"=>"pass", "domain"=>"example.com"}}, "attachments"=>[#<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>, #<ActionDispatch::Http::UploadedFile:0x007f9bef0aecd0 @original_filename="file2.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[1]\"; filename=\"file2.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-hbuu4r>>}]
 ```
 ```language-php
 <?php
   header("Content-type: text/plain");
 
   $to = $_POST['envelope']['to'];
-  $subject = $_POST['headers']['Subject'];
+  $subject = $_POST['headers']['subject'];
   $plain = $_POST['plain'];
   $html = $_POST['html'];
   $reply = $_POST['reply_plain'];
@@ -186,7 +188,7 @@ app.post('/incoming_mail', function(req, res){
   var form = new formidable.IncomingForm()
   form.parse(req, function(err, fields, files) {
     console.log(fields.from)
-    console.log(fields.headers['Subject'])
+    console.log(fields.headers['subject'])
     console.log(fields.plain)
     console.log(fields.html)
     console.log(fields.reply_plain)
@@ -200,7 +202,7 @@ app.listen(8080);
 ```language-c#
 void Page_Load(object sender, EventArgs e) {
   String from = Request.Form["envelope"]["from"];
-  String subject = Request.Form["headers"]["Subject"]; // Note the titlecase Subject. Header names are as passed.
+  String subject = Request.Form["headers"]["subject"];
   String plain = Request.Form["plain"];
   String html = Request.Form["html"];
   String reply = Request.Form["reply_plain"];
@@ -256,20 +258,20 @@ Content-Disposition: form-data; name="envelope[spf][domain]"
 
 example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="envelope[tls]]"
+Content-Disposition: form-data; name="envelope[tls]"
 
 true
 ```
 ```language-ruby
   def create
     Rails.logger.info params[:envelope][:to] #=> "to@example.com"
-    Rails.logger.info params[:envelope][:recipients] #=> {"0"=>"to@example.com","1"=>"another@example.com"}
-    Rails.logger.info params[:envelope][:recipients]['0'] #=> "to@example.com"
-    Rails.logger.info params[:envelope][:recipients].values #=> ["to@example.com"]
+    Rails.logger.info params[:envelope][:recipients] #=> ["to@example.com","another@example.com"]
+    Rails.logger.info params[:envelope][:recipients][0] #=> "to@example.com"
     Rails.logger.info params[:envelope][:from] #=> "from@example.com"
     Rails.logger.info params[:envelope][:helo_domain] #=> "from@example.com"
     Rails.logger.info params[:envelope][:remote_ip] #=> "127.0.0.1"
     Rails.logger.info params[:envelope][:spf] #=> {"result"=>"pass", "domain"=>"example.com"}
+    Rails.logger.info params[:tls] #=> "true"
   end
 ```
 ```language-php
@@ -326,80 +328,80 @@ The following is an example message header:
 
 ```raw
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Return-Path]"
+Content-Disposition: form-data; name="headers[return_path]"
 
 from@example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received][0]"
+Content-Disposition: form-data; name="headers[received][0]"
 
 by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received][1]"
+Content-Disposition: form-data; name="headers[received][1]"
 
 by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received][2]"
+Content-Disposition: form-data; name="headers[received][2]"
 
 from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Date]"
+Content-Disposition: form-data; name="headers[date]"
 
 Mon, 16 Jan 2012 17:00:01 +0000
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[From]"
+Content-Disposition: form-data; name="headers[from]"
 
 Message Sender <sender@example.com>
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[To]"
+Content-Disposition: form-data; name="headers[to]"
 
 Message Recipient <to@example.com>
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Message-ID]"
+Content-Disposition: form-data; name="headers[message_id]"
 
 <4F145791.8040802@example.com>
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Subject]"
+Content-Disposition: form-data; name="headers[subject]"
 
 Test Subject
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Mime-Version]"
+Content-Disposition: form-data; name="headers[mime-version]"
 
 1.0
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Delivered-To]"
+Content-Disposition: form-data; name="headers[delivered_to]"
 
 to@example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Received-SPF]"
+Content-Disposition: form-data; name="headers[received_spf]"
 
 neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[Authentication-Results]"
+Content-Disposition: form-data; name="headers[authentication_results]"
 
 mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com
 ------cloudmailinboundry
-Content-Disposition: form-data; name="headers[User-Agent]"
+Content-Disposition: form-data; name="headers[user_agent]"
 
 Postbox 3.0.2 (Macintosh/20111203)
 ```
 ```language-ruby
 def create
-  Rails.logger.info params[:headers] #=> "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}
-  Rails.logger.info params[:headers]['Subject'] #=> "Test Subject"
-  Rails.logger.info params[:headers]['To'] #=> "to@example.com"
-  Rails.logger.info params[:headers]['From'] #=> "from@example.com"
-  Rails.logger.info params[:headers]['Received'] #=> {"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}
-  Rails.logger.info params[:headers]['Received']['0'] #=> "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800"
-  Rails.logger.info params[:headers]['Return-Path'] #=> "from@example.com"
+  Rails.logger.info params[:headers] #=> "headers"=>{"return_path"=>"from@example.com", "received"=>["by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "from"=>"Message Sender <sender@example.com>", "to"=>"Message Recipient <to@example.com>", "message_id"=>"<4F145791.8040802@example.com>", "subject"=>"Test Subject", "mime_version"=>"1.0", "delivered_to"=>"to@example.com", "received_sp"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "authentication_results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "user_agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}
+  Rails.logger.info params[:headers][:subject] #=> "Test Subject"
+  Rails.logger.info params[:headers][:to] #=> "to@example.com"
+  Rails.logger.info params[:headers][:from] #=> "from@example.com"
+  Rails.logger.info params[:headers][:received] #=> ["by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}
+  Rails.logger.info params[:headers][:received][0] #=> "by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800"
+  Rails.logger.info params[:headers][:return_path] #=> "from@example.com"
 end
 ```
 ```language-php
 <?php
-  $subject = $_POST['headers']['Subject'];
-  $to = $_POST['headers']['To'];
-  $from = $_POST['headers']['From'];
-  $received = $_POST['headers']['Received'];
-  $return_path = $_POST['headers']['Return-Path'];
+  $subject = $_POST['headers']['subject'];
+  $to = $_POST['headers']['to'];
+  $from = $_POST['headers']['from'];
+  $received = $_POST['headers']['received'];
+  $return_path = $_POST['headers']['return_path'];
 ?>
 ```
 ```language-javascript
@@ -411,11 +413,11 @@ var app = module.exports = express.createServer()
 app.post('/incoming_mail', function(req, res){
   var form = new formidable.IncomingForm()
   form.parse(req, function(err, fields, files) {
-    console.log(fields.headers['Subject'])
-    console.log(fields.headers['To'])
-    console.log(fields.headers['From'])
-    console.log(fields.headers['Received'])
-    console.log(fields.headers['Return-Path'])
+    console.log(fields.headers['subject'])
+    console.log(fields.headers['to'])
+    console.log(fields.headers['from'])
+    console.log(fields.headers['received'])
+    console.log(fields.headers['return_path'])
     res.writeHead(200, {'content-type': 'text/plain'})
     res.end('Message Received. Thanks!\r\n')
   })
@@ -425,11 +427,11 @@ app.listen(8080);
 ```
 ```language-c#
 void Page_Load(object sender, EventArgs e) {
-  String recipients = Request.Form["envelope"]["Subject"];
-  String to = Request.Form["headers"]["To"];
-  String from = Request.Form["headers"]["From"];
-  String received = Request.Form["envelope"]["Received"];
-  String return = Request.Form["envelope"]["Return-Path"];
+  String recipients = Request.Form["envelope"]["subject"];
+  String to = Request.Form["headers"]["to"];
+  String from = Request.Form["headers"]["from"];
+  String received = Request.Form["envelope"]["received"];
+  String return = Request.Form["envelope"]["return_path"];
 }
 ```
 
@@ -525,58 +527,58 @@ URL attachments are attachments that have been sent to a message store. Instead 
 
 ```raw
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0][file_name]"
+Content-Disposition: form-data; name="attachments[][file_name]"
 
 file.txt
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0][content_type]"
+Content-Disposition: form-data; name="attachments[][content_type]"
 
 text/plain
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0][size]"
+Content-Disposition: form-data; name="attachments[][size]"
 
 8
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0][disposition]"
+Content-Disposition: form-data; name="attachments[][disposition]"
 
 attachment
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0][url]"
+Content-Disposition: form-data; name="attachments[][url]"
 
 http://example.com/file.txt
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1][file_name]"
+Content-Disposition: form-data; name="attachments[][file_name]"
 
 file.txt
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1][content_type]"
+Content-Disposition: form-data; name="attachments[][content_type]"
 
 text/plain
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1][size]"
+Content-Disposition: form-data; name="attachments[][size]"
 
 8
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1][disposition]"
+Content-Disposition: form-data; name="attachments[][disposition]"
 
 attachment
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1][url]"
+Content-Disposition: form-data; name="attachments[][url]"
 
 http://example.com/file.txt
 ```
 ```language-ruby
   def create
-    Rails.logger.info params[:attachments] #=> {"0"=>{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"},"1"=>{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}}
-    Rails.logger.info params[:attachments]['0'] #=> {"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}
-    Rails.logger.info params[:attachments]['0']['url'] => "http://example.com/file.txt"
+    Rails.logger.info params[:attachments] #=> [{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"},{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}]
+    Rails.logger.info params[:attachments][0] #=> {"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}
+    Rails.logger.info params[:attachments][0]['url'] => "http://example.com/file.txt"
   end
 ```
 ```language-php
 <?php
-  $attachment = $_POST['attachments']['0'];
-  $name = $_POST['attachments']['0']['file_name'];
-  $url = $_POST['attachments']['0']['url'];
+  $attachment = $_POST['attachments'][0];
+  $name = $_POST['attachments'][0]['file_name'];
+  $url = $_POST['attachments'][0]['url'];
 ?>
 ```
 ```language-javascript
@@ -588,9 +590,9 @@ var app = module.exports = express.createServer()
 app.post('/incoming_mail', function(req, res){
   var form = new formidable.IncomingForm()
   form.parse(req, function(err, fields, files) {
-    console.log(fields.attachments['0'])
-    console.log(fields.attachments['0']['file_name'])
-    console.log(fields.attachments['0']['url'])
+    console.log(fields.attachments[0])
+    console.log(fields.attachments[0]['file_name'])
+    console.log(fields.attachments[0]['url'])
     res.writeHead(200, {'content-type': 'text/plain'})
     res.end('Message Received. Thanks!\r\n')
   })
@@ -600,9 +602,9 @@ app.listen(8080);
 ```
 ```language-c#
 void Page_Load(object sender, EventArgs e) {
-  String attachment = Request.Form["attachments"]["0"];
-  String name = Request.Form["attachments"]["0"]["file_name"];
-  String name = Request.Form["attachments"]["0"]["url"];
+  String attachment = Request.Form["attachments"][0];
+  String name = Request.Form["attachments"][0]["file_name"];
+  String name = Request.Form["attachments"][0]["url"];
 }
 ```
 
@@ -614,12 +616,12 @@ Embedded attachments are attachments that send the attachment content direct to 
 
 ```raw
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[0]"; filename="file1.txt"
+Content-Disposition: form-data; name="attachments"; filename="file1.txt"
 Content-Type: text/plain
 
 testfile
 ------cloudmailinboundry
-Content-Disposition: form-data; name="attachments[1]"; filename="file2.txt"
+Content-Disposition: form-data; name="attachments"; filename="file2.txt"
 Content-Type: text/plain
 
 testfile
@@ -628,8 +630,8 @@ testfile
   # In Rails embeded files are just normal instances of ActionDispatch::Http::UploadedFile
 
   def create
-    Rails.logger.info params[:attachments] #=> {"0"=>#<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[0]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>, "1"=>#<ActionDispatch::Http::UploadedFile:0x007f9bef0aecd0 @original_filename="file2.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[1]\"; filename=\"file2.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-hbuu4r>>}
-    Rails.logger.info params[:attachments]['0'] #=> #<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[0]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>
+    Rails.logger.info params[:attachments] #=> [#<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[0]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>, "1"=>#<ActionDispatch::Http::UploadedFile:0x007f9bef0aecd0 @original_filename="file2.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[]\"; filename=\"file2.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-hbuu4r>>}
+    Rails.logger.info params[:attachments][0] #=> #<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>
 
     params[:attachments].each do |k, attachment|
       Rails.logger.info attachment.read #=> "testfile"
