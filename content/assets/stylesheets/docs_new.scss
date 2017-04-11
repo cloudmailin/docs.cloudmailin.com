@@ -20,6 +20,10 @@ body {
   background-color: $brand-primary;
 }
 
+h3, h4 {
+  color: #999;
+}
+
 nav {
   @extend .navbar;
   @extend .navbar-default;
@@ -144,4 +148,9 @@ pre {
   code {
     white-space: pre;
   }
+}
+
+.warning {
+  @extend .alert;
+  @extend .alert-warning;
 }
