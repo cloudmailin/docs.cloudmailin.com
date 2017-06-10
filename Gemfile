@@ -12,6 +12,7 @@ gem 'bootstrap-sass'
 gem "builder"
 gem "coffee-script"
 gem "pygments.rb"
+gem 'ruby-jq', require: 'jq'
 
 group :developement do
   gem 'rake'

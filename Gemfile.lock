@@ -67,7 +67,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
-    multi_json (1.0.4)
+    multi_json (1.12.1)
     nanoc (3.7.5)
       cri (~> 2.3)
     nanoc-sprockets3 (1.0.5)
@@ -92,6 +92,8 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     redcarpet (2.2.2)
+    ruby-jq (0.1.6)
+      multi_json
     ruby_dep (1.5.0)
     sass (3.4.22)
     shellany (0.0.1)
@@ -121,6 +123,7 @@ DEPENDENCIES
   pygments.rb
   rake
   redcarpet
+  ruby-jq
   sass
 
 BUNDLED WITH
