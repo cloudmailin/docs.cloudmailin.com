@@ -20,7 +20,7 @@ docker-compose build
 ### Running in Development Mode
 
 ```bash
-docker-compose run docs
+docker-compose up docs
 ```
 
 You can then head to:
