@@ -6,3 +6,5 @@
 output/
 tmp/
 vendor/bundle
+
+content/robots.txt

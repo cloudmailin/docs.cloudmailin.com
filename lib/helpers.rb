@@ -1,6 +1,8 @@
 Bundler.require(:default)
 $:.unshift File.dirname(__FILE__)
 
+require 'net/http'
+
 include Nanoc::Sprockets::Helper
 include Nanoc3::Helpers::LinkTo
 include Nanoc3::Helpers::Rendering

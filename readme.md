@@ -14,21 +14,19 @@ The CloudMailin team.
 ### Installation
 
 ```bash
-bundle install
+docker-compose build
 ```
 
 ### Running in Development Mode
 
 ```bash
-bundle exec guard --no-interactions
+docker-compose run docs
 ```
 
-```bash
-be nanoc view -p 5000
-```
+You can then head to:
 
 ## Deploying
 
 ```bash
-FOG_RC=.fog bundle exec nanoc deploy
+docker-compose run docs bash -c "nanoc compile && FOG_RC=.fog nanoc deploy"
 ```

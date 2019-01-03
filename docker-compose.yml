@@ -1,0 +1,9 @@
+version: '2'
+services:
+  docs:
+    build: .
+    command: bash -c "guard --no-interactions & nanoc view -p 5000"
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
