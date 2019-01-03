@@ -3,9 +3,9 @@ title: Receiving Email on Google Cloud
 name: Getting Started on Google Cloud Platform
 ---
 
-# Receiving email within the Azure Cloud Platform
+# Receiving email within the Google Cloud Platform
 
-Google has an amazing history in Cloud computing and it's Cloud Platform is no different.
+Google has an amazing history in Cloud computing and their Cloud Platform is no different.
 From compute to machine learning Google has some really interesting offerings.
 
 [CloudMailin](http://www.cloudmailin.com/). is a tool for developers to make it easy to receive
