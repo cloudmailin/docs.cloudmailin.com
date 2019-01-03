@@ -150,6 +150,15 @@ pre {
   }
 }
 
+#comments {
+  margin-top: 100px;
+}
+
+.info {
+  @extend .alert;
+  @extend .alert-info;
+}
+
 .warning {
   @extend .alert;
   @extend .alert-warning;

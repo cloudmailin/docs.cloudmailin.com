@@ -23,7 +23,9 @@
         .documentation_content{:id => @item.name.downcase.gsub(/[^a-z0-9\_]+/i, '_')}
           %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
           = find_and_preserve(yield)
-          = render 'comments' unless @item.disable_comments?
+
+          #comments
+            = render 'comments' unless @item.disable_comments?
 
         = render('sidebar')
 
