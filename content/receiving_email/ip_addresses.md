@@ -4,7 +4,7 @@ title: CloudMailin IP Address Ranges
 
 # CloudMailin IP Address Ranges
 
-CloudMailin's default cluster uses AWS in `us-east-1`, `eu-west-1` and `Brightbox UK`.
+CloudMailin's default cluster uses AWS in `us-east-1`, `eu-west-1`.
 
 **We do not recommend that customers restrict access to their website from our
 cluster based on IP address**. Because our cloud scales up and down as required
@@ -27,10 +27,4 @@ However for reference the possible list of IP addresses as ranges is as follows:
 
 ```
 <%= aws_ip_range('eu-west-1', 'EC2') %>
-```
-
-## Brightbox
-
-```
-109.107.32.0/19
 ```
