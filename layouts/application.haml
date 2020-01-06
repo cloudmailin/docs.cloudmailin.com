@@ -2,11 +2,11 @@
 %html
   %head
     %title= @item.title
-    %link{:href => 'favicon.ico', :rel => "shortcut icon"}
-    %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
+    %link{href: '/favicon.png', rel: "shortcut icon", type: "image/png"}
+    %meta{"http-equiv": "Content-Type", content: "text/html; charset=utf-8"}
     <link rel='stylesheet' href='/assets/stylesheets/docs_new.css' type='text/css' media="screen, projection"/>
     <link rel='stylesheet' href='/assets/stylesheets/highlight.css' type='text/css' media="screen, projection"/>
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="/assets/javascripts/code.js"></script>
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"}
   %body#documentation
@@ -20,7 +20,7 @@
 
     #middle
       #container
-        .documentation_content{:id => @item.name.downcase.gsub(/[^a-z0-9\_]+/i, '_')}
+        .documentation_content{id: @item.name.downcase.gsub(/[^a-z0-9\_]+/i, '_')}
           %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
           = find_and_preserve(yield)
 
@@ -33,6 +33,6 @@
       #details
         &copy; cloudmailin.com
 
-    <a href="https://github.com/cloudmailin/docs.cloudmailin.com" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <a href="https://github.com/cloudmailin/docs.cloudmailin.com" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
     = render 'analytics'
     = render 'zendesk'
