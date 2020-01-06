@@ -18,7 +18,7 @@ GEM
     concurrent-ruby (1.1.4)
     cri (2.6.1)
       colored (~> 1.2)
-    excon (0.54.0)
+    excon (0.71.1)
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffi (1.9.25)
