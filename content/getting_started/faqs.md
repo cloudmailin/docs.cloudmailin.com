@@ -26,7 +26,7 @@ You can also use a plus in your email address to create a disposable email addre
 Checkout the [HTTP POST Formats](/http_post_formats/) documentation.
 
 ### Do you support attachments?
-Absolutely. Some formats also parse the attachments for you see [HTTP POST Formats](/http_post_formats/) for more details. We can also send your message direct to an [attachment store](/receiving_email/attachments).
+Absolutely. Some formats also parse the attachments for you see [HTTP POST Formats](/http_post_formats/) for more details. We can also send your message direct to an [attachment store](/receiving_email/attachments/).
 
 ### How robust is this service?
 We have tried to make things pretty robust, in fact we should be far better than most email hosting systems, however everyone makes mistakes and sometimes things happen that are beyond our control.
