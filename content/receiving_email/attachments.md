@@ -15,7 +15,7 @@ This can help reduce the overhead on the end server and allow you to easily save
 
   1. Log into your [address dashboard](http://www.cloudmailin.com/addresses) and choose the address you wish to manage.
   2. Select add attachment store.
-  3. Enter your amazon S3 bucket name and an optional path to place before each file. In the format bucket_name/path_prefix.
+  3. Enter your amazon S3 bucket name and an optional path to place before each file. In the format bucket\_name/path\_prefix.
   4. Select the permission that you wish for files to be created with `bucket-owner-full-control` or `public-read`.
   5. Make sure you give write access for CloudMailin to your Amazon S3 bucket from the Amazon AWS dashboard.
 
