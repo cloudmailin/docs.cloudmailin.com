@@ -1,6 +1,8 @@
 ---
 title: Questions? - Frequently Asked Questions
+description: Frequently asked questions sending and receiving email with CloudMailin's API
 ---
+
 # Frequently Asked Questions
 
 The following are some of the most frequently asked questions at CloudMailin. We're hoping to build this up into a bit more of a knowledge base so feel free to add more to the [issue tracker on github](https://github.com/CloudMailin/docs.cloudmailin.com/issues).
@@ -9,10 +11,10 @@ The following are some of the most frequently asked questions at CloudMailin. We
 Your emails should arrive within seconds (actually we aim for it to be milliseconds). Our email server doesn't poll for your emails, they will be received as soon as they are sent to the server. A little bit of processing and they're sent straight on to your app.
 
 ### How do I change the website that my email is posted to
-The CloudMailin website allows you to view all of your email addresses and to change the target location. Click [here](http://www.cloudmailin.com/addresses) to view and edit your addresses.
+The CloudMailin website allows you to view all of your email addresses and to change the target location. Head your [email address page](http://www.cloudmailin.com/addresses) to view and edit your address details and targets.
 
-### How can I use my own domain name or email@mydomain.com instead of a CloudMailin address.
-Absolutely check out [Forwarding and Custom Domains](/receiving_email/forwarding_and_custom_domains/) for more details.
+### How can I use a custom domain name or email@mydomain.com instead of a CloudMailin issued email address.
+Absolutely, check out [Forwarding and Custom Domains](/receiving_email/forwarding_and_custom_domains/) for more details.
 
 ### Can I create a Wildcard DNS entry or subdomain for my Custom Domain?
 Yes. Make sure you create a wildcard DNS entry then just enter *.yourdomain.com as your custom domain.
@@ -53,7 +55,7 @@ The details also include the first 2kb of any failed response so that you can de
 You can use the details page for a delivery status to see all delivery attempts with the same message ID. Hopefully one of these is green.
 
 ### I am receiving an error trying to create my custom domain?
-You must make sure that your setup your DNS entries with either a CNAME or MX records pointing to CloudMailin before trying to enter a custom domain in the control panel. If you try to enter your custom domain first, it will fail to validate stating that the DNS records cannot be found. Take a look [here](/receiving_email/forwarding_and_custom_domains/) for more information about setting up your custom domains.
+You must make sure that your setup your DNS entries with either a CNAME or MX records pointing to CloudMailin before trying to enter a custom domain in the control panel. If you try to enter your custom domain first, it will fail to validate stating that the DNS records cannot be found. Take a look at our [custom domains documentation](/receiving_email/forwarding_and_custom_domains/) for more information about setting up your custom domains.
 
 ### Where are your servers based?
-Our servers predominantly based in EC2's US-EAST region (it is most likely these are the servers you will reach). This is to allow low latency and cut costs for the majority of our users. We do however make use of several other hosting providers to provide redundancy can add others upon request if required. [Contact us](http://www.cloudmailin.com/contact_us) for more details.
+Our servers predominantly based in EC2's US-EAST-1 and EU-WEST-1 regions (it is most likely these are the servers you will reach). This is to allow low latency and cut costs for the majority of our users. We do however make use of several other hosting providers to provide redundancy can add others upon request if required. [Contact us](http://www.cloudmailin.com/contact_us) for more details.

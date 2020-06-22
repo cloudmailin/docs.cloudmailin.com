@@ -41,7 +41,12 @@ You can check your configuration with the host command:
     mail.example.com mail is handled by 5 client1.cloudmailin.net.
 
 ## Adding a CNAME
-We no longer recommend that you use a CNAME to setup your custom domain. This method has the advantage that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. However, it has the downside of a few incompatibiliy issues with some servers. To add use this method create a CNAME record pointing to:
+
+> We no longer recommend that you use a CNAME to setup your custom domain.
+Problems occur when sending servers translate the original email address to the
+CNAME target.
+
+This method has the advantage that whenever we change the locations or names of our mail servers your DNS record will always be up to date with the latest details. However, it has the downside of a few incompatibility issues with some servers. To add use this method create a CNAME record pointing to:
 
     clients.cloudmailin.net
 
@@ -55,4 +60,3 @@ You can check your configuration with the host command:
 Please make sure that you setup your DNS entries before trying to enter a custom domain in the CloudMailin system. If you try to register your CustomDomain before creating the DNS entries then the CloudMailin system will not validate your custom domain and it cannot be used. If you have any problems setting up your MX Records [contact us](http://www.cloudmailin.com/contact_us).
 
 If you need to ensure a transfer from one mail server to the CloudMailin system please [contact us](http://www.cloudmailin.com/contact_us) and we can setup the custom domain before you change your DNS records.
-

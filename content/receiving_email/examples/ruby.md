@@ -3,19 +3,19 @@ title: Receiving Email with Rails 5
 skip_erb: true
 ---
 
-# Receiving Email with Ruby and Rails
+# Receiving Inbound Email with Ruby and Rails
 
 <div class="warning">This example may be outdated. You can now find examples for newer POST formats
 within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
 
 Please pick from the following:
 
-* [Rails 5](#receiving-email-with-rails-5)
-* [Rails 3 and 4](#receiving-email-with-rails-3-and-4)
+* [Rails 6](#receiving-email-with-rails-6)
+* [Rails 3, 4 and 5](#receiving-email-with-rails-5)
 * [Gridder CloudMailin](#griddler-cloudmailin-and-rails)
 * [Sinatra](#receiving-mail-with-sinatra)
 
-## Receiving email with Rails 5
+## Receiving email with Rails 6
 
 Rails will automatically parse and understand our
 [multipart normalized](/http_post_formats/multipart_normalized/) and
@@ -51,7 +51,16 @@ class IncomingMailsController < ApplicationController
 
   def create
     Rails.logger.debug params.inspect
-    Rails.logger.debug "Received: #{params[:headers][:subject]} for #{params[:envelope][:to]}"
+    Rails.logger.debug "Received: #{mail_params[:headers][:subject]} for #{mail_params[:envelope][:to]}"
+  end
+
+  protected
+
+  # We might need to permit parameters here because we're going
+  # to ensure only CloudMailin can post we will permit all here.
+  # You might want to review this yourself.
+  def mail_params
+    params.permit!
   end
 end
 ```
@@ -136,9 +145,9 @@ Received: Test Subject for client_test@cloudmailin.net
 Completed 201 Created in 1ms (ActiveRecord: 0.0ms)
 ```
 
-## Receiving email with Rails 3 and 4
+## Receiving email with Rails 5 and older
 
-Rails 4 and 5 are very similar to the Rails 5 example above.
+Inbound email to Rails 4 and 5 are very similar to the Rails 6 example above.
 
 Rails 3 already makes use of mail instead of using TMail that was default in Rails 2.x. In Rails 3
 we just have to `rails generate controller incoming_mails` to generate our controller and add a create method.

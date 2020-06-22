@@ -26,7 +26,7 @@ a {
 }
 
 h3, h4 {
-  color: #999;
+  color: #666;
 }
 
 nav {
@@ -50,7 +50,13 @@ nav {
     #header_image {
       @extend .navbar-brand;
       padding-top: 4px;
-      padding-left: 30px
+      padding-left: 30px;
+    }
+
+    @media (max-width: $screen-sm-min) {
+      #header_image {
+        line-height: 40px;
+      }
     }
   }
 
@@ -70,6 +76,7 @@ nav {
 #container {
   @extend .container;
   background-color: #fff;
+  // min-height: 80%;
 }
 
 #sidebar {
@@ -80,21 +87,7 @@ nav {
     background: url('/assets/images/divider.png') no-repeat 80% 0%;
   }
 
-  @media (max-width: $screen-md-min) {
-    li {
-      padding-bottom: 10px;
-    }
-
-    li ul{
-      padding-top: 10px;
-
-      li:last-child {
-        padding-bottom: 0px;
-      }
-    }
-  }
-
-  &>ul {
+  ul {
     // @extend .list-unstyled;
     padding-left: 0;
     list-style: none;
@@ -110,9 +103,24 @@ nav {
         list-style-type: none;
 
         li {
-          padding-top: 0;
-          font-weight: normal
+          padding-top: 0px;
+          font-weight: normal;
+
+          ul {
+            padding-top: 5px;
+          }
         }
+      }
+    }
+  }
+
+  // mobiles / smaller screen sidebar links
+  @media (max-width: $screen-md-min) {
+    ul li {
+      padding-top: 20px;
+
+      ul li {
+        padding-top: 20px;
       }
     }
   }

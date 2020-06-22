@@ -8,8 +8,8 @@ name: Getting Started on Google Cloud Platform
 Google has an amazing history in Cloud computing and their Cloud Platform is no different.
 From compute to machine learning Google has some really interesting offerings.
 
-[CloudMailin](http://www.cloudmailin.com/). is a tool for developers to make it easy to receive
-email via a API WebHook.
+[CloudMailin](http://www.cloudmailin.com/) is a tool for developers to make it easy to receive
+email via an API WebHook.
 You send CloudMailin an email and it will come as an HTTP POST to your site. Leaving you free
 to do what you do best and not having to worry about managing email servers.
 

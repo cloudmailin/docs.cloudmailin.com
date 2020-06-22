@@ -23,11 +23,7 @@
       Receiving Email
       %ul
         %li= link_to 'HTTP Status Codes', '/receiving_email/http_status_codes/'
-        %li
-          = link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/'
-          %ul
-            %li= link_to 'Email Forwarding', '/receiving_email/email_forwarding/'
-            %li= link_to 'Custom Domains', '/receiving_email/custom_domains/'
+        %li= link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/'
         %li= link_to 'Attachment Stores (S3)', '/receiving_email/attachments/'
         %li= link_to 'Reply Parsing', '/features/extracting_replies_from_email/'
         %li
@@ -47,22 +43,24 @@
       %ul
         %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/'
         %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/'
-    %li
-      Examples
-      %ul
-        %li= link_to 'Introduction', '/receiving_email/examples/'
-        %li= link_to 'Java', '/receiving_email/examples/java/'
-        %li= link_to '.Net', '/receiving_email/examples/net/'
-        %li= link_to 'Node.js', '/receiving_email/examples/node/'
-        %li= link_to 'PHP', '/receiving_email/examples/php/'
-        %li= link_to 'Python', '/receiving_email/examples/python/'
-        %li
-          = link_to 'Ruby', '/receiving_email/examples/ruby/'
-          %ul
-            %li= link_to 'Rails 5', '/receiving_email/examples/ruby/#receiving-email-with-rails-5'
-            %li= link_to 'Rails 3 and 4', '/receiving_email/examples/ruby/#receiving-email-with-rails-3-and-4'
-            %li= link_to 'Rails 2.x', '/receiving_email/examples/ruby/#rails2'
-            %li= link_to 'Sinatra', '/receiving_email/examples/ruby/#sinatra'
+        - unless in_section?('examples')
+          %li= link_to 'Examples', '/receiving_email/examples/'
 
-        %li
-          = link_to 'More', '/receiving_email/examples/more/'
+    - if in_section?('examples')
+      %li
+        Examples
+        %ul
+          %li= link_to 'Introduction', '/receiving_email/examples/'
+          %li= link_to 'Java', '/receiving_email/examples/java/'
+          %li= link_to '.Net', '/receiving_email/examples/net/'
+          %li= link_to 'Node.js', '/receiving_email/examples/node/'
+          %li= link_to 'PHP', '/receiving_email/examples/php/'
+          %li= link_to 'Python', '/receiving_email/examples/python/'
+          %li= link_to 'Ruby', '/receiving_email/examples/ruby/'
+
+    %li
+      Outbound (Sending)
+      %ul
+        %li= link_to 'Introduction', '/outbound/'
+        %li= link_to 'Getting Started', '/outbound/getting_started/'
+        %li= link_to 'Priorities and Tagging', '/outbound/priorities_and_tags/'
