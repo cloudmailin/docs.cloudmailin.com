@@ -6,5 +6,6 @@
 output/
 tmp/
 vendor/bundle
+crash.log
 
 content/robots.txt
