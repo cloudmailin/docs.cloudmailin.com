@@ -34,7 +34,7 @@ rails g controller IncomingMails --no-javascripts --no-stylesheets
 Then we need to add the route for the controller. Since CloudMailin makes an
 HTTP POST with the message content we'll use the create action.
 
-```language-ruby
+```ruby
 # config/routes.rb
 Rails.application.routes.draw do
   resources :incoming_mails, only: [:create]
@@ -44,7 +44,7 @@ end
 Then we need to add the following to our `IncomingMailsController` at
 `app/controllers/incoming_mails.rb`
 
-```language-ruby
+```ruby
 # app/controllers/incoming_mails.rb
 class IncomingMailsController < ApplicationController
   protect_from_forgery with: :null_session
@@ -69,7 +69,7 @@ to ensure that we want to accept the message.
 
 We can handle these two things by doing something like the following:
 
-```language-ruby
+```ruby
 class IncomingMailsController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :authenticate_cloudmailin, only: [:create]
@@ -113,7 +113,7 @@ All of your attachments are stored like normal file uploads in the attachments p
 
 You can access the attachments like so:
 
-```language-ruby
+```ruby
 class IncomingMailsController < ApplicationController
   protect_from_forgery with: :null_session
 
@@ -143,8 +143,8 @@ Rails 4 and 5 are very similar to the Rails 5 example above.
 Rails 3 already makes use of mail instead of using TMail that was default in Rails 2.x. In Rails 3
 we just have to `rails generate controller incoming_mails` to generate our controller and add a create method.
 
-```language-ruby
-class IncomingMailsController < ApplicationController    
+```ruby
+class IncomingMailsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
 
@@ -167,8 +167,8 @@ Alternatively Rails can handle the parsed versions of CloudMailin's
 [HTTP POST Formats](/http_post_formats/) automatically. An example reading the subject and body
 from address might be:
 
-```language-ruby
-class IncomingMailsController < ApplicationController    
+```ruby
+class IncomingMailsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def create
@@ -204,7 +204,7 @@ Then create a controller `script/generate controller incoming_mails`. You are fr
 controller anything you like. Make sure you add your controller to your routes file
 (resources :incoming_mails) and then setup the create method like so.
 
-    class IncomingMailsController < ApplicationController    
+    class IncomingMailsController < ApplicationController
       require 'mail'
       skip_before_filter :verify_authenticity_token
 
@@ -242,7 +242,7 @@ gem 'gridder-cloudmailin'
 
 Then add the route to your routes:
 
-```language-ruby
+```ruby
 # config/routes.rb
 
 mount_griddler('/incoming_mails')
@@ -250,7 +250,7 @@ mount_griddler('/incoming_mails')
 
 You then need to configure the adapater:
 
-```language-ruby
+```ruby
 Griddler.configure do |config|
   config.processor_class = EmailProcessor # CommentViaEmail
   config.email_class = Griddler::Email # MyEmail
@@ -267,7 +267,7 @@ For more details checkout the [gem](https://github.com/thoughtbot/griddler-cloud
 Parsing incoming mail in Sinatra is really simple. Using the multipart format you can simply use
 something like the following:
 
-```language-ruby
+```ruby
 post '/incoming_mail' do
   puts params.inspect
   puts params[:headers][:subject]
@@ -281,7 +281,7 @@ For more details see the [POST formats](/http_post_formats/) section.
 You can also just use the [mail gem](https://github.com/mikel/mail). Once the gem is installed then
 you can require 'mail' and add a post method to deal with the message.
 
-```language-ruby
+```ruby
 require 'mail'
 
 post '/incoming_mail' do

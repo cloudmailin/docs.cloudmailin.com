@@ -1,20 +1,14 @@
-FROM ruby:2.3
-
-RUN apt-get update -qq && apt-get install -qq -y build-essential nodejs
+FROM ruby:2.6
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+RUN apt-get update -qq && apt-get install -qq -y build-essential nodejs libjq-dev
+
 WORKDIR /app
 
-# Install JQ so we can easily work with AWS IP list
-RUN wget -q https://github.com/stedolan/jq/releases/download/jq-1.5/jq-1.5.tar.gz \
-  && tar -xzf jq-1.5.tar.gz \
-  && cd jq-1.5  \
-  && autoreconf -i \
-  && ./configure -q --disable-maintainer-mode \
-  && make -s \
-  && make -s install
+ENV RUBYJQ_USE_SYSTEM_LIBRARIES=yes
+ENV BUNDLE_BUILD__NOKOGIRI: "--use-system-libraries"
 
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock

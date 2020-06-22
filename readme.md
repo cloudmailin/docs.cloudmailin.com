@@ -28,5 +28,11 @@ You can then head to:
 ## Deploying
 
 ```bash
-docker-compose run docs bash -c "nanoc compile && FOG_RC=.fog nanoc deploy"
+docker-compose run docs bash -c "bundle exec nanoc compile -e production && FOG_RC=.fog bundle exec nanoc deploy --target staging"
+```
+
+## Generating Rouge CSS Files
+
+```
+rougify style --scope='pre code' igorpro > ./content/assets/stylesheets/syntax.css
 ```

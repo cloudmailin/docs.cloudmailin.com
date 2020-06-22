@@ -58,7 +58,7 @@ Content-Disposition: form-data; name="envelope[spf][domain]"
 
 example.com
 ```
-```language-ruby
+```ruby
   def create
     Rails.logger.info params[:envelope][:to] #=> "to@example.com"
     Rails.logger.info params[:envelope][:recipients] #=> {"0"=>"to@example.com","1"=>"another@example.com"}
@@ -70,7 +70,7 @@ example.com
     Rails.logger.info params[:envelope][:spf] #=> {"result"=>"pass", "domain"=>"example.com"}
   end
 ```
-```language-php
+```php
 <?php
   $to = $_POST['envelope']['to'];
   $from = $_POST['envelope']['from'];
@@ -81,7 +81,7 @@ example.com
   $spf_result = $_POST['envelope']['spf']['result'];
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -104,7 +104,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String to = Request.Form["envelope"]["to"];
   String from = Request.Form["envelope"]["from"];
@@ -127,7 +127,7 @@ Content-Disposition: form-data; name="message"
 entire message here
 ------cloudmailinboundry
 ```
-```language-ruby
+```ruby
 class IncomingMailsController < ApplicationController
   def create
     # Creates an instance of the Mail class in the mail gem.
@@ -137,12 +137,12 @@ class IncomingMailsController < ApplicationController
   end
 end
 ```
-```language-php
+```php
 <?php
   $raw = $_POST['message'];
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -159,7 +159,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String raw = Request.Form["message"];
 }

@@ -7,7 +7,7 @@
       %ul
         %li= link_to 'Introduction', '/getting_started/'
         - for item in items_for_section('getting_started/receiving_email')
-          %li= link_to item.title, item.identifier
+          %li= link_to title(item), item
         %li= link_to 'FAQs', '/getting_started/faqs/'
     %li
       HTTP POST Formats

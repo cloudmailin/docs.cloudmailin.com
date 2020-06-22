@@ -138,7 +138,7 @@ Content-Type: text/plain
 testfile
 ------cloudmailinboundry--
 ```
-```language-ruby
+```ruby
 class IncomingMailsController < ApplicationController
   def create
     Rails.logger.info params
@@ -158,7 +158,7 @@ end
 
 #=> {"plain"=>"Test with HTML.", "html"=>"<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>", "reply_plain"=>"Message reply if found.", "headers"=>{"Return-Path"=>"from@example.com", "Received"=>{"0"=>"by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "1"=>"by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "2"=>"from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "Date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "From"=>"Message Sender <sender@example.com>", "To"=>"Message Recipient <to@example.com>", "Message-ID"=>"<4F145791.8040802@example.com>", "Subject"=>"Test Subject", "Mime-Version"=>"1.0", "Delivered-To"=>"to@example.com", "Received-SPF"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "Authentication-Results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "User-Agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}, "envelope"=>{"to"=>"to@example.com", "recipients"=>{"0"=>"to@example.com"}, "from"=>"from@example.com", "helo_domain"=>"localhost", "remote_ip"=>"127.0.0.1", "spf"=>{"result"=>"pass", "domain"=>"example.com"}}, "attachments"=>[#<ActionDispatch::Http::UploadedFile:0x007f9bef0aed98 @original_filename="file1.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[]\"; filename=\"file1.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-120trfe>>, #<ActionDispatch::Http::UploadedFile:0x007f9bef0aecd0 @original_filename="file2.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"attachments[1]\"; filename=\"file2.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<Tempfile:/var/folders/sq/lggbm81j6zdgp8xz9c69wwr80000gn/T/RackMultipart20130409-6298-hbuu4r>>}]
 ```
-```language-php
+```php
 <?php
   header("Content-type: text/plain");
 
@@ -178,7 +178,7 @@ end
   exit;
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -199,7 +199,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String from = Request.Form["envelope"]["from"];
   String subject = Request.Form["headers"]["subject"];
@@ -262,7 +262,7 @@ Content-Disposition: form-data; name="envelope[tls]"
 
 true
 ```
-```language-ruby
+```ruby
   def create
     Rails.logger.info params[:envelope][:to] #=> "to@example.com"
     Rails.logger.info params[:envelope][:recipients] #=> ["to@example.com","another@example.com"]
@@ -274,7 +274,7 @@ true
     Rails.logger.info params[:tls] #=> "true"
   end
 ```
-```language-php
+```php
 <?php
   $to = $_POST['envelope']['to'];
   $from = $_POST['envelope']['from'];
@@ -285,7 +285,7 @@ true
   $spf_result = $_POST['envelope']['spf']['result'];
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -308,7 +308,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String to = Request.Form["envelope"]["to"];
   String from = Request.Form["envelope"]["from"];
@@ -384,7 +384,7 @@ Content-Disposition: form-data; name="headers[user_agent]"
 
 Postbox 3.0.2 (Macintosh/20111203)
 ```
-```language-ruby
+```ruby
 def create
   Rails.logger.info params[:headers] #=> "headers"=>{"return_path"=>"from@example.com", "received"=>["by 10.52.90.229 with SMTP id bz5cs75582vdb; Mon, 16 Jan 2012 09:00:07 -0800", "by 10.216.131.153 with SMTP id m25mr5479776wei.9.1326733205283; Mon, 16 Jan 2012 09:00:05 -0800", "from mail-wi0-f170.google.com (mail-wi0-f170.google.com [209.85.212.170]) by mx.google.com with ESMTPS id u74si9614172weq.62.2012.01.16.09.00.04 (version=TLSv1/SSLv3 cipher=OTHER); Mon, 16 Jan 2012 09:00:04 -0800"}, "date"=>"Mon, 16 Jan 2012 17:00:01 +0000", "from"=>"Message Sender <sender@example.com>", "to"=>"Message Recipient <to@example.com>", "message_id"=>"<4F145791.8040802@example.com>", "subject"=>"Test Subject", "mime_version"=>"1.0", "delivered_to"=>"to@example.com", "received_sp"=>"neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) client-ip=10.0.10.1;", "authentication_results"=>"mx.google.com; spf=neutral (google.com: 10.0.10.1 is neither permitted nor denied by best guess record for domain of from@example.com) smtp.mail=from@example.com", "user_agent"=>"Postbox 3.0.2 (Macintosh/20111203)"}
   Rails.logger.info params[:headers][:subject] #=> "Test Subject"
@@ -395,7 +395,7 @@ def create
   Rails.logger.info params[:headers][:return_path] #=> "from@example.com"
 end
 ```
-```language-php
+```php
 <?php
   $subject = $_POST['headers']['subject'];
   $to = $_POST['headers']['to'];
@@ -404,7 +404,7 @@ end
   $return_path = $_POST['headers']['return_path'];
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -425,7 +425,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String recipients = Request.Form["envelope"]["subject"];
   String to = Request.Form["headers"]["to"];
@@ -458,21 +458,21 @@ Content-Disposition: form-data; name="reply_plain"
 
 Message reply if found.
 ```
-```language-ruby
+```ruby
   def create
     Rails.logger.info params[:plain] #=> "Test with HTML."
     Rails.logger.info params[:html] #=> "<html><head>\r\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\r\n bgcolor=\"#FFFFFF\" text=\"#000000\">\r\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\r\n</body>\r\n</html>"
     Rails.logger.info params[:reply_plain] #=> "Message reply if found."
   end
 ```
-```language-php
+```php
 <?php
   $plain = $_POST['plain'];
   $html = $_POST['html'];
   $reply = $_POST['reply_plain'];
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -491,7 +491,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String plain = Request.Form["plain"];
   String html = Request.Form["html"];
@@ -567,21 +567,21 @@ Content-Disposition: form-data; name="attachments[][url]"
 
 http://example.com/file.txt
 ```
-```language-ruby
+```ruby
   def create
     Rails.logger.info params[:attachments] #=> [{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"},{"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}]
     Rails.logger.info params[:attachments][0] #=> {"file_name"=>"file.txt","content_type"=>"text/plain","size"=>8,"disposition"=>"attachment","url"=>"http://example.com/file.txt"}
     Rails.logger.info params[:attachments][0]['url'] => "http://example.com/file.txt"
   end
 ```
-```language-php
+```php
 <?php
   $attachment = $_POST['attachments'][0];
   $name = $_POST['attachments'][0]['file_name'];
   $url = $_POST['attachments'][0]['url'];
 ?>
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()
@@ -600,7 +600,7 @@ app.post('/incoming_mail', function(req, res){
 
 app.listen(8080);
 ```
-```language-c#
+```c#
 void Page_Load(object sender, EventArgs e) {
   String attachment = Request.Form["attachments"][0];
   String name = Request.Form["attachments"][0]["file_name"];
@@ -630,7 +630,7 @@ Content-Type: text/plain
 
 testfile
 ```
-```language-ruby
+```ruby
   # In Rails embeded files are just normal instances of ActionDispatch::Http::UploadedFile
 
   def create
@@ -644,7 +644,7 @@ testfile
     end
   end
 ```
-```language-php
+```php
 <?php error_log(var_export($_FILES, true), 3, '/var/tmp/output.log') ?>
 
 outputs:
@@ -677,7 +677,7 @@ array (
 outputs: 'file1.txt'
 
 ```
-```language-javascript
+```javascript
 var express = require('express');
 
 var app = module.exports = express.createServer()

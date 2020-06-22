@@ -4,22 +4,16 @@ end
 
 compile '*' do
   if item.binary?
-    item.identifier.chop + '.' + item[:extension]
+    "#{item.identifier.chop}.#{item[:extension]}"
   else
     ext = item[:extension].nil? ? nil : item[:extension].split('.').last
     case ext
     when 'markdown', 'md'
       filter :erb unless item.attributes[:skip_erb]
-      filter :redcarpet, {
-        :options => { :tables => true, :fenced_code_blocks => true, :gh_blockcode => true },
-        :renderer => TitleAnchoredHTML,
-        :renderer_options => { :with_toc_data => true}
-      }
-      filter :colorize_syntax, :default_colorizer => :pygmentsrb
+      filter :common_marker
+      # filter :colorize_syntax, default_colorizer: :rouge
       layout 'application'
     when 'scss'
-      # filter :erb
-      # filter :sass, syntax: :scss #, Compass.sass_engine_options.merge!(:style => :expanded, :syntax => :scss)
       filter :sprockets, css_compressor: :scss
     when 'coffee'
       filter :coffeescript
@@ -37,8 +31,9 @@ compile '*' do
 end
 
 route '*' do
+  raise "Item without extension #{item.inspect}" if item[:extension].nil?
   if item.binary?
-    item.identifier.chop + '.' + item[:extension]
+    "#{item.identifier.chop}.#{item[:extension]}"
   else
     ext = item[:extension].nil? ? nil : item[:extension].split('.').last
     case ext
@@ -54,6 +49,6 @@ route '*' do
   end
 end
 
-layout '/application/', :haml, :format => :html5, :encoding => 'utf-8'
+layout '/application/', :haml, format: :html5, encoding: 'utf-8', language: 'en'
 layout '/sidebar/', :haml, encoding: 'utf-8'
 layout '*', :erb

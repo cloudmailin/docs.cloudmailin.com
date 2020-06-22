@@ -12,8 +12,8 @@ Remember, all the documentation is also open source, so if you think there's som
 ## Getting Started
 The Getting Started Guides cover getting CloudMailin setup and receiving your first emails.
 
-<% for item in items_for_section('getting_started').sort_by(&:name) %>
-  * [<%= item.name %>](<%= item.identifier %>)
+<% for item in items_for_section('getting_started').sort_by{ |i| name(i) } %>
+  * [<%= title(item) %>](<%= item.identifier %>)
 <% end %>
 
 ## Receiving Email
