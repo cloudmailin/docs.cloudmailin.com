@@ -1,6 +1,6 @@
 module ItemHelpers
   def title(item = @item)
-    item[:title] || filename
+    item[:title] || filename(item)
   end
 
   def name(item = @item)

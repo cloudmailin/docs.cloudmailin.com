@@ -63,6 +63,23 @@ data_sources:
 # Base URL for XML sitemap generation
 base_url: https://docs.cloudmailin.com
 
+# Add checks
+checking:
+  enabled_checks:
+    - internal_links
+    - stale
+    - external_links
+    # - html
+
+checks:
+  external_links:
+    exclude:
+      - http://localhost:3000
+      - http://www.cloudmailin.com/target/404
+      - http://www.cloudmailin.com/target/500
+      # Redirect is allowed
+      - https://www.attachmentscanner.com/documentation
+
 # Deploy using fog
 deploy:
   default:

@@ -26,4 +26,4 @@ When CloudMailin receives multiple recipient commands it will validate that each
 
 The list of recipients will then be passed along to your target within the envelope parameters as a list of `Recipients`.
 
-If you need to handle multiple recipients differently we can adjust the way that these parameters are handled on a per account basis just [contact us](https://cloudmailin.com/contact_us) and let us know what you need to do.
+If you need to handle multiple recipients differently we can adjust the way that these parameters are handled on a per account basis just [contact us] and let us know what you need to do.

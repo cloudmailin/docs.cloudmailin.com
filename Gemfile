@@ -24,4 +24,5 @@ group :developement do
   gem 'adsf-live'
   gem 'guard-nanoc'
   gem 'mime-types'
+  gem 'w3c_validators'
 end

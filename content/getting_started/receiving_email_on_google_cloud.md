@@ -28,8 +28,7 @@ This can help improve performance but also makes it much faster to get started w
 In addition we have the ability to store the entire email, either RAW or in JSON form in
 Google Cloud Storage.
 
-In order to enable this feature or if you want more details please
-[contact us](http://www.cloudmailin.com/contact_us).
+In order to enable this feature or if you want more details please [contact us].
 
 ## Regions and Setup
 
@@ -51,9 +50,8 @@ dedicated servers into the following zones.
 
 ### Other regions
 
-We're quickly adding support for other regions so
-[contact us](http://www.cloudmailin.com/contact_us)
-if your preferred region isn't available.
+We're quickly adding support for other regions so [contact us] if your preferred region isn't
+available.
 
 ## Getting Started
 
@@ -67,5 +65,5 @@ We recommend taking a look at our [HTTP POST Formats](/http_post_formats/). Thes
 of the webhook POST to your website and some sample code to get started.
 
 ## Contact Us
-If you need any help [contact us](http://www.cloudmailin.com/contact_us) and we can help you
-get setup receiving email with the Google Cloud Platform.
+If you need any help [contact us] and we can help you get setup receiving email with the
+Google Cloud Platform.

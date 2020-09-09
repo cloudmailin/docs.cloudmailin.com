@@ -29,7 +29,7 @@ In addition we have the ability to store the entire email, either RAW or in JSON
 Azure Storage.
 
 In order to enable this feature or if you want more details please
-[contact us](http://www.cloudmailin.com/contact_us).
+[contact us].
 
 ## Regions and Setup
 
@@ -91,17 +91,15 @@ In order to allow this we have the ability to create dedicated servers in the fo
 
 ### Other regions
 
-We're quickly adding support for other regions so
-[contact us](http://www.cloudmailin.com/contact_us)
-if your preferred region isn't available.
+We're quickly adding support for other regions so [contact us] if your preferred region isn't
+available.
 
 ## Security in the Cloud
 
 Security in the Cloud can be a big worry for some customers. Our pioneering technology allows us
 to place security at the forefront of everything that CloudMailin does.
 
-If you want more details about the security of CloudMailin please just
-[contact us](http://www.cloudmailin.com/contact_us).
+If you want more details about the security of CloudMailin please just [contact us].
 
 ## Getting Started
 
@@ -115,5 +113,4 @@ We recommend taking a look at our [HTTP POST Formats](/http_post_formats/). Thes
 of the webhook POST to your website and some sample code to get started.
 
 ## Contact Us
-If you need any help [contact us](http://www.cloudmailin.com/contact_us) and we can help you
-get setup receiving email in Azure.
+If you need any help [contact us] and we can help you get setup receiving email in Azure.

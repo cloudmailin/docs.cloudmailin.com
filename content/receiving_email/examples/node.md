@@ -9,7 +9,7 @@ skip_erb: true
 
 ## Express
 
-Node.js will automatically parse JSON and provide you with an object to work with. If you need to access 'multipart/form-data' content (for the original format) in Node.js you can use the [node-formidable](https://github.com/felixge/node-formidable) module.
+Node.js will automatically parse JSON and provide you with an object to work with. If you need to access 'multipart/form-data' content (for the original format) in Node.js you can use the [node-formidable] module.
 
 The following is a really simple express app that parses the multipart content using node-formidable and outputs the to, from and subject to the console.
 
@@ -30,5 +30,11 @@ The following is a really simple express app that parses the multipart content u
     })
 
     app.listen(8080);
-    
+
 The following [gist](https://gist.github.com/1495479) (by [jafstar](https://github.com/jafstar)) may also be of help when dealing with errors from Node.js applications and presenting the correct parameters.
+
+Then log into [CloudMailin] and make sure you set your address to deliver
+to `http://example.com/incoming_mail` (replace example.com with your app's URL)
+and send our first message. and thats it!
+
+[node-formidable]: https://github.com/node-formidable/formidable

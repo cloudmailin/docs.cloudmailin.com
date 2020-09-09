@@ -14,7 +14,7 @@ When you install the CloudMailin Add-on you will be automatically given an email
 You can install the CloudMailin Add-on from the Heroku website or the terminal. To get started using the terminal simply install the CloudMailin Add-on using the following command:
 
     $ heroku addons:add cloudmailin
-    
+
 This will automatically create you a CloudMailin account and create an address that will forward to the default location. To create a different CloudMailin plan just pass the plan name. For example to create the starter plan type:
 
     $ heroku addons:add cloudmailin:starter
@@ -36,7 +36,7 @@ In order to forward your email to your own website you need login to the [CloudM
 | Method                          | Logging In                                                                            |
 |---------------------------------|---------------------------------------------------------------------------------------|
 | Using the Terminal              | Use the gem and enter `$ heroku addons:open cloudmailin` into the terminal.           |
-| Using the Heroku Website        | Just login to [Heroku](http://heroku.com) and select CloudMailin from the Add-On menu for your application. |
+| Using the Heroku Website        | Just login to [Heroku] and select CloudMailin from the Add-On menu for your application. |
 | Using a Username and Password   | First, obtain your CloudMailin Username and Password using `$ heroku config --long`. Then head to  [CloudMailin.com](http://www.cloudmailin.com) and login using these credentials. |
 
 Once you're logged in you must set the target location for each HTTP POST containing your email and choose your HTTP POST Format. Click on the edit target button, here you can set the URL and choose the POST Format. For more details about the format that CloudMailin will send your email in see [HTTP Post Formats](/http_post_formats/).
@@ -54,4 +54,3 @@ You can upgrade your Heroku Add-on to one of our other plans by using the upgrad
     $ heroku addons:upgrade cloudmailin:premium
 
 This will upgrade your existing address and setup to the higher plan without you having to provision any new details or setup.
-

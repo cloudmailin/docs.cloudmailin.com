@@ -7,15 +7,12 @@ title: Scanning Incoming Emails for Viruses
 CloudMailin has the ability to scan incoming messages for viruses, malware and
 other malicious content.
 
-Through our partnership with [AttachmentScanner](http://www.attachmentscanner.com/), we
-can scan all of the email attachments that CloudMailin receives via the API.
+Through our partnership with [AttachmentScanner], we can scan all of the email attachments that
+CloudMailin receives via the API. We also have the ability to prevent an HTTP POST from being made
+to your website if we believe that a virus may have been found.
 
-We also have the ability to prevent an HTTP POST from being made to your website if we believe
-that a virus may have been found.
-
-Please
-[contact us](http://www.cloudmailin.com/contact_us) if you would like more details about
-enabling virus scanning on your email server.
+Please [contact us] if you would like more details about enabling virus scanning on your email
+server.
 
 ## Virus Scanner Output
 
@@ -48,9 +45,10 @@ The key statuses are:
 | `pending` | The scan wasn't completed. Call the AttachmentScanner API to get an updated result. |
 | `failed`  | The scanner failed to perform the scan, contact support.                            |
 
-More details can be found in the [AttachmentScanner](http://www.attachmentscanner.com/) scan
-[documentation](http://www.attachmentscanner.com/documentation).
+More details can be found in the [AttachmentScanner] scan
+[documentation](https://www.attachmentscanner.com/documentation).
 
-Please
-[contact us](http://www.cloudmailin.com/contact_us) if you would like more details about
-enabling virus scanning for your CloudMailin incoming email address.
+Please [contact us] if you would like more details about enabling virus scanning for your
+CloudMailin incoming email address.
+
+[AttachmentScanner]: https://www.attachmentscanner.com/

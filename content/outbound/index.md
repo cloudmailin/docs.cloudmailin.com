@@ -37,7 +37,7 @@ permitting this type of message. However, they'll need to be marked as `digest` 
 <div class="warning">
 <strong>Marketing, Newsletters, Announcements or any other bulk mail are not permitted</strong>
 at present.
-If you have any questions please <a href="http://www.cloudmailin.com/contact_us">contact us</a>
+If you have any questions please <a href="https://www.cloudmailin.com/contact_us">contact us</a>
 and we can help to clarify things.
 </div>
 
@@ -52,8 +52,7 @@ If any of these cause an issue please [contact us]("http://www.cloudmailin.com/c
 | Message Size | The maximum message size (unless otherwise agreed) is `10 MB` this should include all message content and encoding. |
 | Attachments  | Attachments are limited to safe formats. We do not allow executables or those often associated with viruses. Although not exhaustive the following attachments are **not permitted** ` vbs, exe, bin, bat, chm, com, hta, pif, reg, vbe, vba, msc, msi`.
 | SPAM         | We will run automated SPAM checks against messages. Those with a high score will be rejected. |
-| Max Volumes  | We will help you to automatically ramp up sending volumes, starting small and growing the number of emails you can send per day. Please [contact us](http://www.cloudmailin.com/contact_us) if you have any questions about this. |
+| Max Volumes  | We will help you to automatically ramp up sending volumes, starting small and growing the number of emails you can send per day. Please [contact us] if you have any questions about this. |
 | Bounce Rate  | Bounces and supressions will be monitored. Because we're sending transactional email we don't expect this rate to rise above `2%`. We can help you to ensure this is successful. |
 
-Please [contact us](http://www.cloudmailin.com/contact_us) if we need to work with you on any of
-these limitations.
+Please [contact us] if we need to work with you on any of these limitations.

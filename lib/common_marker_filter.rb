@@ -16,6 +16,20 @@ module Nanoc::Filters
         end
       end
 
+      def link(node)
+        raise "Link Error" if node.url.nil?
+
+        out('<a href="', node.url.nil? ? '' : escape_href(node.url), '"')
+        if node.title && !node.title.empty?
+          out(' title="', escape_html(node.title), '"')
+        end
+        if node.url && node.url =~ %r{https?:\/\/}i && node.url !~ /cloudmailin/i
+          out(' rel="nofollow"')
+        end
+        out(' target="_blank"') if node.url && node.url =~ %r{https?:\/\/}i
+        out('>', :children, '</a>')
+      end
+
       def code_block(node)
         source = node.string_content
         # lang = CGI.escapeHTML(node.fence_info)
@@ -32,7 +46,8 @@ module Nanoc::Filters
     def run(content, _params = {})
       opts = %i[DEFAULT]
       exts = %i[tagfilter autolink table strikethrough tasklist]
-      doc = CommonMarker.render_doc(content, opts, exts)
+      common_links = File.read(File.expand_path('content/common_links.md'))
+      doc = CommonMarker.render_doc(content + common_links, opts, exts)
       CustomHtmlRenderer.new(options: opts, extensions: exts).render(doc)
     end
   end

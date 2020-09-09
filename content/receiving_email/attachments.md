@@ -49,7 +49,7 @@ It's possible to configure CloudMailin to send attachments directly to Azure sto
 You'll need to give us your storage credentials so that we can create a file within
 your storage account.
 
-In order to use Azure file storage [contact us](http://www.cloudmailin.com/contact_us).
+In order to use Azure file storage [contact us].
 
 
 ## Sending Email Attachments to Google Cloud Storage
@@ -60,4 +60,4 @@ This helps reduce the burden on your application and improves response times.
 You'll need to give us your storage credentials so that we can create a file within
 your storage account.
 
-In order to use Google Cloud file storage [contact us](http://www.cloudmailin.com/contact_us).
+In order to use Google Cloud file storage [contact us].

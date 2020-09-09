@@ -112,4 +112,4 @@ similar to this when rendered:
 ## Contact Us
 
 In order to enable SPAM checking on your CloudMailin email address, please
-[contact us](http://www.cloudmailin.com/contact_us).
+[contact us].

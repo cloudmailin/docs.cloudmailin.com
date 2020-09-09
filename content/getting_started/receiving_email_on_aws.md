@@ -27,7 +27,7 @@ This can allow you to create systems that work with email in queue form or using
 as AWS Lambda.
 
 See the section on [Attachment Stores](/receiving_email/attachments/) for more details or
-[contact us](http://www.cloudmailin.com/contact_us) to enable sending the entire email to S3.
+[contact us] to enable sending the entire email to S3.
 
 ## AWS Regions
 
@@ -77,5 +77,5 @@ We recommend taking a look at our [HTTP POST Formats](/http_post_formats/). Thes
 of the webhook POST to your website and some sample code to get started.
 
 ## Contact Us
-If you need any help [contact us](http://www.cloudmailin.com/contact_us) and we can help you
+If you need any help [contact us] and we can help you
 get setup receiving email on the Amazon Web Services platform.

@@ -11,11 +11,12 @@ cluster based on IP address**. Because our cloud scales up and down as required
 IP addresses can change from time to time. This results in a large number of
 IP addresses being required.
 
-Instead we highly recommend using [HTTPS and Basic Auth]
-(/receiving_email/securing_your_email_url_target/#basic-authentication-and-https)
+Instead we highly recommend using
+[HTTPS and Basic Auth](/receiving_email/securing_your_email_url_target/#basic-authentication-and-https)
 to secure the endpoint that CloudMailin contacts.
 
-However for reference the possible list of IP addresses as ranges is as follows:
+However for reference the possible list of CloudMailin IPs (Specifically CloudMailin IP ranges) are
+as follows:
 
 ## AWS US-EAST-1
 

@@ -21,4 +21,4 @@ If you just want to use CloudMailin to forward the entire email to your website 
 
 ## Testing a Format
 
-If you want to see how a format will look with your own content we recommend using the [WebhookApp](http://webhookapp.com). Simply set the [WebhookApp](http://webhookapp.com) as your message url target and then send an email. The message content will then be sent over HTTP to the app using WebSockets so you can view this content and try out the format.
+If you want to see how a format will look with your own content we recommend using the [WebhookApp]. Simply set the [WebhookApp] as your message url target and then send an email. The message content will then be sent over HTTP to the app using WebSockets so you can view this content and try out the format.

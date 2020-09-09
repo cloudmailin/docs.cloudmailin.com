@@ -1,5 +1,5 @@
 ---
-title: Receiving Email with Rails 5
+title: Receiving Email with Ruby and Rails
 skip_erb: true
 ---
 
@@ -65,8 +65,8 @@ class IncomingMailsController < ApplicationController
 end
 ```
 
-Thats it! We now just make sure that our target is set to `http://yourdomain/incoming_mails` and
-send our first message.
+Thats it! We now just make sure that our target is set to `http://example.com/incoming_mails`
+(replace example.com with your app's URL) and send our first message.
 
 For more details see the [POST formats](/http_post_formats/) section.
 
@@ -195,8 +195,9 @@ class IncomingMailsController < ApplicationController
 end
 ```
 
-Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to
-deliver to http://yourdomain.com/incoming_mails and thats it!
+Then log into [CloudMailin] and make sure you set your address to deliver
+to `http://example.com/incoming_mails` (replace example.com with your app's URL)
+and send our first message. and thats it!
 
 
 ## Rails (2.3.x)
@@ -231,8 +232,9 @@ controller anything you like. Make sure you add your controller to your routes f
 Notice the call to `skip_before_filter :verify_authenticity_token` to make sure that rails doesn't
 raise an exception because we have no way of knowing the token.
 
-Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to
-deliver to http://yourdomain.com/incoming_mails and thats it!
+Then log into [CloudMailin] and make sure you set your address to deliver
+to `http://example.com/incoming_mail` (replace example.com with your app's URL)
+and send our first message. and thats it!
 
 ## Griddler CloudMailin and Rails
 
@@ -269,7 +271,10 @@ Griddler.configure do |config|
 end
 ```
 
-Then you need to configure CloudMailin to target `http://yourdomain.com/incoming_mails`.
+Then log into [CloudMailin] and make sure you set your address to deliver
+to `http://example.com/incoming_mail` (replace example.com with your app's URL)
+and send our first message. and thats it!
+
 For more details checkout the [gem](https://github.com/thoughtbot/griddler-cloudmailin).
 
 ## Receiving mail with Sinatra
@@ -300,5 +305,6 @@ post '/incoming_mail' do
 end
 ```
 
-Then log into [CloudMailin](http://www.cloudmailin.com) and make sure you set your address to
-deliver to `http://yourdomain.com/incoming_mail` and thats it!
+Then log into [CloudMailin] and make sure you set your address to deliver
+to `http://example.com/incoming_mail` (replace example.com with your app's URL)
+and send our first message. and thats it!
