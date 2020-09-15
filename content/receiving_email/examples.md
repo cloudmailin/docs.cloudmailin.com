@@ -7,11 +7,15 @@ description: CloudMailin inbound code examples
 
 Here are the links to our language specific examples:
 
- * [Java](/receiving_email/examples/java/)
+<!-- This strange layout is to handle the weird ERB issue with - -->
+<% items_for_section('receiving_email/examples').each do |item| %>
+  * <%= link_to_item(item) %><% end %>
+
+ <!-- * [Java](/receiving_email/examples/java/)
  * [.Net](/receiving_email/examples/net/)
  * [PHP](/receiving_email/examples/php/)
  * [Python](/receiving_email/examples/python/)
- * [Ruby](/receiving_email/examples/ruby/)
+ * [Ruby](/receiving_email/examples/ruby/) -->
 
 If your favourite framework is missing please let us know and we'll try to create an example. We would love to provide examples for every these languages but we feel that examples should come from people who really know the language well and with your help we can achieve that!
 

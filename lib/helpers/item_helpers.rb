@@ -15,6 +15,18 @@ module ItemHelpers
     item.attributes[:description]
   end
 
+  def redirect_to(item = @item)
+    link = item.attributes[:redirect_to]
+    return if link.nil?
+
+    candidate = find_item(link)
+    raise ArgumentError, "Cannot find item #{link.inspect}" unless candidate
+
+    url = ""
+    url += @config[:base_url] unless ENV['NANOC_ENV'] == 'development'
+    url += candidate.identifier
+  end
+
   def filename(item  = @item)
     item.attributes[:filename].split('/').last.tr('_', " ").split('.').first
   end

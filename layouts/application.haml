@@ -13,6 +13,10 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5"}
     - if description
       %meta{name: 'description', content: description}
+    - if redirect_to
+      - unless ENV['NANOC_ENV'] == 'development'
+        %meta(http-equiv="refresh" content="0; url=#{redirect_to}")
+      %link(rel="canonical" href="#{redirect_to}")
   %body#documentation
     %nav#nav
       #nav-content
@@ -29,7 +33,13 @@
             %p Description not set
         .documentation_content{id: identifier }
           %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
-          = find_and_preserve(yield)
+
+          - if redirect_to
+            %p Redirecting to #{link_to redirect_to, redirect_to}.
+
+          - unless redirect_to
+            -# Show the main content for this page
+            = find_and_preserve(yield)
 
           #comments
             = render 'comments' unless disable_comments?
