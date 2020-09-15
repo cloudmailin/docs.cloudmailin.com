@@ -69,6 +69,8 @@ checking:
     - internal_links
     - stale
     - external_links
+    - no_unprocessed_erb
+    - no_unprocessed_references
     # - html
 
 checks:
