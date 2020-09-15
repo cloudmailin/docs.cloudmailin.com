@@ -2,7 +2,7 @@
 title: Getting Setup Sending Email with CloudMailin Outbound
 ---
 
-# Getting Started
+# Getting Started Sending Email
 
 > Remember CloudMailin Outbound is only for
 [Transactional email](/outbound/)
@@ -41,9 +41,11 @@ Details for your domain specifically cen be found on the domain's
 
 ### SMTP Settings
 
-SMTP settings will be available from within the dashboard of your account. Currently we require
-TLS to allow our self issued certificates. This might require VERIFY_PEER to be turned off in
-OpenSSL.
+SMTP settings will be available from within the dashboard of your account.
+
+Before you can send email we require SMTP Autentication. You'll need to provide a username and
+password via `LOGIN` or `PLAIN` auth. In order for this to be secure we only accept SMTP Auth once
+an encrptyed session has been established via the `STARTTLS` command.
 
 The SMTP transaction will reply with the message-id of the message to use for bounce tracking if
 required.

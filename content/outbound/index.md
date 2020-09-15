@@ -1,13 +1,13 @@
 ---
-title: Getting started Sending Email with CloudMailin Outbound
+title: Sending Email with CloudMailin Outbound
 description: Getting started Sending Transactional Email over SMTP with CloudMailin Outbound.
 ---
 
 # Sending with CloudMailin Outbound
 
 Our outbound product is newer than our inbound product and is still evolving.
-Although we feel it's ready for production use we'd greatly appreciate any feedback you may have.
-As always just [contact us](https://www.cloudmailin.com/contact_us) if you have any feedback.
+Although it's being used in production  by a number of customers we'd greatly appreciate any
+feedback you may have. As always just [contact us] if you have any feedback.
 
 ## Getting Started
 
@@ -15,9 +15,10 @@ As always just [contact us](https://www.cloudmailin.com/contact_us) if you have 
   [Getting Started Guide](/outbound/getting_started/).
 * To read about priories and tags check out the
   [Priorites and Tagging](/outbound/priorities_and_tags/) documentation.
+* To get started with SMTP read the <%= link_to_item('/outbound/sending_email_with_smtp/') %>
+  documentation.
 
-If you have any questions at all please contact our support team using our
-[contact us](http://www.cloudmailin.com/contact_us) page.
+If you have any questions at all please contact our support team using ou [contact us] page.
 
 ## Transactional email
 
@@ -43,8 +44,8 @@ and we can help to clarify things.
 
 ## Limitations
 
-There are a number of limitations we'd like you to be aware of.
-If any of these cause an issue please [contact us]("http://www.cloudmailin.com/contact_us").
+There are a number of limitations we'd like you to be aware of. If any of these cause an issue
+please [contact us].
 
 | Title        | Description |
 |--------------|-------------|

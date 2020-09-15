@@ -39,7 +39,7 @@ work from any AWS region without the need for specific changes.
 By default CloudMailin operates two clouds, when you setup incoming email on your own domain you can
 include one or both or these regions:
 
-| Cloud  | Location                                      |
+| Cloud  | Location        |
 |--------|-----------------|
 | cloud1 | AWS (us-east-1) |
 | cloud2 | AWS (eu-west-1) |

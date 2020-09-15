@@ -1,4 +1,4 @@
-subNames = { 'ruby': 'Rails', 'php': 'PHP', 'javascript': 'Node.js', 'c#': '.NET' }
+subNames = { 'ruby': 'Rails', 'php': 'PHP', 'javascript': 'Node.js', 'c#': '.NET', 'xml': 'XML' }
 
 Array::unique = ->
   output = {}

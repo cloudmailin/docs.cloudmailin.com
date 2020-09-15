@@ -9,3 +9,5 @@ vendor/bundle
 crash.log
 
 content/robots.txt
+
+/examples/

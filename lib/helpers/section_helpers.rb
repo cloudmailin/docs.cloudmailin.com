@@ -1,7 +1,11 @@
 module SectionHelpers
-  def in_section?(section_name, item = @item)
-    paths = item.identifier.to_s.split('/')
-    paths.any? { |path| path == section_name }
+  def in_section?(section, item: @item, include_self: false)
+    # paths = item.identifier.to_s.split('/')
+    # paths.any? { |path| path == section_name }
+    in_section = item.identifier.match?(/#{section}/)
+    is_section = item.identifier.match?(/\/?#{section}\/?\Z/)
+    # puts "#{item.identifier} in #{section}: #{in_section} #{is_section}"
+    in_section && (include_self || !is_section)
   end
 
   def current_section
@@ -10,7 +14,23 @@ module SectionHelpers
   end
 
   def items_for_section(section)
-    @items.select { |item| item.identifier =~ %r{^/#{section}} }
-      .sort_by { |item| item.identifier.to_s }
+    items = @items.select { |item| in_section?(section, item: item) }
+      .reject { |i| !i.attributes[:redirect_to].nil? }
+      .reject { |i| i.path.nil? } # Ignore items that don't resolve to a path
+      .sort_by { |i| name(i) }
+    # .sort_by { |item| item.identifier.to_s }
+    # puts items
+    items
+  end
+
+  def find_item(section)
+    return section if section.is_a?(Nanoc::Core::CompilationItemView)
+
+    @items.detect { |item| item.identifier.match?(/#{section}\Z/) }
+  end
+
+  def link_to_item(identifier)
+    item = find_item(identifier)
+    "[#{title(item)}](#{item.path})"
   end
 end

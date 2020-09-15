@@ -19,10 +19,21 @@ $table-bg-accent: $pre-bg;
 
 body {
   background-color: $brand-primary;
+  // font-size: 1.2rem;
+  line-height: 1.8em;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
 }
 
 a {
   color: #0066cc;
+}
+
+h1 {
+  margin-bottom: 0.5em;
 }
 
 h3, h4 {
@@ -129,6 +140,13 @@ nav {
 .documentation_content {
   @extend .col-md-8;
   @extend .col-md-push-4;
+
+  img {
+    max-width: 100%;
+    border: 1px solid $pre-border-color;
+    margin: 0px;
+    padding: 10px;
+  }
 }
 
 #footer {
@@ -170,7 +188,7 @@ table {
 
 pre {
   border-radius: 0;
-  max-height: 250px;
+  max-height: 300px;
   overflow: auto;
   // background-color: #f8f8f8;
   background-color: #fff;
@@ -184,6 +202,10 @@ blockquote {
   font-size: inherit;
   @extend .alert;
   @extend .alert-info;
+
+  p {
+    margin: 0px;
+  }
 }
 
 #comments {

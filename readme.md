@@ -23,7 +23,13 @@ docker-compose build
 docker-compose up docs
 ```
 
-You can then head to:
+You can then head to: http://localhost:5000/
+
+## Checks
+
+```bash
+docker-compose run docs bash -c "bundle exec nanoc check"
+```
 
 ## Deploying
 

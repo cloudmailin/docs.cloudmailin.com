@@ -7,7 +7,8 @@ description : Setting SMTP Queue Priority and Tagging on your CloudMailin Outbou
 
 CloudMailin allows you to select which queue you send your email to. This allows you to priorities messages like password resets whilst lowering the priority of things like Digest Emails.
 
-> Remember, digest emails must use the digest queue.
+> Remember, digest emails such as updates or weekly/monthly summaries must use the digest queue.
+> This enables us to prioritise emails such as password resets.
 
 ### Queues / Priority
 

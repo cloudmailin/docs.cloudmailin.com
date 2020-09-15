@@ -2,6 +2,8 @@ compile '/guide/' do
   filter :haml
 end
 
+ignore '*/_*'
+
 compile '*' do
   if item.binary?
     "#{item.identifier.chop}.#{item[:extension]}"

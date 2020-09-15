@@ -3,12 +3,13 @@
   %ul
     %li= link_to 'Home', '/'
     %li
-      Getting Started
+      Getting Started (Receiving)
       %ul
         %li= link_to 'Introduction', '/getting_started/'
         - for item in items_for_section('getting_started/receiving_email')
           %li= link_to title(item), item
         %li= link_to 'FAQs', '/getting_started/faqs/'
+        %li= link_to 'Getting Started Sending Email', '/outbound/'
     %li
       HTTP POST Formats
       %ul
@@ -43,20 +44,12 @@
       %ul
         %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/'
         %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/'
-        - unless in_section?('examples')
-          %li= link_to 'Examples', '/receiving_email/examples/'
-
-    - if in_section?('examples')
-      %li
-        Examples
-        %ul
-          %li= link_to 'Introduction', '/receiving_email/examples/'
-          %li= link_to 'Java', '/receiving_email/examples/java/'
-          %li= link_to '.Net', '/receiving_email/examples/net/'
-          %li= link_to 'Node.js', '/receiving_email/examples/node/'
-          %li= link_to 'PHP', '/receiving_email/examples/php/'
-          %li= link_to 'Python', '/receiving_email/examples/python/'
-          %li= link_to 'Ruby', '/receiving_email/examples/ruby/'
+        %li
+          = link_to 'Examples', '/receiving_email/examples/'
+          - if in_section?('receiving_email/examples', include_self: true)
+            %ul
+              - items_for_section('receiving_email/examples').each do |item|
+                %li= link_to title(item), item
 
     %li
       Outbound (Sending)
@@ -64,3 +57,9 @@
         %li= link_to 'Introduction', '/outbound/'
         %li= link_to 'Getting Started', '/outbound/getting_started/'
         %li= link_to 'Priorities and Tagging', '/outbound/priorities_and_tags/'
+        %li
+          = link_to 'Sending Email with SMTP', '/outbound/sending_email_with_smtp/'
+          - if in_section?('outbound/', include_self: true)
+            %ul
+              - items_for_section('outbound/examples').each do |item|
+                %li= link_to title(item), item

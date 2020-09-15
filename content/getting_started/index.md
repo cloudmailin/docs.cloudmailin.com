@@ -3,7 +3,7 @@ title: Receiving Incoming Email as an HTTP POST with CloudMailin
 name: Getting Started
 ---
 
-# Getting Started With CloudMailin
+# Receiving Mail With CloudMailin
 CloudMailin allows you to receive any volume of incoming email via a Webhook. You are given an email address that will forward any incoming message to your app, as an HTTP POST, within milliseconds. You can also seamlessly check the delivery status of each of your incoming emails via the dashboard, bounce emails that you do not wish to receive and use your own domain name.
 
 <iframe src="https://player.vimeo.com/video/37971504" width="640" height="360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
