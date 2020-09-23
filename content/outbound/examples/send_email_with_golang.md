@@ -1,5 +1,5 @@
 ---
-title: Send Email with Go
+title: Send Email with Go (GoLang)
 description: In this guide we'll cover sending email in Go Lang over SMTP with CloudMailin's SMTP settings.
 ---
 
@@ -9,7 +9,7 @@ description: In this guide we'll cover sending email in Go Lang over SMTP with C
 
 ## Sending with SMTP
 
-Sending email in Go is simple with the inbuilt `net/smtp` package. Go will automatically attempt to
+Sending email in Go (GoLang) is simple with the inbuilt `net/smtp` package. Go will automatically attempt to
 negotiate a TLS connection using STARTTLS when using `SendMail`.
 
 All we need to do is create `smtp.PlainAuth` to perform authentication. Like CloudMailin Go will
