@@ -11,7 +11,7 @@ module ItemHelpers
     filename(item).downcase.gsub(/[^a-z0-9\_]+/i, '-')
   end
 
-  def description
+  def description(item = @item)
     item.attributes[:description]
   end
 
@@ -27,7 +27,7 @@ module ItemHelpers
     url += candidate.identifier
   end
 
-  def filename(item  = @item)
+  def filename(item = @item)
     item.attributes[:filename].split('/').last.tr('_', " ").split('.').first
   end
 
