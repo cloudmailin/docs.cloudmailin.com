@@ -13,7 +13,6 @@ compile '*' do
     when 'markdown', 'md'
       filter :erb unless item.attributes[:skip_erb]
       filter :common_marker
-      # filter :colorize_syntax, default_colorizer: :rouge
       layout 'application'
     when 'scss'
       filter :sprockets, css_compressor: :scss
@@ -25,7 +24,8 @@ compile '*' do
     when 'xml'
       filter :erb
     when 'js', 'txt', 'json', 'css'
-      item.identifier.chop + '.' + item[:extension]
+      filter :erb
+      item.identifier.chop + '.' + ext
     else
       raise "Unknown filetype #{item[:extension]}"
     end
@@ -44,7 +44,7 @@ route '*' do
     when 'coffee'
       item.identifier.chop + '.js'
     when 'js', 'txt', 'json', 'css', 'xml'
-      item.identifier.chop + '.' + item[:extension]
+      item.identifier.chop + '.' + ext
     else
       item.identifier + 'index.html'
     end
