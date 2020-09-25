@@ -30,9 +30,9 @@
       #container
         -if ENV['NANOC_ENV'] == 'development'
           .info Development Mode
-        - if description.nil? && ENV['NANOC_ENV'] == 'development'
-          .warning
-            %p Description not set
+          - if description.nil?
+            .warning
+              %p Description not set
         .documentation_content{id: identifier }
           %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
 
@@ -42,6 +42,9 @@
           - unless redirect_to
             -# Show the main content for this page
             = find_and_preserve(yield)
+
+          -if ENV['NANOC_ENV'] == 'development'
+            %pre.warning>= @item.attributes.map { |k, v| "#{k}: #{v.inspect}"}.join("\n")
 
           #comments
             = render 'comments' unless disable_comments?
