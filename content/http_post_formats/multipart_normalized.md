@@ -576,9 +576,9 @@ http://example.com/file.txt
 ```
 ```php
 <?php
-  $attachment = $_POST['attachments'][0];
-  $name = $_POST['attachments'][0]['file_name'];
-  $url = $_POST['attachments'][0]['url'];
+  print_r($_POST_["attachments"]);
+  $name = $_POST['attachments']['file_name'][0];
+  $url = $_POST['attachments']['url'][0];
 ?>
 ```
 ```javascript

@@ -20,6 +20,7 @@
         %li= link_to 'Multipart Format', '/http_post_formats/multipart/'
         %li= link_to 'Raw Message Format', '/http_post_formats/raw/'
         %li= link_to 'Original Format', '/http_post_formats/original/'
+        -# %li= link_to 'Examples', '/receiving_email/examples/'
     %li
       Receiving Email
       %ul
@@ -39,17 +40,17 @@
         %li= link_to 'SPAM Filtering', '/features/spam_filtering/'
         %li= link_to 'Virus Scanning', '/features/virus_scanning/'
         %li= link_to 'IP Address List', '/receiving_email/ip_addresses/'
-    %li
-      Local Development and Testing
-      %ul
-        %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/'
-        %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/'
         %li
           = link_to 'Examples', '/receiving_email/examples/'
           - if in_section?('receiving_email/examples', include_self: true)
             %ul
               - items_for_section('receiving_email/examples').each do |item|
                 %li= link_to title(item), item
+    %li
+      Local Development and Testing
+      %ul
+        %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/'
+        %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/'
 
     %li
       Outbound (Sending)
@@ -59,7 +60,9 @@
         %li= link_to 'Priorities and Tagging', '/outbound/priorities_and_tags/'
         %li
           = link_to 'Sending Email with SMTP', '/outbound/sending_email_with_smtp/'
-          - if in_section?('outbound/', include_self: true)
-            %ul
+          %ul
+            - if in_section?('outbound/', include_self: true)
               - items_for_section('outbound/examples').each do |item|
                 %li= link_to title(item), item
+            - else
+              %li= link_to 'Examples', '/outbound/sending_email_with_smtp/#examples'

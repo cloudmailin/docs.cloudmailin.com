@@ -36,4 +36,9 @@ module SectionHelpers
     item = find_item(identifier)
     "[#{title(item)}](#{item.path})"
   end
+
+  def url_to_item(identifier)
+    item = find_item(identifier)
+    item.path
+  end
 end

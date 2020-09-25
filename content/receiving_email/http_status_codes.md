@@ -1,3 +1,8 @@
+---
+title: HTTP Status Codes - Accepting, Rejecting and Retrying Emails
+description: HTTP Status Codes - Accepting, Rejecting and Retrying Emails. How CloudMailin reacts to your server's Status Response.
+---
+
 # Accepting, Rejecting and Retrying Messages
 
 CloudMailin will send your email as an HTTP POST request to the url that you specify. Depending on the status code we receive from your app several things can happen. The message will either be rejected, delayed or considered successfully delivered.
