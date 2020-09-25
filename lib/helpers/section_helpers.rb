@@ -26,7 +26,10 @@ module SectionHelpers
   def find_item(section)
     return section if section.is_a?(Nanoc::Core::CompilationItemView)
 
-    @items.detect { |item| item.identifier.match?(/#{section}\Z/) }
+    item = @items.detect { |i| i.identifier.match?(/#{section}\Z/) }
+    raise "Cannot find #{section}" if item.nil?
+
+    item
   end
 
   def link_to_item(identifier)
