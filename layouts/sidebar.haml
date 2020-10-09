@@ -14,12 +14,12 @@
       HTTP POST Formats
       %ul
         %li= link_to 'Introduction to POST Formats', '/http_post_formats/'
-        %li= link_to 'Normalized JSON', '/http_post_formats/json_normalized/'
-        %li= link_to 'Normalized Multipart', '/http_post_formats/multipart_normalized/'
-        %li= link_to 'JSON Format', '/http_post_formats/json/'
-        %li= link_to 'Multipart Format', '/http_post_formats/multipart/'
+        %li= link_to 'JSON (Normalized)', '/http_post_formats/json_normalized/'
+        %li= link_to 'Multipart (Normalized)', '/http_post_formats/multipart_normalized/'
         %li= link_to 'Raw Message Format', '/http_post_formats/raw/'
-        %li= link_to 'Original Format', '/http_post_formats/original/'
+        %li= link_to 'JSON Format', '/http_post_formats/json/', class: 'deprecated'
+        %li= link_to 'Multipart Format', '/http_post_formats/multipart/', class: 'deprecated'
+        %li= link_to 'Original Format', '/http_post_formats/original/', class: 'deprecated'
         -# %li= link_to 'Examples', '/receiving_email/examples/'
     %li
       Receiving Email

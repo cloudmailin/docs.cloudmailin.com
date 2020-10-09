@@ -1,5 +1,5 @@
 ---
-title: Normalised JSON Hash Format
+title: JSON (Normalised) Hash Format
 ---
 
 # Normalised JSON Hash Email Message Format

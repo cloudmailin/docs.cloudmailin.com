@@ -1,8 +1,11 @@
 ---
-title: Multipart Form Data Hash Format
+title: Multipart Form Data Hash Format (Depracated)
 ---
 
 # Multipart/form-data Hash Email Message Format
+
+> The original multipart format has been deprecated. We recommend using the
+> <%= link_to_item '/http_post_formats/multipart_normalized/' %> for new apps.
 
 The JSON and multipart formats are incredibly similar. It's only the transport method that differs. The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
 

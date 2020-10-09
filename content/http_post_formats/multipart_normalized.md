@@ -1,5 +1,5 @@
 ---
-title: Normalised Multipart Form Data Hash Format
+title: Multipart Form/Data (Normalised) Hash Format
 ---
 
 # Multipart/form-data Normalised Hash Email Message Format

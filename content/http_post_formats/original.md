@@ -1,8 +1,12 @@
 ---
-title: Original HTTP POST Format
+title: Original HTTP POST Format (Depracated)
 ---
 
 # Original HTTP POST Format
+
+> The original format has been deprecated. We recommend using either the
+> <%= link_to_item '/http_post_formats/multipart_normalized/' %>
+> or <%= link_to_item '/http_post_formats/json_normalized/' %> for new apps.
 
 The original HTTP POST Format transfers emails to your web app using `multipart/form-data` requests. The POST contains the following parameters:
 

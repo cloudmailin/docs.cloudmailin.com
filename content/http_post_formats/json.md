@@ -1,8 +1,11 @@
 ---
-title: JSON Hash Format
+title: JSON Hash Format (Depracated)
 ---
 
 # JSON Hash Email Message Format
+
+> The original format has been deprecated. We recommend using the
+> <%= link_to_item '/http_post_formats/json_normalized/' %> for new apps.
 
 The JSON and multipart formats are incredibly similar. It's only the transport method that differs. The format consists of four main elements, `envelope`, `headers`, `body` and `attachments`. The `body` consists of two parameters `plain` and `html`.
 

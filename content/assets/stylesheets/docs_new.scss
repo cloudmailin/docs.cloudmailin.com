@@ -32,6 +32,15 @@ a {
   color: #0066cc;
 }
 
+a.deprecated {
+  color: mix(#0066cc, #aaa, 20%);
+
+  &::after {
+    content: ' (deprecated)';
+    // color: #999;
+  }
+}
+
 h1 {
   margin-bottom: 0.5em;
 }
