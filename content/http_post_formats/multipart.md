@@ -523,6 +523,7 @@ URL based attachments will contain the following parameters:
 | `content_type`  | The content type of the attachment.                                                                  |
 | `size`          | The size of the attachment.                                                                          |
 | `disposition`   | The disposition of the attachment either `attachment` or `inline`                                    |
+| `content_id`    | The id of the attachment if it's `inline`. This can be used to display inline images for example.    |
 
 URL attachments are attachments that have been sent to a message store. Instead of content they will contain a link to allow you to retrieve that content. URL attachments will be formatted as an array of attachment details. The following is an attachments parameter containing URL attachments:
 
