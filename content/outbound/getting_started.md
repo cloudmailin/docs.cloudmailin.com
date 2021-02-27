@@ -37,7 +37,7 @@ We need to set the following DNS records (these are just examples):
 | TXT    | `1234._domainkeys.example.com` | The DKIM record placed on the root example.com domain.|
 
 Details for your domain specifically cen be found on the domain's
-[detail page](https://www.cloudmailin.com/beacon/domains/).
+[detail page](https://www.cloudmailin.com/outbound/domains/).
 
 ### SMTP Settings
 

@@ -47,4 +47,4 @@ email over SMTP:
   * <%= link_to_item(item) %><% end %>
 
 
-[account page]: https://www.cloudmailin.com/beacon/accounts
+[account page]: https://www.cloudmailin.com/outbound/accounts
