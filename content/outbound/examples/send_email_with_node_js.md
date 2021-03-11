@@ -1,16 +1,56 @@
 ---
-title: Send email with Node JS & Express
+title: Send email with Node JS, Typescript & Express
 description: In this guide we'll cover sending email in Node JS and Express over SMTP with CloudMailin.
 ---
 
-# Sending Email with Node JS and Express
+# Sending Email with Node.js, Typescript and Express
 
-* [Sending Email with Node JS](#sending-mail-with-node)
+* [Sending Email via API](#sending-mail-via-the-api)
+* [Sending Email with Node via SMTP](#sending-mail-with-node-via-smtp)
 * [Sending Email with Express](#sending-mail-with-express)
 
 > To obtain your SMTP credentials you can create a free [outbound account] with CloudMailin.
 
-## Sending mail with Node
+## Sending mail via the API
+
+To send email via our API in Typescript or Node.js you can download the CloudMailin NPM package.
+
+```sh
+npm install --save cloudmailin
+```
+
+Once the package is installed we just need to create a message client and send the message.
+More details can be found on the [Message API] page.
+
+```typescript
+import { MessageClient } from "cloudmailin"
+
+const client = new MessageClient({ username: USERNAME, apiKey: API_KEY});
+const response = await client.sendMessage({
+  to: 'test@example.net',
+  from: 'test@example.com',
+  plain: 'test message',
+  html:  '<h1>Test Message</h1>',
+  subject: "hello world"
+});
+```
+```javascript
+const cloudmailin = require("cloudmailin")
+
+const client = new MessageClient({ username: USERNAME, apiKey: API_KEY});
+const response = await client.sendMessage({
+  to: 'test@example.net',
+  from: 'test@example.com',
+  plain: 'test message',
+  html:  '<h1>Test Message</h1>',
+  subject: "hello world"
+});
+```
+
+## Sending mail with Node via SMTP
+
+> These examples are for sending email with Node.js / Typescript via SMTP
+> To send via API please checkout [Sending via the API](#sending-mail-via-the-api)
 
 To send email in Node we'll use [nodemailer], a thirdparty library for email in Node JS.
 
@@ -135,5 +175,7 @@ above is the template used for rendering the email.
 
 <%= render 'outbound_summary' %>
 
+
+[Message API]: <%= url_to_item('/outbound/sending_email_via_json_api/') %>
 [nodemailer]: https://github.com/nodemailer/nodemailer/
 [Express mailer]: https://github.com/RGBboy/express-mailer
