@@ -8,6 +8,7 @@ use_helper Nanoc::Helpers::Rendering
 use_helper Nanoc::Helpers::XMLSitemap
 use_helper ItemHelpers
 use_helper SectionHelpers
+use_helper OpenapiHelpers
 
 def image_tag(path, options)
   full_path = path =~ /^http:\/\// ? path : "/assets/images/#{path}"

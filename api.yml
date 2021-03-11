@@ -1,0 +1,846 @@
+openapi: 3.0.0
+
+info:
+  title: CloudMailin API
+  description: |
+    The CloudMailin Core API.
+
+    This is currently for private Beta, if an API key is required please
+    [contact us](https://www.cloudmailin.com/contact_us).
+
+    # Account ID.
+
+    Please note that all endpoint require sending the accountID as part of the URL.
+    This can be found on your account page in the GUI.
+
+    However, for sending email over API this ID is the Username in your SMTP credentials.
+
+    # Rate Limiting
+
+    Calls to the API are limited to 5 calls per minute.
+
+    ## Incoming Statuses
+
+    For some end points this may not be enough, specifically the `incoming_statuses` endpoint
+    returns a fixed number of results and may receive faster than the results can be fetched.
+    Please [contact us](https://www.cloudmailin.com/contact_us) if this is an issue.
+
+  version: 0.1.0
+  contact:
+    name: CloudMailin Support
+    url: https://www.cloudmailin.com/
+  x-logo:
+    url: https://assets.cloudmailin.com/assets/logo_api.png
+    backgroundColor: "#4d7ABA"
+    altText: "CloudMailin logo"
+
+servers:
+  - url: http://localhost:3000/api/v0.1/{accountID}
+    description: Developement usage
+    variables:
+      accountID:
+        description: Your account identifier
+        default: 21c3976d80ba5e42
+  - url: https://api.cloudmailin.com/api/v0.1/{accountID}
+    description: |
+      The core API server.
+      In future this may be separated for regions and may require updating.
+    variables:
+      accountID:
+        description: |
+          Your account identifier this can be found on the account page.
+
+          Please note that for sending email this is the Server's Username
+        default: aaaaaaaaaaaaaaaa
+
+security:
+  - bearerAPIToken: []
+
+components:
+  securitySchemes:
+    bearerAPIToken:
+      type: http
+      scheme: bearer
+      description: |
+        Authentication uses the `Authorization` HTTP Request header.
+        Your API key can be obtained by contacting CloudMailin support and is tied to a
+        specific account.
+
+        You can actually specify the account token in two ways, the default is:
+
+          `Authorization: Bearer API_TOKEN`
+
+        Additionally it's possible to use HTTP Basic Authentication for this with the key although
+        we only recommend using this if it's not possbile to use the method described above.
+
+    smtpAuth:
+      type: http
+      scheme: bearer
+      description: |
+        This authentication method is used only for the Send Message endpoint.
+        Authentication uses the `Authorization` HTTP Request header.
+        Your API Token for this method can be found with your SMTP settings.
+
+        `Authorization: Bearer SMTP_TOKEN`
+
+  schemas:
+    Address:
+      type: object
+      required:
+        - target
+        - target_format
+      additionalProperties: false
+      properties:
+        id:
+          $ref: "#/components/schemas/addressID"
+        target:
+          type: string
+        target_format:
+          type: string
+          enum: [json+n, multipart+n]
+        nickname:
+          type: string
+          nullable: true
+
+    Addresses:
+      type: array
+      items:
+        $ref: "#/components/schemas/Address"
+
+    CustomDomain:
+      type: object
+      externalDocs:
+        url: https://docs.cloudmailin.com/receiving_email/custom_domains/
+      required:
+        - domain
+      additionalProperties: false
+      properties:
+        id:
+          $ref: "#/components/schemas/customDomainID"
+        domain:
+          type: string
+          example: example.com
+          description: |
+            The domain to receive email on. MX records for the domain must already be set.
+        auth_regex:
+          type: string
+          nullable: true
+          example: allowed[0-9]*@example.com
+        domain_target:
+          type: string
+          nullable: true
+          description: |
+            Domain target changes the address target for this specific Custom Domain.
+            This feature is not available to all accounts.
+          example: https://www.cloudmailin.com/target/201
+
+    CustomDomains:
+      type: array
+      items:
+        $ref: "#/components/schemas/CustomDomain"
+
+    IncomingStatus:
+      type: object
+      properties:
+        message_id:
+          type: string
+          description: The message ID.
+          example: CAB=Hge+gC2LqXPu14qy82qPLk0YXcKrLeS7WZ3MPkOJJ-tMkMQ@mail.gmail.com
+          readOnly: true
+          nullable: true
+        to:
+          type: string
+          description: |
+            The message recipient email address.
+            This is the address specified in the SMTP transaction.
+          example: recipient@example.net
+          readOnly: true
+          nullable: true
+        from:
+          type: string
+          description: |
+            The message sender's email address.
+            This is the address specified in the SMTP transaction.
+          example: sender@example.net
+          readOnly: true
+          nullable: true
+        status:
+          type: string
+          description: |
+            The message status.
+            This is normally the HTTP Response code received from the server but may also
+            include server statuses such as client_timeout
+          example: 200
+          readOnly: true
+          nullable: true
+        subject:
+          type: string
+          example: Example Subject Line
+          readOnly: true
+          nullable: true
+        tls:
+          type: string
+          example: TLSv1.3
+          readOnly: true
+          nullable: true
+        # md5:
+        #   type: string
+        #   readOnly: true
+        #   nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+
+    IncomingStatuses:
+      type: array
+      items:
+        $ref: "#/components/schemas/IncomingStatus"
+
+    MessageCommon:
+      required:
+        - from
+        - to
+      type: object
+      properties:
+        id:
+          type: string
+          example: 724b9ef2-94ee-4fb0-b722-082204633911
+          format: uuid
+          readOnly: true
+        from:
+          type: string
+          example: Sender Name <sender@example.com>
+          description: |
+            The from addrress of the email message.
+            This is the address to be used in the SMTP transaction itself.
+            Although it will be replaced with an address used for bounce handling.
+            This must match a `from:` header in the email headers.
+        to:
+          oneOf:
+            - type: array
+              items:
+                type: string
+              example:
+                - Recipient <recipient@example.com>
+                - Another <another@example.com>
+            - type: string
+              example: Recipient <recipient@example.com>, Another <another@example.com>
+          description: |
+            The To addrress of the email message.
+            This is the address to be used in the SMTP transaction itself.
+            This must match a `To:` header in the email headers.
+        test_mode:
+          type: boolean
+          example: false
+          description: |
+            Whether to send this message in test mode.
+            This will validate the messge but no actually send it if true.
+            If the server is in test mode then it will always be in test mode
+            regardless of this value.
+        subject:
+          type: string
+          example: "Hello from CloudMailin 😃"
+          description: The subject of the email. This will override any subject set in headers
+            or raw messages.
+        tags:
+          oneOf:
+            - type: array
+              items:
+                type: string
+              example:
+                - api-tag
+                - cloudmailin-tag
+            - type: string
+              example: api-tag,cloudmailin-tag
+          description: |
+            Tags that help filter the messages within the dashboard
+
+    Message:
+      allOf:
+        - $ref: "#/components/schemas/MessageCommon"
+        - type: object
+          properties:
+            plain:
+              type: string
+              example: "Hello Plain Text"
+              description: |
+                The plain text part of the email message.
+                Either the plain text or the html parts are required.
+            html:
+              type: string
+              example: <h1>Hello Html</h1>
+              description: |
+                The HTML part of the email message.
+                Either the plain text or the html parts are required.
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+              example:
+                x-api-test: Test
+                x-additional-header: Value
+            priority:
+              type: string
+              enum: [standard, priority, digest]
+              example: standard
+            attachments:
+              type: array
+              items:
+                $ref: "#/components/schemas/MessageAttachment"
+
+    MessageAttachment:
+      type: object
+      required:
+        - file_name
+        - content
+        - content_type
+      properties:
+        file_name:
+          type: string
+          example: pixel.png
+          description: The file name of the attachment
+        content:
+          type: string
+          example: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0rdr1HwAFHwKCk87e6gAAAABJRU5ErkJggg==
+          description: |
+            The Base64 encoded representation of the content.
+            This shouldn't contain newlines within JSON.
+        content_type:
+          type: string
+          example: image/png
+          description: The mime content type of the file such as `image/jpeg`
+        content_id:
+          type: string
+          example: logo
+          description: |
+            An optional content identifier.
+            This is used to mark the attachment as inline and would allow inline display of the
+            attachment within the html content.
+            Within the HTML render an image tag for example with cid:
+            <img src="cid:logo" alt="Logo" /> foo
+
+    RawMessage:
+      allOf:
+        - $ref: "#/components/schemas/MessageCommon"
+        - type: object
+          properties:
+            raw:
+              type: string
+              description: |
+                A full raw email.
+                This should consist of both headers and a message body.
+                `To` and `From` headers must be present and match those in the request.
+                Multiple parts, text and html or other mixed content are
+                acceptable but the message must be valid and RFC822 compliant.
+
+                Any attachments intended to be sent in the Raw format must also be
+                encoded and included here.
+              example: |
+                To: Recipient <recipient@example.com>, Another <another@example.com>
+                From: Sender <sender@example.com>
+                Subject: Test from Raw Email Message
+                Content-Type: text/html;
+                  charset=UTF-8
+
+                <h1> Test Message: </h1>
+
+                <p>Hi <strong>There</strong>,</p>
+                <p>This is an example raw message.</p>
+                <p>Thanks,<br />
+                CloudMailin</p>
+
+    SendingDomain:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: "#/components/schemas/sendingDomainID"
+        domain:
+          type: string
+          description: The domain used for sending mail
+          example: example.com
+        mta_domain:
+          type: string
+          description: |
+            The domain used for sending mail.
+            This is also the domain that requires the CNAME record.
+          example: mta.example.com
+          readOnly: true
+        dkim_selector:
+          type: string
+          description: The selector (domain prefix) we require for the DKIM TXT record.
+          example: 0e7c28e2e4cm
+          readOnly: true
+        dkim_domain:
+          type: string
+          description: The full required domain for the DKIM TXT record.
+          example: 0e7c28e2e4cm._domainkey.example.com
+          readOnly: true
+        dkim_public_record:
+          type: string
+          description: |
+            The public DKIM record that we expect to be set for the Domain.
+            Note that the record should be placed at {selector}._domainkey.{domain}.
+          # The only way I could get it to not introduce spaces was to add quotes
+          # and escape the new line
+          example: "v=DKIM1; h=sha256; k=rsa; s=email; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz\
+            PzZ1k4BjmTZbaS43mhI+HJE2seKeudrExH7kd7YzQ7H0Ci3BBvzQkh6WjUGdibEUOgdo0Mm4VN4H6myc9L\
+            vX8qpM+C4MaBNW3hr2kOG/nKSI+Gp0usSj+THc3/4u1+J7IhKBuKaZdj4k5uDKcwKw3uM3RDiwQjppVJvO\
+            RhuvoMfsGjD296FatQf53j9XExxM4j2ugLnHdhtXtVsGfQb3DoE87Hzc2W6wg7Je3C8eZZ/w9cI2OHBFL3\
+            xi39dgwOlbMrLUqTPtvIl+aRMikGS2RZadiGEPnXVS3Ac57ekqprDD7M7Uapyn2a0NX4A/VOtWOFceXSk6\
+            iHBbDlM/fO3SwIDAQAB"
+          readOnly: true
+        required_cname:
+          type: string
+          description: The CNAME record required on the MTA domain.
+          example: feedback-smtp.cloudmta.net
+          readOnly: true
+        dkim_verified:
+          type: boolean
+          description: Has the DKIM record been set
+          readOnly: true
+          nullable: true
+        return_path_verified:
+          type: boolean
+          description: |
+            Has the return path record been set
+            (this is set by the CNAME on the MTA domain)e: true
+          readOnly: true
+          nullable: true
+        spf_verified:
+          type: boolean
+          description: |
+            Has the return path record been set
+            (this is set by the CNAME on the MTA domain)
+          readOnly: true
+          nullable: true
+
+    SendingDomains:
+      type: array
+      items:
+        $ref: "#/components/schemas/SendingDomain"
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          default: 404
+        error:
+          type: string
+          default: Not Found
+
+    UnauthorizedError:
+      type: object
+      properties:
+        status:
+          type: integer
+          enum: [401]
+        error:
+          type: string
+          default: Unauthorized
+
+    ForbiddenError:
+      type: object
+      properties:
+        status:
+          type: integer
+          enum: [403]
+        error:
+          type: string
+          default: Forbidden
+          enum: [Forbidden]
+
+    NotFoundError:
+      type: object
+      properties:
+        status:
+          type: integer
+          enum: [404]
+        error:
+          type: string
+          default: Not Found
+
+    UnprocessableEntityError:
+      type: object
+      properties:
+        status:
+          type: integer
+          enum: [422]
+        error:
+          type: string
+          description: The description of the failed validation
+          default: Unprocessable Entity
+
+    accountID:
+      type: string
+      description: Identifier, please be aware that the format may change
+      example: 123
+
+    addressID:
+      type: string
+      example: aaaa740b4c5c37b1aaaa
+      description: Identifier, please be aware that the format may change
+      readOnly: true
+      pattern: "[0-9a-f]{20}"
+
+    customDomainID:
+      $ref: "#/components/schemas/id"
+
+    sendingDomainID:
+      $ref: "#/components/schemas/id"
+
+    id:
+      type: string
+      example: 226c806f758619c5
+      pattern: "[0-9a-f]{16}"
+      description: Identifier, please be aware that the format may change
+      readOnly: true
+
+  parameters:
+    accountID:
+      in: path
+      name: accountID
+      required: true
+      schema:
+        $ref: "#/components/schemas/accountID"
+
+    addressID:
+      in: query
+      name: address_id
+      required: true
+      schema:
+        $ref: "#/components/schemas/addressID"
+
+    customDomainID:
+      in: path
+      name: customDomainID
+      required: true
+      schema:
+        $ref: "#/components/schemas/customDomainID"
+
+    sendingDomainID:
+      in: path
+      name: sendingDomainID
+      required: true
+      schema:
+        $ref: "#/components/schemas/sendingDomainID"
+
+    page:
+      in: query
+      name: page
+      deprecated: true
+      description: The page of results to return
+      schema:
+        type: integer
+
+  responses:
+    401:
+      description: The user is not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UnauthorizedError"
+    403:
+      description: The user is not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ForbiddenError"
+    404:
+      description: Resource be found or does not belong to this account
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NotFoundError"
+    422:
+      description: Unprocessable Entity, most likely your input does not pass validation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UnprocessableEntityError"
+
+paths:
+  /addresses:
+    get:
+      summary: Get all addresses in the account
+      tags:
+        - "Addresses"
+      responses:
+        200:
+          description: A list of addresses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Addresses"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+
+  /addresses/{addressID}:
+    get:
+      summary: Get a specific address
+      tags:
+        - "Addresses"
+      parameters:
+        - in: path
+          name: addressID
+          required: true
+          schema:
+            $ref: "#/components/schemas/addressID"
+      responses:
+        200:
+          description: A list of addresses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+
+  /custom_domains:
+    get:
+      summary: Get all custom domains for a given address
+      tags:
+        - "Inbound Domains"
+      parameters:
+        - $ref: "#/components/parameters/addressID"
+        - $ref: "#/components/parameters/page"
+      responses:
+        200:
+          description: A list of Custom Domainis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomDomains"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+
+    post:
+      summary: Create a custom domain for a given address
+      tags:
+        - "Inbound Domains"
+      parameters:
+        - $ref: "#/components/parameters/addressID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomDomain"
+      responses:
+        201:
+          description: The created ustom domain
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomDomain"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+        422:
+          $ref: "#/components/responses/422"
+
+  /custom_domains/{customDomainID}:
+    delete:
+      summary: Delete a Custom Domaiin with the given id
+      tags:
+        - "Inbound Domains"
+      description: Note that a 202 response is expected. Deletion may not happen immediately.
+      parameters:
+        - $ref: "#/components/parameters/addressID"
+        - $ref: "#/components/parameters/customDomainID"
+      responses:
+        202:
+          description: Custom Domain Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomDomain"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+
+  /messages:
+    post:
+      summary: Create a new Email Message for a given outbound account (server)
+      operationId: sendMessage
+      tags:
+        - "Messages"
+      security:
+        - smtpAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Message"
+                  - $ref: "#/components/schemas/RawMessage"
+      responses:
+        202:
+          description: The message has been accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageCommon"
+        401:
+          $ref: "#/components/responses/401"
+        422:
+          $ref: "#/components/responses/422"
+
+
+  /sending_domains:
+    get:
+      summary: Get all outbound domains in the account
+      tags:
+        - "Sending Domains"
+      parameters:
+        - $ref: "#/components/parameters/page"
+      responses:
+        200:
+          description: A list of domains
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendingDomains"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+    post:
+      summary: Create an Outbound Sending Domain for a given account
+      tags:
+        - "Sending Domains"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendingDomain"
+      responses:
+        201:
+          description: The created Domain
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendingDomain"
+        401:
+          $ref: "#/components/responses/401"
+        422:
+          $ref: "#/components/responses/422"
+
+  /sending_domains/{sendingDomainID}:
+    get:
+      summary: Get a specific Outbound Sending Domain
+      tags:
+        - "Sending Domains"
+      parameters:
+        - $ref: "#/components/parameters/sendingDomainID"
+      responses:
+        200:
+          description: The Domain
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendingDomain"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+    delete:
+      summary: Delete the specified Outbound Sending Domain
+      tags:
+        - "Sending Domains"
+      description: Note that a 202 response is expected. Deletion may not happen immediately.
+      parameters:
+        - $ref: "#/components/parameters/sendingDomainID"
+      responses:
+        202:
+          description: Custom Domain Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendingDomain"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+
+  /sending_domains/{sendingDomainID}/verify:
+    post:
+      summary: Verify (Check) the DNS records have been set for the given domain
+      tags:
+        - "Sending Domains"
+      parameters:
+        - $ref: "#/components/parameters/sendingDomainID"
+      responses:
+        200:
+          description: The Sending Domain we attempted to verify
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendingDomain"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
+        422:
+          description: Details of the sending domain that failed verification
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendingDomain"
+
+  /incoming_statuses:
+    get:
+      summary: Get all incomming message statuses for a given address
+      tags:
+        - "Addresses"
+      description: |
+        Incoming statuses are ordered newest first.
+        This doesn't really help with pagination as new records will be added frequently.
+        A new scheme will be added in future to handle this issue more effectively.
+      parameters:
+        - $ref: "#/components/parameters/addressID"
+        - $ref: "#/components/parameters/page"
+        - in: query
+          name: query
+          # example: 'subject: reply, status: 200'
+          example:
+          description: A query string to search the statuses for.
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of Received Message Statuses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncomingStatuses"
+        401:
+          $ref: "#/components/responses/401"
+        403:
+          $ref: "#/components/responses/403"
+        404:
+          $ref: "#/components/responses/404"
