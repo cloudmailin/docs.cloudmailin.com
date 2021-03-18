@@ -86,7 +86,7 @@ Array
     [received] => by mail-qv1-f65.google.com with SMTP id p7so20148692qvl.4        for <postman@example.net>; Wed, 08 Jul 2020 02:45:03 -0700
     [date] => Wed, 08 Jul 2020 10:44:51 +0100
     [from] => Test User <test@example.com>
-    [to] => postman@cloudmailin.net
+    [to] => postman@example.net
     [message_id] => <CALazKR8Zr8Lsv+SUAeuaL-vrhWSCK36TRU8=7HjsenxwaP9ZbA@mail.gmail.com>
     [subject] => Test Email
     ...

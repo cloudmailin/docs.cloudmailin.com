@@ -59,8 +59,8 @@ Now we have a transport we can create and send the mail message:
 ```php
 $message = (new Swift_Message())
   ->setSubject('Hello from PHP SwiftMailer')
-  ->setFrom(['from@cloudmailin.com'])
-  ->setTo(['to@cloudmailin.com' => 'User Name']);
+  ->setFrom(['from@example.com'])
+  ->setTo(['to@example.com' => 'User Name']);
 
 $headers = ($message->getHeaders())
   -> addTextHeader('X-CloudMTA-Class', 'standard');

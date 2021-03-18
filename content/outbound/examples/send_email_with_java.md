@@ -84,8 +84,8 @@ With our message body and subject set all that's left is to set the priority of 
 ```java
   try {
       MimeMessage msg = new MimeMessage(session);
-      msg.setFrom(new InternetAddress("from@cloudmailin.com"));
-      InternetAddress[] address = {new InternetAddress("to@cloudmailin.com")};
+      msg.setFrom(new InternetAddress("from@example.com"));
+      InternetAddress[] address = {new InternetAddress("to@example.com")};
       msg.setRecipients(Message.RecipientType.TO, address);
       msg.setSubject("Jakarta Mail APIs Test");
       msg.addHeader("x-cloudmta-class", "standard");
@@ -136,8 +136,8 @@ public class App
 
         try {
             MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("from@cloudmailin.com"));
-            InternetAddress[] address = {new InternetAddress("to@cloudmailin.com")};
+            msg.setFrom(new InternetAddress("from@example.com"));
+            InternetAddress[] address = {new InternetAddress("to@example.com")};
             msg.setRecipients(Message.RecipientType.TO, address);
             msg.setSubject("Jakarta Mail APIs Test");
             msg.addHeader("x-cloudmta-class", "standard");
