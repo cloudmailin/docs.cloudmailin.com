@@ -51,6 +51,6 @@ route '*' do
   end
 end
 
-layout '/application/', :haml, format: :html5, encoding: 'utf-8', language: 'en'
+layout '/application/', :haml, format: :html5, encoding: 'utf-8'
 layout '/sidebar/', :haml, encoding: 'utf-8'
 layout '*', :erb

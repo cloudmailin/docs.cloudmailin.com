@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Generating
 gem 'nanoc'
 gem 'commonmarker'
-gem "haml", '~> 4.0'
+gem "haml", '~> 5.0'
 gem "sass"
 gem 'nanoc-sprockets3', require: 'nanoc-sprockets'
 gem 'bootstrap-sass', '~> 3.4'
