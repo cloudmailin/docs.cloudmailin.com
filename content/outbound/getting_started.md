@@ -1,5 +1,6 @@
 ---
 title: Getting Setup Sending Email with CloudMailin Outbound
+image: out
 ---
 
 # Getting Started Sending Email

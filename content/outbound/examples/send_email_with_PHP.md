@@ -1,6 +1,7 @@
 ---
 title: Send email with PHP
 description: In this guide we'll cover sending email in PHP over SMTP with CloudMailin.
+image: php
 ---
 
 # Sending Email with PHP

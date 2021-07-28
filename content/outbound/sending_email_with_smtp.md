@@ -1,6 +1,7 @@
 ---
 title: Sending Email with SMTP
 description: CloudMailin's SMTP settings for sending email
+image: out
 ---
 
 # Sending Email with SMTP

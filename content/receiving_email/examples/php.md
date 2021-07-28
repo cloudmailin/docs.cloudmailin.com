@@ -1,6 +1,7 @@
 ---
 title: Receiving Email with PHP and Laravel
 description: There are a number of ways to receive email in PHP or Laravel. We'll cover the simplest using CloudMailin to send email to your PHP app over HTTP POST.
+image: php
 ---
 
 # Receiving Email with PHP and Laravel

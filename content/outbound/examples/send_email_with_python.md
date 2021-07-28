@@ -1,6 +1,7 @@
 ---
 title: Send email with Python & Django
 description: In this guide we'll cover sending email in Python and Django over SMTP with CloudMailin.
+image: python
 ---
 
 # Sending Email with Python and Django

@@ -1,6 +1,7 @@
 ---
 title: Sending Email with CloudMailin Outbound
 description: Getting started Sending Transactional Email over SMTP with CloudMailin Outbound.
+image: out
 ---
 
 # Sending with CloudMailin Outbound

@@ -1,6 +1,8 @@
 ---
 title: Receiving Email with .Net
+description: Receiving email with .Net and CloudMailin
 skip_erb: true
+image: net
 ---
 
 # Receiving Email with .Net

@@ -13,10 +13,22 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5"}
     - if description
       %meta{name: 'description', content: description}
+      %meta{property: 'og:description', content: description}
     - if redirect_to
       - unless ENV['NANOC_ENV'] == 'development'
         %meta(http-equiv="refresh" content="0; url=#{redirect_to}")
       %link(rel="canonical" href="#{redirect_to}")
+
+    %meta{property: 'og:title', content: title}
+    %meta{property: 'og:type', content: 'article' }
+    %meta{property: 'og:url', content: full_url}
+
+    - if social_image
+      %meta{property: 'og:image', content: image_url(social_image) }
+
+    %meta{name: 'twitter:site', content: '@cloudmailin'}
+    %meta{name: 'twitter:creator', content: '@cloudmailin'}
+    %meta{name: 'twitter:card', content: 'summary_large_image'}
   %body#documentation
     %nav#nav
       #nav-content

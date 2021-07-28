@@ -11,3 +11,4 @@ crash.log
 content/robots.txt
 
 /examples/
+*.sketch

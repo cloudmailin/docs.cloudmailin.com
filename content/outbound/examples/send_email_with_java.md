@@ -1,6 +1,7 @@
 ---
 title: Send Email with Java
 description: In this guide we'll cover sending email in Java over SMTP with CloudMailin.
+image: java
 ---
 
 # Sending Email with Java

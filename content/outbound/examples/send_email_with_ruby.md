@@ -1,6 +1,7 @@
 ---
 title: Send Email with Ruby, Sinatra and Ruby on Rails
 description: In this guide we'll cover sending email in Ruby, Rails and Sinatra over SMTP with CloudMailin.
+image: ruby
 ---
 
 # Sending Email with Ruby, Rails and Sinatra

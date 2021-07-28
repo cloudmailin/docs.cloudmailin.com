@@ -1,6 +1,7 @@
 ---
 title: Receiving Email with Python
 skip_erb: true
+image: python
 ---
 
 # Receiving Email with Python

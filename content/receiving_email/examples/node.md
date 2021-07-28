@@ -4,6 +4,7 @@ description: |
   There are a number of ways to receive email in Node.js or TypeScript.
   We'll cover the simplest, using CloudMailin to receive email with your Node app as JSON by HTTP POST.
 skip_erb: false
+image: node
 ---
 
 # Receiving Email with Node.js and TypeScript

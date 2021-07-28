@@ -1,6 +1,7 @@
 ---
 title: Setting SMTP queue priority and Tagging
 description : Setting SMTP Queue Priority and Tagging on your CloudMailin Outbound Emails
+image: out
 ---
 
 # Setting SMTP Queue Priority and Tagging

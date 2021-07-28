@@ -1,6 +1,7 @@
 ---
 title: Receiving Email with Java
 skip_erb: true
+image: java
 ---
 
 # Receiving Email with Java

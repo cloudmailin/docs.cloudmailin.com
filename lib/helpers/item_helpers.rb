@@ -15,6 +15,13 @@ module ItemHelpers
     item.attributes[:description]
   end
 
+  def social_image(item = @item)
+    path = item.attributes[:image] || 'default'
+    return if path.nil?
+
+    "social/#{path}.png"
+  end
+
   def redirect_to(item = @item)
     link = item.attributes[:redirect_to]
     return if link.nil?
@@ -25,6 +32,10 @@ module ItemHelpers
     url = ""
     url += @config[:base_url] unless ENV['NANOC_ENV'] == 'development'
     url += candidate.identifier
+  end
+
+  def full_url(item = @item)
+    "#{@config[:base_url]}#{@item.identifier}"
   end
 
   def filename(item = @item)

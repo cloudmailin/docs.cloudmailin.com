@@ -1,6 +1,7 @@
 ---
 title: Send Email with Go (GoLang)
 description: In this guide we'll cover sending email in Go Lang over SMTP with CloudMailin's SMTP settings.
+image: go
 ---
 
 # Sending Email with Go

@@ -1,6 +1,7 @@
 ---
 title: Receiving Email with Ruby and Rails
 skip_erb: true
+image: ruby
 ---
 
 # Receiving Inbound Email with Ruby and Rails

@@ -1,6 +1,7 @@
 ---
 title: Send Email with .Net (C#)
 description: In this guide we'll cover sending email in C# and .Net over SMTP with CloudMailin's SMTP settings.
+image: net
 ---
 
 # Sending Email with .Net (C#)

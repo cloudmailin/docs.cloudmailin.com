@@ -1,6 +1,7 @@
 ---
 title: Sending Email via the CloudMailin API
 description: CloudMailin's API documentation to send email via JSON API
+image: http
 ---
 
 # CloudMailin Send Email Message API

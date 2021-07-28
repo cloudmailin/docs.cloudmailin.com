@@ -1,6 +1,7 @@
 ---
 title: Send email with Node JS, Typescript & Express
 description: In this guide we'll cover sending email in Node JS and Express over SMTP with CloudMailin.
+image: node
 ---
 
 # Sending Email with Node.js, Typescript and Express
