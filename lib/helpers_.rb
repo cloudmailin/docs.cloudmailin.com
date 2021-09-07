@@ -11,12 +11,16 @@ use_helper SectionHelpers
 use_helper OpenapiHelpers
 
 def image_tag(path, options)
-  full_path = image_url(path)
+  full_path = image_path(path)
   tag(:image, options.merge!(:src => full_path))
 end
 
-def image_url(path)
+def image_path(path)
   path.match?(/^http:\/\//) ? path : "/assets/images/#{path}"
+end
+
+def image_url(path)
+  path.match?(/^http:\/\//) ? path : "#{@config[:base_url]}/assets/images/#{path}"
 end
 
 def tag(name, options={})
