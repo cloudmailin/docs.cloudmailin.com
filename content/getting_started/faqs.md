@@ -11,7 +11,7 @@ The following are some of the most frequently asked questions at CloudMailin. We
 Your emails should arrive within seconds (actually we aim for it to be milliseconds). Our email server doesn't poll for your emails, they will be received as soon as they are sent to the server. A little bit of processing and they're sent straight on to your app.
 
 ### How do I change the website that my email is posted to
-The CloudMailin website allows you to view all of your email addresses and to change the target location. Head your [email address page](http://www.cloudmailin.com/addresses) to view and edit your address details and targets.
+The CloudMailin website allows you to view all of your email addresses and to change the target location. Head your [email address page](https://www.cloudmailin.com/addresses) to view and edit your address details and targets.
 
 ### How can I use a custom domain name or email@mydomain.com instead of a CloudMailin issued email address.
 Absolutely, check out [Forwarding and Custom Domains](/receiving_email/forwarding_and_custom_domains/) for more details.
@@ -43,9 +43,9 @@ We have wired up a few fake targets you can use to test your emails.
 
 | URL                                   | Description                                                                            |
 |---------------------------------------|----------------------------------------------------------------------------------------|
-| http://www.cloudmailin.com/target/200 | will simulate a 200 response. This simulates the message successfully being delivered. |
-| http://www.cloudmailin.com/target/404 | will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target.                                                                                                              |
-| http://www.cloudmailin.com/target/500 | will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later.                                                                                             |
+| https://www.cloudmailin.com/target/200 | will simulate a 200 response. This simulates the message successfully being delivered. |
+| https://www.cloudmailin.com/target/404 | will simulate a 404 response. This simulates your site not knowing anything about the page you have set as your target.                                                                                                              |
+| https://www.cloudmailin.com/target/500 | will simulate a 500 response. This simulates something going wrong on your site and you asking the server to deliver the message later.                                                                                             |
 
 ### How can I see the response my server returned
 On the address page within CloudMailin you should see the message and the status that your server returned to CloudMailin. Clicking on the details tab will also show additional information.

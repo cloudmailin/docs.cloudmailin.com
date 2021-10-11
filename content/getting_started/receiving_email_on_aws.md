@@ -7,7 +7,7 @@ name: Getting Started on AWS
 
 AWS provides a number of Cloud Services and is a perfect fit for building your API.
 
-[CloudMailin](http://www.cloudmailin.com) allows you to receive incoming email on AWS without having
+[CloudMailin](https://www.cloudmailin.com) allows you to receive incoming email on AWS without having
 to manage and configure email servers.
 
 CloudMailin was designed from the ground up to work well with AWS and allows you to easily scale up
@@ -46,7 +46,7 @@ include one or both or these regions:
 
 ### Dedicated Servers
 
-[Dedicated servers](http://www.cloudmailin.com/plans) offer additional flexiblity.
+[Dedicated servers](https://www.cloudmailin.com/plans) offer additional flexiblity.
 This can be especially useful if you want to restrict traffic so that it never leaves the EU for
 example. Dedicated servers can be placed into any of the following regions:
 

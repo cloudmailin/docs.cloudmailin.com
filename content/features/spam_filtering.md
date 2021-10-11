@@ -19,7 +19,7 @@ email content.
 ## Enabling SPAM checking for your CloudMailin email address
 
 In order to enable SPAM checking on your CloudMailin email address, you'll need to
-[contact support](http://www.cloudmailin.com/contact_us).
+[contact support](https://www.cloudmailin.com/contact_us).
 
 There are a number of options that can be enabled and disabled on dedicated servers.
 

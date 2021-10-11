@@ -19,7 +19,7 @@ The first step is to add a record to your Domain Name Server (DNS) to state that
 
 ## Adding Your Custom Domain
 
-Once your DNS records are setup The next step is to go to the [CloudMailin](http://www.cloudmailin.com) and go to the address page for the address you wish to add the custom domain for. Once you are on the page you can click the custom domains button to add your domain name to the address. Any email sent to the CloudMailin servers with a to address with that domain will now be sent to your website.
+Once your DNS records are setup The next step is to go to the [CloudMailin](https://www.cloudmailin.com) and go to the address page for the address you wish to add the custom domain for. Once you are on the page you can click the custom domains button to add your domain name to the address. Any email sent to the CloudMailin servers with a to address with that domain will now be sent to your website.
 
 Note that both of these methods will prevent you from receiving regular email on this domain so we recommend using a subdomain such as mail.example.com. If you only want to receive email on one email address we recommend you [set up a forwarding account](/receiving_email/email_forwarding/) on your domain.
 

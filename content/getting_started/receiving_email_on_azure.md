@@ -10,7 +10,7 @@ to receive email within a Cloud environment.
 
 Many of the on-premise options aren't available in the Cloud and scale can become more of an issue.
 
-[CloudMailin](http://www.cloudmailin.com) is a Cloud solution for developers that allows you to
+[CloudMailin](https://www.cloudmailin.com) is a Cloud solution for developers that allows you to
 receive any volume of incoming email, directly to your website in the Cloud via HTTP POST.
 
 CloudMailin was designed from the ground up to work well with Cloud and allows you to easily scale
