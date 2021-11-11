@@ -8,7 +8,6 @@ gem "sass"
 gem 'nanoc-sprockets3', require: 'nanoc-sprockets'
 gem 'bootstrap-sass', '~> 3.4'
 gem "builder"
-gem "coffee-script"
 gem 'rouge'
 gem 'ruby-jq', '~> 0.1', require: 'jq'
 gem 'nokogiri'

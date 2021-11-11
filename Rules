@@ -16,8 +16,6 @@ compile '*' do
       layout 'application'
     when 'scss'
       filter :sprockets, css_compressor: :scss
-    when 'coffee'
-      filter :coffeescript
     when 'haml'
       filter :haml, :format => :html5
       layout 'application'
@@ -41,8 +39,6 @@ route '*' do
     case ext
     when 'scss'
       item.identifier.chop + '.css'
-    when 'coffee'
-      item.identifier.chop + '.js'
     when 'js', 'txt', 'json', 'css', 'xml'
       item.identifier.chop + '.' + ext
     else
