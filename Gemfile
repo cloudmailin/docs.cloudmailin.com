@@ -25,3 +25,11 @@ group :developement do
   gem 'mime-types'
   gem 'w3c_validators'
 end
+
+group :vscode do
+  # VSCode
+  gem 'debase'
+  gem 'rubocop'
+  gem 'ruby-debug-ide'
+  gem 'solargraph'
+end
