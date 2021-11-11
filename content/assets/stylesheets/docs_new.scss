@@ -15,7 +15,7 @@ $table-head-bg: mix(darken($brand-primary, 25), #fff, 6);
 $table-bg-accent: $pre-bg;
 
 @import "bootstrap-sprockets";
-@import "bootstrap";
+@import "bootstrap_choices";
 
 body {
   background-color: $brand-primary;
@@ -151,7 +151,7 @@ nav {
   @extend .col-md-push-4;
 
   img {
-    max-width: 100%;
+    max-width: 80%;
     border: 1px solid $pre-border-color;
     margin: 0px;
     padding: 10px;
