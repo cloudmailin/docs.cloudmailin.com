@@ -127,4 +127,4 @@ For more detail relating to the store_url see the
 [address dashboard]: https://www.cloudmailin.com/addresses
 [Microsoft Azure Blob Storage]: #send-the-full-email-to-azure-blob-storage
 [Google Cloud Platform Cloud Storage]: #send-the-full-email-to-google-cloud-storage
-[JSON format]: ./http_post_formats/json_normalized.md
+[JSON format]: /http_post_formats/json_normalized/
