@@ -7,19 +7,25 @@ description: |
 
 # Ensuring that Email Webhooks come from CloudMailin
 
-CloudMailin will send your email as an HTTP POST, but how can you ensure that the POST is actually
-coming from CloudMailin and not from another source attempting to send messages on our behalf?
+CloudMailin will send your email as an HTTP POST, but how can you ensure that
+the POST is actually coming from CloudMailin and not from another source
+attempting to send messages on our behalf?
 
 CloudMailin provides two solutions to ensure your Email to HTTP POST is secure:
 
-| Type                                                    | Availability      | Description                                               |
-|---------------------------------------------------------|-------------------|-----------------------------------------------------------|
-| [Basic Authentication](#basic-authentication-and-https) | `All Formats`     | When used with HTTPS this provides a simple and effective way to secure your target and ensure that only CloudMailin has permission to post to it |
-| [Signed Requests](/receiving_email/signed_https_requests) | `Original Format` | Provided for the Original Format but **now Deprecated**. |
+| Type                   | Availability      | Description                     |
+|------------------------|-------------------|---------------------------------|
+| [Basic Authentication] | `All Formats`     | When used with HTTPS this provides a simple and effective way to secure your target and ensure that only CloudMailin has permission to post to it
+| [Signed Requests]      | `Original Format` | Provided for the Original Format but **now Deprecated**.
+
+[Basic Authentication]: #basic-authentication-and-https
+[Signed Requests]: /receiving_email/signed_http_requests/
 
 ## Basic Authentication and HTTPS
 
-We recommend that all requests CloudMailin makes to your target URL are over HTTPS using basic authentication. This ensures that only CloudMailin is able to POST requests to this URL.
+We recommend that all requests CloudMailin makes to your target URL are over
+HTTPS using basic authentication. This ensures that only CloudMailin is able to
+POST requests to this URL.
 
 Unlike the Signed requests using Basic Authentication to secure your request is really simple. You simply pass a username and password within your target URL as you set it. We will then extract this username and password and add it the headers of each request that we make. For example:
 

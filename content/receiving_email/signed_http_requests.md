@@ -1,7 +1,18 @@
-## Signed Requests
+---
+title: Signed HTTP Requests in the Original Format
+description: |
+  Previously CloudMailin allowed you to sign HTTP requests using a hash based
+  algorithm. That approach is now deprecated and we recommend you used HTTPS
+  and Basic Authentication instead.
+---
 
-> The original POST format also includes a signature parameter.
-> We no longer recommend the use of this signature and instead we recommend HTTPS and basic authentication.
+## The Original format and MD5 Signed Requests (Deprecated)
+
+> The original POST format also includes a signature parameter. We no longer
+> recommend the use of this signature and instead we recommend
+> [HTTPS and basic authentication].
+
+[HTTPS and basic authentication]: /receiving_email/securing_your_email_url_target/
 
 When an email is posted to your web server by the original POST format it will
 be signed to enable you to check that the message was received by CloudMailin
