@@ -8,7 +8,8 @@
  * DS205: Consider reworking code to avoid use of IIFEs
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const subNames = { 'ruby': 'Rails', 'php': 'PHP', 'javascript': 'Node.js', 'c#': '.NET', 'xml': 'XML' };
+const subNames = { 'ruby': 'Rails', 'php': 'PHP', 'javascript': 'Node.js',
+  'c#': '.NET', 'xml': 'XML', 'jsonc': 'JSON', 'json': 'JSON' };
 
 Array.prototype.unique = function() {
   let key;
