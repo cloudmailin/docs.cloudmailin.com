@@ -5,7 +5,7 @@ name: Getting Started on Azure
 
 # Receiving email within the Azure Cloud
 
-[Azure](https://azure.microsoft.com/) provides a number of Cloud Services but it can be difficult
+[Azure](https://azure.microsoft.com/en-us/) provides a number of Cloud Services but it can be difficult
 to receive email within a Cloud environment.
 
 Many of the on-premise options aren't available in the Cloud and scale can become more of an issue.
