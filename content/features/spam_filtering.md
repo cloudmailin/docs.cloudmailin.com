@@ -8,7 +8,7 @@ For a long time, CloudMailin didn't support the ability to scan emails for SPAM.
 It was and still is our belief that bayesian SPAM checking is best done at the account level.
 
 However, we're pleased to announce that CloudMailin can now check your incoming emails for SPAM
-using [SPAM Assassin](http://spamassassin.apache.org/) automatically.
+using [SPAM Assassin](https://spamassassin.apache.org/) automatically.
 
 SPAM Assassin performs a number of tests that give an indication of whether you should accept the
 email or not.
@@ -43,7 +43,7 @@ By default, you'll receive something like the following:
 
 | Field | Description |
 | ----- | ----------- |
-| `score` | The SpamAssasin assigned score. Spam assasin combines all of its rules and gives this score as the output.
+| `score` | The SpamAssassin assigned score. Spam assassin combines all of its rules and gives this score as the output.
 | `success` | Did the scan complete. This will be `true` or `false` and is not an indication of the SPAM status just the success of the scan taking place.
 | `symbols` | _(if present)_ The rule names that the message matched.
 | `description` | _(if present)_ A human readable table of rules, their score and a description. Helpful for getting started. |
@@ -52,7 +52,7 @@ By default, you'll receive something like the following:
 
 Every system is different and it would be impossible to choose a score that works for everyone.
 
-SpamAssasin uses a score of **5.0** or above to indicate SPAM by
+SpamAssassin uses a score of **5.0** or above to indicate SPAM by
 default. However, this is quite aggressive.
 
 With multiple people emailing you it may be better to start with
@@ -79,7 +79,7 @@ This can be used to adjust a score to your liking and understand which rules mat
 
 #### Full Description
 
-For even more detauls it's possible to include the SpamAssasin
+For even more detauls it's possible to include the SpamAssassin
 table report.
 
 The description field will contain additional information about
