@@ -56,4 +56,4 @@ by using additional third-party libaries. If you need help with emails in go fee
 
 <%= render 'outbound_summary' %>
 
-[docs]: https://golang.org/pkg/net/smtp/#PlainAuth
+[docs]: https://go.dev/pkg/net/smtp/#PlainAuth
