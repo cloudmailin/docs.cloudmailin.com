@@ -18,7 +18,7 @@ the link in each example to change between the two.
 
 > To work with Node, we recommend the JSON (Normalized) version of our HTTP POST
 
-### Express
+## Express
 
 We're going to use Express to receive our email as an HTTP POST.
 Express can automatically parse JSON bodies using the [body parser] middleware.
@@ -65,7 +65,7 @@ Here we've created a basic express app framework, parsed the JSON so that the va
 
 Next, we'll take a look at a few parts of the email.
 
-### Getting TypeScript Types for the HTTP POST JSON
+## Getting TypeScript Types for the HTTP POST JSON
 
 To make the next part simpler, we can fetch an interface for the CloudMailin HTTP POST.
 The interface allows us to strongly-type the JSON from the inbound HTTP POST.
@@ -98,7 +98,7 @@ app.post("/incoming_mails/", (req, res) => {
 ```javascript
 ```
 
-### The Envelope (SMTP Transaction)
+## The Envelope (SMTP Transaction)
 
 The SMTP transaction itself receives a recipient (`to`) and a mail (`from`) command.
 This allows the server to route the email.
@@ -142,7 +142,7 @@ app.post("/incoming_mail/", function (req, res) {
 Note that the CloudMailin server will respond to the SMTP sending server as if the
 mailbox does not exist if we return the `422` status code (see [Status Codes]).
 
-### The Headers
+## The Headers
 
 All of the headers can be found in the `headers` parameter. This is an object containing
 the header key and either a string or array of strings.
@@ -173,7 +173,7 @@ app.post("/incoming_mails", function (req, res) {
 });
 ```
 
-### Plain, HTML and Replies
+## Plain, HTML and Replies
 
 The plain and HTML parts of the email can be found in the `plain` and `html` fields.
 Not all emails will have a plain AND html parameter so it generally makes sense to fall
@@ -194,7 +194,7 @@ back to the plain parameter for HTML.
 
 We also attempt to extract the latest reply to an email message and return that in the `reply_plain`.
 
-### Attachments
+## Attachments
 
 Attachments are extracted and can be returned in one of two formats. The first format passes
 the attachment content as Base64 encoded content within the JSON.

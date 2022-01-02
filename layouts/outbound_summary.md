@@ -18,3 +18,5 @@ if required.
 
 Of course if there are any questions feel free to [contact us] and we'll do our best to help you
 get setup sending email.
+
+[Summary]: #summary

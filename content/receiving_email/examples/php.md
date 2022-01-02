@@ -320,19 +320,6 @@ class VerifyCsrfToken extends Middleware
 
 ---
 
-### Summary
-
-That's the code complete. All we now have to do is log into [CloudMailin] and make sure we set
-your address to deliver to `http://example.com/incoming_mail` (replace example.com with your
-App URL) and send our first message.
-
-![Inbound Dashboard](/assets/images/inbound_summary.png)
-
-All of the details are listed in the dashboard where we can dig in and see the HTTP Reponse of your
-server if it's not a positive one:
-
-![Inbound Error Example](/assets/images/inbound_error_details.png)
-
-
+<%= items["/receiving_email/examples/_summary/"].raw_content %>
 
 [Attachment Store]: <%= url_to_item('/receiving_email/attachments/') %>

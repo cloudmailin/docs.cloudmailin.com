@@ -6,25 +6,60 @@ image: http
 
 # CloudMailin Send Email Message API
 
-In order to send an email via API you can create a POST request to the Message endpoint:
-`POST`: `https://api.cloudmailin.com/api/v0.1/[SMTP_USERNAME]/messages`
+In order to send an email via API you can create a POST request to the Email
+Message endpoint:
 
-###  Authentication
+`POST`: `https://api.cloudmailin.com/api/v0.1/[SMTP_USERNAME]/messages`.
 
-Authentication relies on your username and password from you SMTP credentails.
-You can find your SMTP credentails for both live and test accounts on the [SMTP Accounts] page.
-Your SMTP username is part of the path used to make the SMTP request:
-`POST`: `https://api.cloudmailin.com/api/v0.1/[SMTP_USERNAME]/messages`
+Sending email via HTTP POST can be done via one of two methods:
+
+* If a [client library] is available for your Programming Language / Framework
+  you can use a client library; Alternatively;
+* you can make an HTTP POST to our API manually to send the email
+
+## Client Libraries
+
+Some languages and frameworks have official or community libraries to help get started:
+
+| Language / Framework | Status      | Library                         | Link |
+|----------------------|-------------|---------------------------------|------|
+| [node/typescript]    | released    | `npm install --save cloudmailin` | [link](https://github.com/cloudmailin/cloudmailin-js)
+| [go]                 | beta        | `go get -u github.com/cloudmailin/cloudmailin-go` | [link](https://github.com/cloudmailin/cloudmailin-go)
+| `ruby`               | coming soon |
+
+[node/typescript]: /outbound/examples/send_email_with_node_js/
+[go]: /outbound/examples/send_email_with_golang/
+
+We're adding new libraries regularly and this is an area under active
+development.
+
+> If you've created a community library we'd love to hear from you.
+> [Contact Us] and let us know!
+
+## Sending Email with an API Call
+
+If your Language / Framework isn't listed above then you can always make a
+request directly to the Outbound Email API.
+
+You can also use any language / framework via [SMTP].
+
+### Authentication
+
+Authentication relies on your username and password from you SMTP credentials.
+You can find your SMTP credentials for both live and test accounts on the
+[SMTP Accounts] page. Your SMTP username is part of the path used to make the
+SMTP request: `POST`:
+`https://api.cloudmailin.com/api/v0.1/[SMTP_USERNAME]/messages`
 
 You then need to send your SMTP API Token.
 Authentication is via the Bearer token in the Authorization header as follows:
 `Authorization: Bearer API_TOKEN`.
 
-> This documentation is currently a work in progress. If you need help sending via the API
-> please feel free to contact us, alterrnatively you may wish to use [SMTP], which if
-> fully functional.
+> This documentation is currently a work in progress. If you need help sending
+> via the API please feel free to contact us, alternatively you may wish to use
+> [SMTP], which is fully functional.
 
-## Messages Endpoint Example
+## Email Messages Endpoint Example
 
 A full example POST can be seen below:
 
@@ -58,8 +93,8 @@ A full example POST can be seen below:
 }
 ```
 
-Below you can see an explanation of the [fields](#fields), how to add [attachments](#attachments)
-and how to set custom [headers](#headers).
+Below you can see an explanation of the [fields](#fields), how to add
+[attachments](#attachments) and how to set custom [headers](#headers).
 
 ### Fields
 
@@ -106,19 +141,6 @@ The key is the header name and the value is expected to be a string a string val
 }
 ```
 
-## Libaries
-
-Some languages and frameworks have official or community libraries to help get started:
-
-| Language / Framework | Status      | Library                         |
-|----------------------|-------------|---------------------------------|
-| `node`/`typescript`  | beta        | `npm install --save cloudmailin`
-| `ruby`               | coming soon |
-| `go`                 | coming soon |
-
-In the meantime you can still use any language / framework via [SMTP].
-
-> If you've created a community library we'd love to hear from you. [Contact Us] and let us know!
-
+[Client Library]: #client-libraries
 [SMTP Accounts]: https://www.cloudmailin.com/outbound/accounts
 [SMTP]: <%= url_to_item('/outbound/sending_email_with_smtp/') %>
