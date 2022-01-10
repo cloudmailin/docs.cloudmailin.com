@@ -16,73 +16,90 @@ There are different options for ASP.NET projects. In this case we simply use an 
 First we need the necessary models for the webhook request.
 
     // Model.cs
-    public class CloudmailinHeader
-    {
-        public string return_path { get; set; }
-        public string[] received { get; set; }
-        public DateTime date { get; set; }
-        public string[] from { get; set; }
-        public string[] to { get; set; }
-        public string message_id { get; set; }
-        public string subject { get; set; }
-        public string mime_version { get; set; }
-        public string content_type { get; set; }
-        public string[] delivered_to { get; set; }
-        public string received_spf { get; set; }
-        public string authentication_results { get; set; }
-        public string user_agent { get; set; }
-    }
-
     public class CloudmailinEnvelope
     {
-        public string to { get; set; }
-        public string from { get; set; }
-        public string helo_domain { get; set; }
-        public string remote_ip { get; set; }
-        public string[] recipients { get; set; }
-        public Spf spf { get; set; }
-        public bool tls { get; set; }
+        [JsonPropertyName("to")]
+        public string To { get; set; }
+
+        [JsonPropertyName("from")]
+        public string From { get; set; }
+
+        [JsonPropertyName("helo_domain")]
+        public string HeloDomain { get; set; }
+
+        [JsonPropertyName("remote_ip")]
+        public string RemoteIp { get; set; }
+
+        [JsonPropertyName("recipients")]
+        public string[] Recipients { get; set; }
+
+        [JsonPropertyName("spf")]
+        public Spf Spf { get; set; }
+
+        [JsonPropertyName("tls")]
+        public bool Tls { get; set; }
     }
 
     public class Spf
     {
-        public string result { get; set; }
-        public string domain { get; set; }
+        [JsonPropertyName("result")]
+        public string Result { get; set; }
+
+        [JsonPropertyName("domain")]
+        public string Domain { get; set; }
     }
 
     public class CloudmailinAttachment
     {
-        public string content { get; set; }
-        public string file_name { get; set; }
-        public string content_type { get; set; }
-        public int size { get; set; }
-        public string disposition { get; set; }
+        [JsonPropertyName("content")]
+        public string Content { get; set; }
+
+        [JsonPropertyName("file_name")]
+        public string FileName { get; set; }
+
+        [JsonPropertyName("content_type")]
+        public string ContentType { get; set; }
+
+        [JsonPropertyName("size")]
+        public int Size { get; set; }
+
+        [JsonPropertyName("disposition")]
+        public string Disposition { get; set; }
     }
 
     public interface ICloudmailinRequest
     {
-        public CloudmailinEnvelope envelope { get; set; }
-        public string plain { get; set; }
-        public string html { get; set; }
-        public CloudmailinAttachment[] attachments { get; set; }
+        [JsonPropertyName("envelope")]
+        public CloudmailinEnvelope Envelope { get; set; }
+
+        [JsonPropertyName("plain")]
+        public string Plain { get; set; }
+
+        [JsonPropertyName("html")]
+        public string Html { get; set; }
+
+        [JsonPropertyName("attachments")]
+        public CloudmailinAttachment[] Attachments { get; set; }
     }
 
     public class CloudmailinRequest : ICloudmailinRequest
     {
-        public IDictionary<string, string[]> headers { get; set; }
-        public CloudmailinEnvelope envelope { get; set; }
-        public string plain { get; set; }
-        public string html { get; set; }
-        public CloudmailinAttachment[] attachments { get; set; }
+        [JsonPropertyName("headers")]
+        public IDictionary<string, string[]> Headers { get; set; }
+        public CloudmailinEnvelope Envelope { get; set; }
+        public string Plain { get; set; }
+        public string Html { get; set; }
+        public CloudmailinAttachment[] Attachments { get; set; }
     }
 
     public class CloudmailinRequestDto : ICloudmailinRequest
     {
-        public IDictionary<string, JsonElement> headers { get; set; }
-        public CloudmailinEnvelope envelope { get; set; }
-        public string plain { get; set; }
-        public string html { get; set; }
-        public CloudmailinAttachment[] attachments { get; set; }
+        [JsonPropertyName("headers")]
+        public IDictionary<string, JsonElement> Headers { get; set; }
+        public CloudmailinEnvelope Envelope { get; set; }
+        public string Plain { get; set; }
+        public string Html { get; set; }
+        public CloudmailinAttachment[] Attachments { get; set; }
     }
 
 In the next step we create a controller that is accessed by the webhook of Cloudmailin.
@@ -98,14 +115,14 @@ In the next step we create a controller that is accessed by the webhook of Cloud
         {
             var mail = new CloudmailinRequest()
             {
-                headers = request.headers.ConvertHeaderToDictionary(),
-                envelope = request.envelope,
-                html = request.html,
-                plain = request.plain,
-                attachments = request.attachments
+                Headers = request.Headers.ConvertHeaderToDictionary(),
+                Envelope = request.Envelope,
+                Html = request.Html,
+                Plain = request.Plain,
+                Attachments = request.Attachments
             };
 
-            Console.WriteLine(mail.headers["to"]); // access headers
+            Console.WriteLine(mail.Headers.TryGetValue("to", out var to)); // access headers
 
             return Json(mail);
         }
@@ -114,64 +131,29 @@ In the next step we create a controller that is accessed by the webhook of Cloud
 To convert the header properties in a .NET manner we need additionally a helper class that handles array and string parameters into an array property.
 
     // Helper.cs
-    public static CloudmailinHeader ConvertHeader(this IDictionary<string, JsonElement> source)
+    public static Dictionary<string, string[]> ConvertHeaderToDictionary(this IDictionary<string, JsonElement> source)
     {
-        var header = new CloudmailinHeader();
-        var headerType = header.GetType();
+        var dictionary = new Dictionary<string, string[]>();
 
         foreach (var item in source)
         {
-            var prop = headerType.GetProperty(item.Key);
-            if (prop.PropertyType.IsArray)
+            if (dictionary.ContainsKey(item.Key))
             {
-                if (item.Value.ValueKind == JsonValueKind.Array)
-                {
-                    prop.SetValue(header, item.Value.EnumerateArray().Select(x => x.GetString()).ToArray(), null);
-                }
-                else
-                {
-                    prop.SetValue(header, new string[] { item.Value.GetString() }, null);
-                }
+                Console.WriteLine("Header value already set.");
             }
             else
             {
-                if (prop.PropertyType == typeof(DateTime))
+                var list = new List<string>();
+                if (item.Value.ValueKind == JsonValueKind.Array)
                 {
-                    prop.SetValue(header, DateTime.Parse(item.Value.GetString()), null);
+                    dictionary.TryAdd(item.Key, item.Value.EnumerateArray().Select(x => x.GetString()).ToArray());
                 }
                 else
                 {
-                    prop.SetValue(header, item.Value.GetString(), null);
+                    dictionary.TryAdd(item.Key, new string[] { item.Value.GetString() });
                 }
             }
         }
 
-        return header;
+        return dictionary;
     }
-    
-    public static Dictionary<string, string[]> ConvertHeaderToDictionary(this IDictionary<string, JsonElement> source)
-        {
-            var dictionary = new Dictionary<string, string[]>();
-
-            foreach (var item in source)
-            {
-                if (dictionary.ContainsKey(item.Key))
-                {
-                    Console.WriteLine("Header value already set.");
-                }
-                else
-                {
-                    var list = new List<string>();
-                    if (item.Value.ValueKind == JsonValueKind.Array)
-                    {
-                        dictionary.TryAdd(item.Key, item.Value.EnumerateArray().Select(x => x.GetString()).ToArray());
-                    }
-                    else
-                    {
-                        dictionary.TryAdd(item.Key, new string[] { item.Value.GetString() });
-                    }
-                }
-            }
-
-            return dictionary;
-        }
