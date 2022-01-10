@@ -69,7 +69,7 @@ First we need the necessary models for the webhook request.
 
     public class CloudmailinRequest : ICloudmailinRequest
     {
-        public CloudmailinHeader headers { get; set; }
+        public IDictionary<string, string[]> headers { get; set; }
         public CloudmailinEnvelope envelope { get; set; }
         public string plain { get; set; }
         public string html { get; set; }
@@ -98,12 +98,14 @@ In the next step we create a controller that is accessed by the webhook of Cloud
         {
             var mail = new CloudmailinRequest()
             {
-                headers = request.headers.ConvertHeader(),
+                headers = request.headers.ConvertHeaderToDictionary(),
                 envelope = request.envelope,
                 html = request.html,
                 plain = request.plain,
                 attachments = request.attachments
             };
+
+            Console.WriteLine(mail.headers["to"]); // access headers
 
             return Json(mail);
         }
@@ -146,3 +148,30 @@ To convert the header properties in a .NET manner we need additionally a helper 
 
         return header;
     }
+    
+    public static Dictionary<string, string[]> ConvertHeaderToDictionary(this IDictionary<string, JsonElement> source)
+        {
+            var dictionary = new Dictionary<string, string[]>();
+
+            foreach (var item in source)
+            {
+                if (dictionary.ContainsKey(item.Key))
+                {
+                    Console.WriteLine("Header value already set.");
+                }
+                else
+                {
+                    var list = new List<string>();
+                    if (item.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        dictionary.TryAdd(item.Key, item.Value.EnumerateArray().Select(x => x.GetString()).ToArray());
+                    }
+                    else
+                    {
+                        dictionary.TryAdd(item.Key, new string[] { item.Value.GetString() });
+                    }
+                }
+            }
+
+            return dictionary;
+        }
