@@ -5,25 +5,144 @@ skip_erb: true
 image: net
 ---
 
-# Receiving Email with .Net
+# Receiving Email with .Net 5
 
-## ASP.NET C Sharp
+## ASP.NET WebAPI C Sharp
 
 <div class="warning">This example may be outdated. You can now find examples for newer POST formats within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
 
-This is an extremely simple version of getting the CloudMailin HTTP POST parameters (original format) from an ASP.net application. Any help expanding this example would be greatly appreciated. This example has only been tested in .net version 2.0 which is now a little dated.
+There are different options for ASP.NET projects. In this case we simply use an Web API project using Swagger for simple debug uses.
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml">
-      <%@ Page Language="C#" ContentType="text/html" ResponseEncoding="UTF-8" validateRequest=false %>
-      <script language="C#" runat="server">
-        void Page_Load(object sender, EventArgs e) {
-          String from = Request.Form["from"];
-          String plain = Request.Form["plain"];
-          String html = Request.Form["html"];
+First we need the necessary models for the webhook request.
+
+    // Model.cs
+    public class CloudmailinHeader
+    {
+        public string return_path { get; set; }
+        public string[] received { get; set; }
+        public DateTime date { get; set; }
+        public string[] from { get; set; }
+        public string[] to { get; set; }
+        public string message_id { get; set; }
+        public string subject { get; set; }
+        public string mime_version { get; set; }
+        public string content_type { get; set; }
+        public string[] delivered_to { get; set; }
+        public string received_spf { get; set; }
+        public string authentication_results { get; set; }
+        public string user_agent { get; set; }
+    }
+
+    public class CloudmailinEnvelope
+    {
+        public string to { get; set; }
+        public string from { get; set; }
+        public string helo_domain { get; set; }
+        public string remote_ip { get; set; }
+        public string[] recipients { get; set; }
+        public Spf spf { get; set; }
+        public bool tls { get; set; }
+    }
+
+    public class Spf
+    {
+        public string result { get; set; }
+        public string domain { get; set; }
+    }
+
+    public class CloudmailinAttachment
+    {
+        public string content { get; set; }
+        public string file_name { get; set; }
+        public string content_type { get; set; }
+        public int size { get; set; }
+        public string disposition { get; set; }
+    }
+
+    public interface ICloudmailinRequest
+    {
+        public CloudmailinEnvelope envelope { get; set; }
+        public string plain { get; set; }
+        public string html { get; set; }
+        public CloudmailinAttachment[] attachments { get; set; }
+    }
+
+    public class CloudmailinRequest : ICloudmailinRequest
+    {
+        public CloudmailinHeader headers { get; set; }
+        public CloudmailinEnvelope envelope { get; set; }
+        public string plain { get; set; }
+        public string html { get; set; }
+        public CloudmailinAttachment[] attachments { get; set; }
+    }
+
+    public class CloudmailinRequestDto : ICloudmailinRequest
+    {
+        public IDictionary<string, JsonElement> headers { get; set; }
+        public CloudmailinEnvelope envelope { get; set; }
+        public string plain { get; set; }
+        public string html { get; set; }
+        public CloudmailinAttachment[] attachments { get; set; }
+    }
+
+In the next step we create a controller that is accessed by the webhook of Cloudmailin.
+
+
+    // Controllers/WebhookController.cs
+    [ApiController]
+    [Route("[controller]")]
+    public class WebhookController : Controller
+    {
+        [HttpPost]
+        public IActionResult CloudMailin(CloudmailinRequestDto request)
+        {
+            var mail = new CloudmailinRequest()
+            {
+                headers = request.headers.ConvertHeader(),
+                envelope = request.envelope,
+                html = request.html,
+                plain = request.plain,
+                attachments = request.attachments
+            };
+
+            return Json(mail);
         }
-      </script>
-    </html>
+    }
 
-In this example the message parameter is ignored although you could use a mime parsing component to read in the full message if required.
+To convert the header properties in a .NET manner we need additionally a helper class that handles array and string parameters into an array property.
+
+    // Helper.cs
+    public static CloudmailinHeader ConvertHeader(this IDictionary<string, JsonElement> source)
+    {
+        var header = new CloudmailinHeader();
+        var headerType = header.GetType();
+
+        foreach (var item in source)
+        {
+            var prop = headerType.GetProperty(item.Key);
+            if (prop.PropertyType.IsArray)
+            {
+                if (item.Value.ValueKind == JsonValueKind.Array)
+                {
+                    prop.SetValue(header, item.Value.EnumerateArray().Select(x => x.GetString()).ToArray(), null);
+                }
+                else
+                {
+                    prop.SetValue(header, new string[] { item.Value.GetString() }, null);
+                }
+            }
+            else
+            {
+                if (prop.PropertyType == typeof(DateTime))
+                {
+                    prop.SetValue(header, DateTime.Parse(item.Value.GetString()), null);
+                }
+                else
+                {
+                    prop.SetValue(header, item.Value.GetString(), null);
+                }
+            }
+        }
+
+        return header;
+    }
