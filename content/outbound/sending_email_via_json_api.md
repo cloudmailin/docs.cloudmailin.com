@@ -9,7 +9,7 @@ image: http
 In order to send an email via API you can create a POST request to the Email
 Message endpoint:
 
-`POST`: `https://api.cloudmailin.com/api/v0.1/[SMTP_USERNAME]/messages`.
+`POST`: `https://api.cloudmailin.com/api/v0.1/{SMTP_USERNAME}/messages`.
 
 Sending email via HTTP POST can be done via one of two methods:
 
