@@ -20,7 +20,7 @@ The format consists of four main elements, `envelope`, `headers`, `body` and `at
 
 The following is complete example JSON message:
 
-```raw
+```jsonc
 {
   "headers": {
     "return_path": "from@example.com",
@@ -142,7 +142,7 @@ The envelope contains the data sent or gathered from the remote server. It doesn
 
 The following is an example envelope:
 
-```raw
+```jsonc
 "envelope": {
   "to": "to@example.com",
   "recipients": [
@@ -197,7 +197,7 @@ The headers parameter contains all of the message headers extracted from the ema
 
 The following is an example message header:
 
-```raw
+```jsonc
 "headers": {
   "return_path": "from@example.com",
   "received": [
@@ -244,10 +244,12 @@ console.log(fields.headers.return_path)
 
 CloudMailin will send the message body in both plain and html formats if they're available. It's always worth using the other parameter as a fallback. If `html` if unavailable then `plain` should always contain the message content. The message body should be encoded into `utf-8` format.
 
-```raw
-"plain": "Test with HTML.",
-"html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>"
-"reply_plain": "Message reply if found."
+```jsonc
+{
+  "plain": "Test with HTML.",
+  "html": "<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head><body\n bgcolor=\"#FFFFFF\" text=\"#000000\">\nTest with <span style=\"font-weight: bold;\">HTML</span>.<br>\n</body>\n</html>"
+  "reply_plain": "Message reply if found."
+}
 ```
 ```ruby
   def create
@@ -299,7 +301,7 @@ The attachments will contain the following parameters:
 
 URL attachments are attachments that have been sent to a message store. Instead of content they will contain a link to allow you to retrieve that content. The following is an attachments parameter containing URL attachments:
 
-```raw
+```jsonc
 "attachments": [
   {
     "file_name": "file1.txt",
@@ -347,7 +349,7 @@ Embedded attachments are attachments that send the attachment content direct to 
 We don't recommend that large attachments are sent in this way as they can cause a lot of overhead
 for your server. The following is an attachments parameter containing embedded attachments:
 
-```raw
+```jsonc
 "attachments": [
   {
     "content": "dGVzdGZpbGU=",
