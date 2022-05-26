@@ -220,7 +220,7 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.6)
       rexml (~> 3.2)
-    yajl-ruby (1.4.1)
+    yajl-ruby (1.4.3)
     yard (0.9.26)
     zeitwerk (2.4.2)
 
