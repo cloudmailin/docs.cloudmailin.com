@@ -25,7 +25,7 @@ The list of possible events during email delivery is as follows:
 | delivery          | The email was delivered to the recipient's server.
 | bounce            | The email bounced. You should take action when receiving this event. Accounts with a [high number of bounces] will be suspended
 | soft_bounce       | The email was temporarily unable to be delivered. The message will retry a number of times.
-| retries_exhausted | The email was retried but ultiamtely could not be delivered. You should investigate this and take action if possible.
+| retries_exhausted | The email was retried but ultimately could not be delivered. You should investigate this and take action if possible.
 | open              | The email was opened.
 | click             | A link in the email was clicked.
 | blocked           | Sending was blocked due to previous bounces. This is called supressed in our interface.
