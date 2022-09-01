@@ -46,7 +46,7 @@ module Nanoc::Filters
     def run(content, _params = {})
       opts = %i[DEFAULT]
       exts = %i[tagfilter autolink table strikethrough tasklist]
-      common_links = File.read(File.expand_path('content/common_links.md'))
+      common_links = File.read(File.expand_path('content/_common_links.md'))
       doc = CommonMarker.render_doc(content + common_links, opts, exts)
       CustomHtmlRenderer.new(options: opts, extensions: exts).render(doc)
     end

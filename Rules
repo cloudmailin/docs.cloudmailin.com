@@ -32,7 +32,10 @@ end
 
 route '*' do
   raise "Item without extension #{item.inspect}" if item[:extension].nil?
-  if item.binary?
+
+  if item.identifier == '/common_links/'
+    nil
+  elsif item.binary?
     "#{item.identifier.chop}.#{item[:extension]}"
   else
     ext = item[:extension].nil? ? nil : item[:extension].split('.').last
