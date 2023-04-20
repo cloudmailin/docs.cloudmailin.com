@@ -371,6 +371,6 @@ As always we recommend taking a look at the [JSON (Normalized)] documentation.
 [Accessing Attachments]: #accessing-email-attachments-in-c-
 
 [Attachment Stores]: <%= url_to_item('/receiving_email/store-email-attachments-in-s3-azure-google-storage/') %>
-[Data Annotation]: https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-customize-properties?pivots=dotnet-6-0
+[Data Annotation]: https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/customize-properties?pivots=dotnet-6-0
 [JSON (Normalized)]: <%= url_to_item('/http_post_formats/json_normalized/') %>
 [Status Codes]: <%= url_to_item('/receiving_email/http_status_codes/') %>

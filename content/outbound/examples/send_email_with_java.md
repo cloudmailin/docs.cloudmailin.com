@@ -157,5 +157,5 @@ public class App
 
 <%= render 'outbound_summary' %>
 
-[Jakarta Mail]: https://eclipse-ee4j.github.io/mail/
-[MimeMessage]: https://eclipse-ee4j.github.io/mail/docs/api/jakarta.mail/jakarta/mail/internet/MimeMessage.html
+[Jakarta Mail]: https://projects.eclipse.org/projects/ee4j.mail
+[MimeMessage]: https://jakarta.ee/specifications/mail/2.1/apidocs/jakarta.mail/jakarta/mail/package-summary.html

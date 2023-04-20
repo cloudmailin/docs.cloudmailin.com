@@ -112,4 +112,4 @@ public class Program
 
 <%= render 'outbound_summary' %>
 
-[SmtpClient]: https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient.credentials?view=netcore-3.1
+[SmtpClient]: https://learn.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient.credentials?view=netcore-3.1
