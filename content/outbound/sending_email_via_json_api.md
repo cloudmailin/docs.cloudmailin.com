@@ -142,5 +142,5 @@ The key is the header name and the value is expected to be a string a string val
 ```
 
 [Client Library]: #client-libraries
-[SMTP Accounts]: https://www.cloudmailin.com/outbound/accounts
+[SMTP Accounts]: https://www.cloudmailin.com/outbound/senders
 [SMTP]: <%= url_to_item('/outbound/sending_email_with_smtp/') %>
