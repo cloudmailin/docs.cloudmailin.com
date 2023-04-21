@@ -23,7 +23,7 @@ docker-compose build
 docker-compose up docs
 ```
 
-You can then head to: http://localhost:5000/
+You can then head to: http://localhost:8000/
 
 ## Checks
 
