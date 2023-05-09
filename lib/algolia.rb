@@ -45,9 +45,12 @@ module Nanoc::Filters
       # put newlines in for * and - lists
       content = content.gsub(/\s\*\s/, "\r\n ")
 
-      # remove whitespace at start and end of lines
-      # content.gsub(/^\s+|\s+$/m, '')
       content
+    end
+
+    def destroy_index
+      @index.clear_objects
+      puts "Index #{@index.name} cleared"
     end
 
     def run(content, params = {})
@@ -59,6 +62,7 @@ module Nanoc::Filters
         description: description,
         content: extract_text(content),
         deprecated: !!item[:deprecated],
+        no_index: !!item[:no_index],
         raw: content
       ).wait
 

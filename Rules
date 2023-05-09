@@ -4,6 +4,14 @@ end
 
 ignore '*/_*'
 
+preprocess do
+  next if ENV['NANOC_ENV'] == 'development'
+
+  puts "Preprocessing"
+  Nanoc::Filters::AlgoliaFilter.new(config: config).destroy_index
+  puts "Index destroyed"
+end
+
 compile '*' do
   if item.identifier == '/_common_links/'
     nil
