@@ -1,5 +1,6 @@
 ---
 title: JSON Hash Format (Depracated)
+deprecated: true
 ---
 
 # JSON Hash Email Message Format

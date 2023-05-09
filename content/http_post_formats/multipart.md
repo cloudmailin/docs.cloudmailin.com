@@ -1,5 +1,6 @@
 ---
 title: Multipart Form Data Hash Format (Depracated)
+deprecated: true
 ---
 
 # Multipart/form-data Hash Email Message Format

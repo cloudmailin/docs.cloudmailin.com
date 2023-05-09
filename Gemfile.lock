@@ -11,6 +11,11 @@ GEM
       eventmachine (~> 1.2)
       listen (~> 3.0)
       rack-livereload (~> 0.3)
+    algolia (2.3.1)
+      faraday (>= 0.15, < 3)
+      faraday-net_http_persistent (>= 0.15, < 3)
+      multi_json (~> 1.0)
+      net-http-persistent
     ast (2.4.2)
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
@@ -24,6 +29,7 @@ GEM
     colored (1.2)
     commonmarker (0.23.1)
     concurrent-ruby (1.1.9)
+    connection_pool (2.4.0)
     cri (2.15.11)
     ddmemoize (1.0.0)
       ddmetrics (~> 1.0)
@@ -41,6 +47,13 @@ GEM
     eventmachine (1.2.7)
     excon (0.85.0)
     execjs (2.8.1)
+    faraday (2.7.4)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
+    faraday-net_http_persistent (2.1.0)
+      faraday (~> 2.5)
+      net-http-persistent (~> 4.0)
     ffi (1.15.4)
     fog-aws (3.12.0)
       fog-core (~> 2.1)
@@ -130,9 +143,16 @@ GEM
       nanoc-checking (~> 1.0)
       nanoc-cli (~> 4.11, >= 4.11.15)
       nanoc-core (~> 4.11, >= 4.11.15)
+    nanoc-live (1.0.0)
+      adsf-live (~> 1.4)
+      listen (~> 3.0)
+      nanoc-cli (~> 4.11, >= 4.11.14)
+      nanoc-core (~> 4.11, >= 4.11.14)
     nanoc-sprockets3 (1.0.5)
       sprockets (~> 3.2, >= 3.0.0)
     nenv (0.3.0)
+    net-http-persistent (4.0.2)
+      connection_pool (~> 2.2)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
@@ -180,6 +200,7 @@ GEM
       mini_portile2 (>= 2.2.0)
       multi_json
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -230,6 +251,7 @@ PLATFORMS
 DEPENDENCIES
   adsf
   adsf-live
+  algolia
   bootstrap-sass (~> 3.4)
   builder
   commonmarker
@@ -239,6 +261,7 @@ DEPENDENCIES
   haml (~> 5.0)
   mime-types
   nanoc
+  nanoc-live
   nanoc-sprockets3
   nokogiri
   rake

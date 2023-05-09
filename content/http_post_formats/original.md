@@ -1,5 +1,6 @@
 ---
 title: Original HTTP POST Format (Depracated)
+deprecated: true
 ---
 
 # Original HTTP POST Format

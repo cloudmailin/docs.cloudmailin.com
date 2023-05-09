@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'nanoc-sprockets3', require: 'nanoc-sprockets'
 
+gem 'algolia'
 gem 'bootstrap-sass', '~> 3.4'
 gem 'builder'
 gem 'commonmarker'
@@ -24,6 +25,10 @@ group :developement do
   gem 'mime-types'
   gem 'rake'
   gem 'w3c_validators'
+end
+
+group :nanoc do
+  gem 'nanoc-live'
 end
 
 group :vscode do

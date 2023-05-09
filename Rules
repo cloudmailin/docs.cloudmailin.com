@@ -5,19 +5,23 @@ end
 ignore '*/_*'
 
 compile '*' do
-  if item.binary?
+  if item.identifier == '/_common_links/'
+    nil
+  elsif item.binary?
     "#{item.identifier.chop}.#{item[:extension]}"
   else
     ext = item[:extension].nil? ? nil : item[:extension].split('.').last
     case ext
     when 'markdown', 'md'
       filter :erb unless item.attributes[:skip_erb]
+      filter :algolia, preview: false unless ENV['NANOC_ENV'] == 'development' ||
+        item.attributes[:no_index] || item.attributes[:redirect_to]
       filter :common_marker
       layout 'application'
     when 'scss'
       filter :sprockets, css_compressor: :scss
     when 'haml'
-      filter :haml, :format => :html5
+      filter :haml, format: :html5
       layout 'application'
     when 'xml'
       filter :erb
@@ -33,7 +37,7 @@ end
 route '*' do
   raise "Item without extension #{item.inspect}" if item[:extension].nil?
 
-  if item.identifier == '/common_links/'
+  if item.identifier == '/_common_links/'
     nil
   elsif item.binary?
     "#{item.identifier.chop}.#{item[:extension]}"

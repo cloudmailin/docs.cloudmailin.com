@@ -6,10 +6,19 @@
     %link{href: '/favicon.svg', rel: "icon", type: "image/svg+xml"}
     %link{href: '/favicon_old.png', rel: "alternate icon", type: "image/png"}
     %meta{"http-equiv": "Content-Type", content: "text/html; charset=utf-8"}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic"/>
     <link rel='stylesheet' href='/assets/stylesheets/docs_new.css' type='text/css' />
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" defer integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="/assets/javascripts/code.js" defer></script>
     <script src="https://www.cloudmailin.com/assets/marketing.js" defer></script>
+
+    -# Algolia - css is above and then overridden
+    <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+    <script src="/assets/javascripts/search.js" defer></script>
+
+
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5"}
     - if description
       %meta{name: 'description', content: description}
@@ -37,6 +46,9 @@
             = link_to image_tag('logo_trans_no_com.png', alt: 'cloudmailin logo, incoming email for your web app', style: 'height: 30px'), 'https://www.cloudmailin.com'
           %ul.home-nav
             %li= link_to 'Return to CloudMailin.com', 'https://www.cloudmailin.com'
+          %ul#search-nav
+            %li#search-area
+              #searchbox
 
     #middle
       #container
@@ -45,6 +57,11 @@
           - if description.nil?
             .warning
               %p Description not set
+          - elsif @item[:no_index]
+            .warning No Index
+          - else
+            .info
+              %p= description
         .documentation_content{id: identifier }
           %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
 

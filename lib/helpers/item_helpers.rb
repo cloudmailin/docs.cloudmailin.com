@@ -12,7 +12,24 @@ module ItemHelpers
   end
 
   def description(item = @item)
-    item.attributes[:description]
+    item.attributes[:description] || preview(item)
+  end
+
+  def preview(item = @item, paragraphs = 5, length = 160)
+    # We can ignore things like images here because the first 3 paragraphs are
+    # what we're using for the preview
+    content = item.raw_content.gsub(/<%.+%>/, '')
+    html = Nanoc::Filters::CommonMarkerFilter.new.run(content)
+    doc = Nokogiri::HTML(html)
+
+    # Only take direct children of the body and only while the length is less
+    # than the desired length
+    output = ''
+    doc.css('body > p')[0...paragraphs].take_while do |paragraph|
+      output += "#{paragraph&.content} "
+      output.length < length
+    end
+    output
   end
 
   def social_image(item = @item)

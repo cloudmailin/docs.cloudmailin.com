@@ -14,8 +14,19 @@ $pre-bg: mix(lighten($brand-primary, 25), #fff, 5);
 $table-head-bg: mix(darken($brand-primary, 25), #fff, 6);
 $table-bg-accent: $pre-bg;
 
+$search-result-prevew-color: #000;
+
 @import "bootstrap-sprockets";
 @import "bootstrap_choices";
+
+:root {
+  --aa-search-input-height: 30px;
+  --aa-base-unit: 16;
+  --aa-icon-size: 14px;
+
+  --search-result-link-color: #666;
+  --search-result-prevew-color: #999;
+}
 
 body {
   background-color: $brand-primary;
@@ -89,6 +100,50 @@ nav {
     @extend .nav;
     @extend .navbar-nav;
     padding-top: 2px;
+  }
+
+  ul#search-nav {
+    @extend .nav;
+    @extend .navbar-nav;
+    @extend .navbar-right;
+    padding-left: 0px;
+
+    #search-area {
+      margin-left: 10px;
+    }
+
+    #searchbox {
+      padding: 0px 10px;
+      margin-top: 3px;
+      min-width: 380px;
+      max-width: 100%;
+      // width: 100%;
+    }
+  }
+}
+
+.aa-Input {
+  padding-left: 3px;
+}
+
+.aa-Item {
+  margin-bottom: 20px;
+}
+
+a.search-result, a.search-result:hover {
+  text-decoration: none;
+
+  h4 {
+    font-size: medium;
+    color: var(--search-result-link-color);
+    margin-top: 0px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: small;
+    color: var(--search-result-prevew-color);
+    margin-bottom: 0px;
   }
 }
 

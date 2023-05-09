@@ -1,10 +1,14 @@
 version: '3.8'
 services:
+
   docs:
     build: .
-    command: bash -c "NANOC_ENV=development bundle exec guard --force-polling --no-interactions & bundle exec nanoc view --live-reload -o 0.0.0.0 -p 8000"
+    # command: bundle exec nanoc view --live-reload --port 8000 --host 0.0.0.0
+    command: bundle exec nanoc live --port 8000 --host 0.0.0.0
     volumes:
       - .:/app
+    environment:
+      - NANOC_ENV=development
     ports:
       - "8000:8000"
       - "35729:35729"
