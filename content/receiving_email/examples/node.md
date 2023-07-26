@@ -25,11 +25,9 @@ Express can automatically parse JSON bodies using the [body parser] middleware.
 
 ```typescript
 import express from "express";
-import bodyParser from "body-parser";
 
 const app = express();
-
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.post("/incoming_mails/", (req, res) => {
   console.log(req.body);
@@ -43,9 +41,9 @@ app.listen("80", "0.0.0.0", () => {
 ```
 ```javascript
 var express = require("express");
-var bodyParser = require("body-parser");
 
 var app = express();
+app.use(express.json());
 
 app.use(bodyParser.json());
 
