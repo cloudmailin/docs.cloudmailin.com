@@ -9,12 +9,20 @@ image: ruby
 <div class="warning">This example may be outdated. You can now find examples for newer POST formats
 within the <a href="/http_post_formats/">HTTP POST Formats documentation</a>.</div>
 
+* [Rails 7](#receiving-email-with-rails-7)
 * [Rails 6](#receiving-email-with-rails-6)
 * [Rails 3, 4 and 5](#receiving-email-with-rails-5)
 * [Gridder CloudMailin](#griddler-cloudmailin-and-rails)
 * [Sinatra](#receiving-mail-with-sinatra)
 
-## Receiving email with Rails 6
+## Receiving email with Rails 7 (Action Mailbox)
+
+Rails 7 contains ActionMailbox which can be used to receive email.
+Action Mailbox provides an abstraction layer for receiving emails in Rails
+applications, however, in many cases it will be easier to work directly with
+CloudMailin's HTTP POST formats.
+
+## Receiving email with Rails 6 & 7 (Without Action Mailbox)
 
 Rails will automatically parse and understand our
 [multipart normalized](/http_post_formats/multipart_normalized/) and

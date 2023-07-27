@@ -40,6 +40,30 @@ config.action_mailer.delivery_method = :cloudmailin
 It's also advisable to set the `action_mailer.default_url_options` so that any email links will have a host
 correctly set in the URL.
 
+### Using CloudMailin's SMTP URL
+
+You can simplify the above by using the SMTP URL provided by CloudMailin:
+
+The SMTP URL passes you all of the parameters needed to connect to the SMTP
+server in a single URL. You can set this URL in an environment variable and get
+up and running quickly.
+
+```ruby
+# Add the config to an initializer config/initializers/cloudmailin.rb
+smtp_url = URI.parse(ENV['CLOUDMAILIN_SMTP_URL'])
+ActionMailer::Base.add_delivery_method :cloudmailin, Mail::SMTP,
+  address: smtp_url.host,
+  port: smtp_url.port,
+  user_name: smtp_url.user,
+  password: smtp_url.password,
+  authentication: 'plain',
+  enable_starttls_auto: true
+
+# You can then set the delivery method in your environment config
+# config/environments/production.rb
+config.action_mailer.delivery_method = :cloudmailin
+```
+
 ### Creating a Mailer
 
 Once you've set your SMTP settings you can make use of the standard `ActionMailer` to actually
