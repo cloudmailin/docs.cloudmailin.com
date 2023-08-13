@@ -1,6 +1,6 @@
 ---
 title: Full Email Storage / Backup in AWS S3, Azure, or Google Storage
-description: |
+description:
   CloudMailin allows you to store or backup an entire email in
   either EML format or fully parsed JSON. The Email is stored within an AWS S3
   bucket, Azure Blob Storage or Google Cloud Storage and delivered to your

@@ -1,6 +1,6 @@
 ---
 title: Storing Email Attachments in AWS S3, Azure, or Google Storage
-description: |
+description:
   CloudMailin allows you to store large email attachments in Amazon Web
   Services (AWS) S3, Microsoft Azure Blob Storage, or Google Cloud Storage.
   Emails are fully parsed and delivered with a URL containing the location of

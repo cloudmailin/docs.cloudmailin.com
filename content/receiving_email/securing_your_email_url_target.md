@@ -1,6 +1,6 @@
 ---
 title: Securely receiving email via HTTP POST
-description: |
+description:
   CloudMailin allows you to Securely receive email via Webhook (HTTP POST)
   Basic authentication allows you to prevent impersonation.
 ---

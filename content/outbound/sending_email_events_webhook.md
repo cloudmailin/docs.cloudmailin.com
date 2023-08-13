@@ -1,6 +1,6 @@
 ---
 title: Outbound Email Event Webhook
-description: |
+description:
   When you send email with CloudMailin you can opt to receive status events via Webhook.
   This is different to the Webhook received when CloudMailin actually receives email.
 image: out

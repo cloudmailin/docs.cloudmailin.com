@@ -1,6 +1,6 @@
 ---
 title: Signed HTTP Requests in the Original Format
-description: |
+description:
   Previously CloudMailin allowed you to sign HTTP requests using a hash based
   algorithm. That approach is now deprecated and we recommend you used HTTPS
   and Basic Authentication instead.
