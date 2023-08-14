@@ -1,6 +1,7 @@
 ---
 title: Page Not Found
 disable_comments: true
+no_index: true
 ---
 
 # Page Not Found
