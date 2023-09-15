@@ -53,14 +53,14 @@ files in your S3 Bucket. The simplest is to use the AWS website.
 1. Go to the AWS Management Console
    [https://console.aws.amazon.com](https://console.aws.amazon.com) and Sign in.
 2. Click on the S3 Tab, then select your bucket (or create a new one)
-    ![The S3 Tab](/assets/images/s3/list-aws-services-s3.png)
+    ![The S3 Tab](/content/assets/images/s3/list-aws-services-s3.png)
 3. Click on permissions the button
-    ![The S3 Permissions Tab](/assets/images/s3/permissions-tab.png)
+    ![The S3 Permissions Tab](/content/assets/images/s3/permissions-tab.png)
 4. Scroll down to the Access control list (ACL) panel
-    ![The S3 Permissions ACL](/assets/images/s3/s3-permissions-acl.png)
+    ![The S3 Permissions ACL](/content/assets/images/s3/s3-permissions-acl.png)
 5. Click `Edit` and then `Add grantee`
     ![The S3 Permissions
-    Tab](/assets/images/s3/add-canonical-id.png)
+    Tab](/content/assets/images/s3/add-canonical-id.png)
 6. In the `grantee` field from above, paste the CloudMailin Canonical ID,
     choose `write` and then save
 

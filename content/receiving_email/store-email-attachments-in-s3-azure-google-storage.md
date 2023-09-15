@@ -56,14 +56,14 @@ files in your S3 Bucket. The simplest is to use the AWS website.
 1. Go to the AWS Management Console
    [https://console.aws.amazon.com](https://console.aws.amazon.com) and Sign in.
 2. Click on the S3 Tab, then select your bucket (or create a new one)
-    ![The S3 Tab](/assets/images/s3/list-aws-services-s3.png)
+    ![The S3 Tab](/content/assets/images/s3/list-aws-services-s3.png)
 3. Click on permissions the button
-    ![The S3 Permissions Tab](/assets/images/s3/permissions-tab.png)
+    ![The S3 Permissions Tab](/content/assets/images/s3/permissions-tab.png)
 4. Scroll down to the Access control list (ACL) panel
-    ![The S3 Permissions ACL](/assets/images/s3/s3-permissions-acl.png)
+    ![The S3 Permissions ACL](/content/assets/images/s3/s3-permissions-acl.png)
 5. Click `Edit` and then `Add grantee`
     ![The S3 Permissions
-    Tab](/assets/images/s3/add-canonical-id.png)
+    Tab](/content/assets/images/s3/add-canonical-id.png)
 6. In the `grantee` field from above, paste the CloudMailin Canonical ID,
     choose `write` and then save
 
@@ -108,13 +108,13 @@ Blob storage whenever an email is received.
 
 1. Create a new `Container` in the Azure Blob Service panel in your Azure
    Storage Account.
-   ![Create Azure blob storage container](/assets/images/azure-blob-storage/create_storage_container.png)
+   ![Create Azure blob storage container](/content/assets/images/azure-blob-storage/create_storage_container.png)
 2. Go to Settings and then `Shared Access Signature` (SAS).
 3. Generate a SAS URL for the `Blob` service with `Object` and `Write`
    permission and select the start and end dates for the signature. You'll need
    a large enough date range to provide CloudMailin continued access to the
    container.
-   ![Create a Shared Access Signature URL](/assets/images/azure-blob-storage/create_sas_url.png)
+   ![Create a Shared Access Signature URL](/content/assets/images/azure-blob-storage/create_sas_url.png)
 4. Once you've generated the URL you'll need to save a copy of the full
    `SAS URL`.
 
@@ -140,12 +140,12 @@ attachments to your bucket.
 
 1. Head to the Google Cloud Platform management page and go to Storage.
 2. Create a new `Bucket` or edit your existing bucket.
-   ![Create Azure blob storage container](/assets/images/google-cloud-storage/create_google_cloud_storage.png)
+   ![Create Azure blob storage container](/content/assets/images/google-cloud-storage/create_google_cloud_storage.png)
 3. Click on the `Permissions Tab` and select `Add` to add a member to the
    permissions tab.
 4. Grant the CloudMailin Service Account (below) `Storage Object Creator` permission to
    allow the creation of new Storage Objects.
-   ![Create Azure blob storage container](/assets/images/google-cloud-storage/add_upload_permission.png)
+   ![Create Azure blob storage container](/content/assets/images/google-cloud-storage/add_upload_permission.png)
 
 > The CloudMailin service account that you need to grant permission is:
 > `uploads@cloudmailin-uploads.iam.gserviceaccount.com`

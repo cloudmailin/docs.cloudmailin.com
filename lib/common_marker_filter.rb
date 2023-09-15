@@ -41,6 +41,16 @@ module Nanoc::Filters
         out(formatter.format(lexer.lex(source)))
         out('</code></pre>')
       end
+
+      def image(node)
+        url = node.url.sub(%r{^/content}, '')
+        out('<img src="', escape_href(url), '"')
+        plain do
+          out(' alt="', :children, '"')
+        end
+        out(' title="', escape_html(node.title), '"') if node.title && !node.title.empty?
+        out(" />")
+      end
     end
 
     def run(content, _params = {})

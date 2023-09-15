@@ -9,7 +9,7 @@ on the [outbound account] page.
 
 > Make sure you changed the from address to match your verified domain and set a recipient
 
-![Outbound Dashboard Showing Message](/assets/images/outbound_summary.png)
+![Outbound Dashboard Showing Message](/content/assets/images/outbound_summary.png)
 
 The SMTP transaction will reply with the message-id of the message to use for bounce tracking
 if required.
