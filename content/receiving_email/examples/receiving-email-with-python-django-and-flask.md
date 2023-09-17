@@ -16,10 +16,12 @@ You can jump straight to the section that's relevant to you:
   * [Basic Example](#receive-email-with-flask)
   * [HTTP Status Codes](#http-status-codes-matter)
   * [Protecting our email Webhook](#protecting-our-email-webhook)
+  * [Receiving Email Attachments with Flask](#receiving-email-attachments-with-flask)
 * [Django](#receive-email-with-django)
   * [Basic Example](#receive-email-with-django)
   * [Validate the To address](#validate-the-to-address)
   * [Protecting our email Webhook](#protecting-our-email-webhook)
+  * [Receiving Email Attachments with Django](#receiving-email-attachments-with-django)
 * [Summary](#summary)
 
 ## Receive email with Flask
@@ -169,6 +171,42 @@ if __name__ == "__main__":
 With the username and password in place we need to make sure we send the user
 and password in the basic auth header in our test HTTP POST CloudMailin and
 when configuring CloudMailin.
+
+### Receiving Email Attachments with Flask
+
+CloudMailin makes receiving email attachments easy. There are two options for
+attachments:
+
+You can either
+
+* receive the attachments as part of the JSON data that is POSTed; Or
+* upload the attachments directly to Cloud Storage such as AWS S3 and receive
+  them as a URL
+
+We're not going to show a full example here but instead just link to the
+relevant documentation
+[HTTP POST Formats - JSON Attachments](/http_post_formats/json_normalized/#attachments).
+As with the parameters above it's simply a matter of taking either the
+`attachments[0].url` or `attachments[0].content` and working with them.
+
+For example for the Attachment Storage version we could get the URL of the first
+attachment like so:
+
+```python
+# Access specific fields from the JSON data
+subject = data.get('headers', {}).get('subject', 'No Subject')
+
+# Get the URL of the first attachment
+attachments = data.get('attachments', [])
+first_attachment_url = attachments[0]['url'] if attachments else None
+
+# Print the extracted fields to the console
+print(f"Subject: {subject}")
+print(f"First attachment URL: {first_attachment_url}")
+```
+
+Great, that's all we need to do. Obviously this can be extended to perform
+additional processing and work with the email content.
 
 ---
 
@@ -329,6 +367,39 @@ def cloudmailin_webhook(request):
     print(f"Subject: {subject}")
 
     return JsonResponse({'status': 'ok'})
+```
+
+### Receiving Email Attachments with Django
+
+CloudMailin makes receiving email attachments easy. There are two options for
+attachments:
+
+You can either
+
+* receive the attachments as part of the JSON data that is POSTed; Or
+* upload the attachments directly to Cloud Storage such as AWS S3 and receive
+  them as a URL
+
+We're not going to show a full example here but instead just link to the
+relevant documentation
+[HTTP POST Formats - JSON Attachments](/http_post_formats/json_normalized/#attachments).
+As with the parameters above it's simply a matter of taking either the
+`attachments[0].url` or `attachments[0].content` and working with them.
+
+For example for the Attachment Storage version we could get the URL of the first
+attachment like so:
+
+```python
+# Access specific fields from the JSON data
+subject = data.get('headers', {}).get('subject', 'No Subject')
+
+# Get the URL of the first attachment
+attachments = data.get('attachments', [])
+first_attachment_url = attachments[0]['url'] if attachments else None
+
+# Print the extracted fields to the console
+print(f"Subject: {subject}")
+print(f"First attachment URL: {first_attachment_url}")
 ```
 
 Perfect, now when we make the request we'll see a 401 Unauthorized response
