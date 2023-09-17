@@ -2,6 +2,7 @@
 title: Receiving Email with Python
 skip_erb: true
 image: python
+redirect_to: /receiving_email/examples/receiving-email-with-python-django-and-flask/
 ---
 
 # Receiving Email with Python
