@@ -23,7 +23,7 @@ If you have any questions at all please contact our support team using ou [conta
 
 ## Transactional email
 
-The CloudMailin outbound system only allows you to send transactional messages. Marketing or bulk
+The CloudMailin outbound system only allows you to send [transactional email] messages. Marketing or bulk
 messages are not permitted. If you're not quite sure here are some examples of transactional
 message types:
 
@@ -56,5 +56,21 @@ please [contact us].
 | SPAM         | We will run automated SPAM checks against messages. Those with a high score will be rejected. |
 | Max Volumes  | We will help you to automatically ramp up sending volumes, starting small and growing the number of emails you can send per day. Please [contact us] if you have any questions about this. |
 | Bounce Rate  | Bounces and supressions will be monitored. Because we're sending transactional email we don't expect this rate to rise above `2%`. We can help you to ensure this is successful. |
+| BCC          | We do not support BCC by default as it is not commonly used for transactional emails [contact us] if your use case requires it. |
 
-Please [contact us] if we need to work with you on any of these limitations.
+> Please [contact us] if we need to work with you on any of these limitations.
+
+#### A note about BCC
+
+BCC is not commonly used for transactional email it makes more sense to send
+individual emails to each recipient. This allows you to track opens and clicks
+and to ensure that you're sending relevant content to each recipient. However,
+we appreciate that there are some use cases where BCC is required [contact us]
+if you believe your use case justifies the need.
+
+## More Help
+
+As always if you have any questions please [contact us] and we'll be happy to help.
+
+
+[transactional email]: https://www.cloudmailin.com/blog/what-is-transactional-email-a-2024-review
