@@ -38,28 +38,35 @@ The acceptance of the message will be determined by the HTTP Status code that yo
 | `5xx`       | The message will be delayed. We will inform the server that an error occurred contacting the authorization server (SMTP `450`) |
 
 ### Examples
+
 An example `application/x-www-form-urlencoded` callback is as follows:
 
-    size=102400&to=to%example.net&from=from%2Btest%40example.com&helo_domain=localhost&remote_ip=127.0.0.1&spf[result]=pass&spf[domain]=example.com
+```application/x-www-form-urlencoded
+size=102400&to=to%example.net&from=from%2Btest%40example.com&helo_domain=localhost&remote_ip=127.0.0.1&spf[result]=pass&spf[domain]=example.com
+```
 
 An example `application/json` callback is as follows:
 
-    {"size":102400,"to":"to@example.net","from":"from+test@example.com","helo_domain":"localhost","remote_ip":"127.0.0.1","spf":{"result":"pass","domain":"example.com"}}
+```json
+{"size":102400,"to":"to@example.net","from":"from+test@example.com","helo_domain":"localhost","remote_ip":"127.0.0.1","spf":{"result":"pass","domain":"example.com"}}
+```
 
 An example `application/xml` callback is as follows:
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <parameters>
-      <size type="integer">102400</size>
-      <to>to@example.net</to>
-      <from>from+test@example.com</from>
-      <helo-domain>localhost</helo-domain>
-      <remote-ip>127.0.0.1</remote-ip>
-      <spf>
-        <result>pass</result>
-        <domain>example.com</domain>
-      </spf>
-    </parameters>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+  <size type="integer">102400</size>
+  <to>to@example.net</to>
+  <from>from+test@example.com</from>
+  <helo-domain>localhost</helo-domain>
+  <remote-ip>127.0.0.1</remote-ip>
+  <spf>
+    <result>pass</result>
+    <domain>example.com</domain>
+  </spf>
+</parameters>
+```
 
 ## Error Callbacks
 
@@ -78,14 +85,17 @@ When an error callback fires it will contain the following parameters:
 
 An example `application/x-www-form-urlencoded` formatter response is as follows:
 
-    status=422&to=recipient%40example.com&from=from%40example.com&response=%3Chtml%3E%3Cbody%3EAn%20error%20occurred%20trying%20to%20save%20this%20data.%3C%2Fbody%3E%3C%2Fhtml%3E
+```application/x-www-form-urlencoded
+status=422&to=recipient%40example.com&from=from%40example.com&response=%3Chtml%3E%3Cbody%3EAn%20error%20occurred%20trying%20to%20save%20this%20data.%3C%2Fbody%3E%3C%2Fhtml%3E
+```
 
 An example `JSON` formatted response is as follows:
 
-    {
-      'status': 422,
-      'to': 'recipient@example.com',
-      'from': 'from@example.com',
-      'response': '<html><body>An error occurred trying to save this data.</body></html>'
-    }
-
+```json
+{
+  'status': 422,
+  'to': 'recipient@example.com',
+  'from': 'from@example.com',
+  'response': '<html><body>An error occurred trying to save this data.</body></html>'
+}
+```

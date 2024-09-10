@@ -42,4 +42,4 @@ its objects.
 
 If you have any questions relating to this please feel free to [contact us].
 
-[access control list]: /receiving_email/store-email-attachments-in-s3-azure-google-storage
+[access control list]: /receiving_email/store-email-attachments-in-s3-azure-google-storage/
