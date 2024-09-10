@@ -1,4 +1,4 @@
-FROM ruby:3.1
+FROM ruby:3
 
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
