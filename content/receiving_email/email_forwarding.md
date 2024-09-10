@@ -28,7 +28,7 @@ This guide will contain examples to help demonstrate setting up email forwarding
 In order to receive email from your domain with go daddy:
 
   1. Log into your GoDaddy.com [account manager](https://www.godaddy.com/).
-  2. Follow the instructions [here](https://uk.godaddy.com/help/set-up-my-forwarding-email-address-7598) up to step 8.
+  2. Follow the instructions [here](https://www.godaddy.com/en-uk/help/set-up-my-forwarding-email-address-7598) up to step 8.
   3. In the `Forward Mail To` field enter your CloudMailin email address.
   4. If you want to send all emails to your CloudMailin address check `use catchall`.
   5. Now any email sent to your domain should automatically be forwarded onto CloudMailin and therefore your app.

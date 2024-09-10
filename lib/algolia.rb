@@ -12,7 +12,7 @@ module Nanoc::Filters
       super
 
       app_id = @config.dig(:algolia, :application_id)
-      api_key = @config.dig(:algolia, :api_key)
+      api_key = ENV['ALGOLIA_API_KEY'] || @config.dig(:algolia, :api_key)
       index = @config.dig(:algolia, :index)
 
       raise ArgumentError, 'Missing algolia:application_id' unless app_id

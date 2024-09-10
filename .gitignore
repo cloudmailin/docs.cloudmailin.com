@@ -2,6 +2,7 @@
 .sass-cache
 .bundle
 .fog
+.env
 
 output/
 tmp/

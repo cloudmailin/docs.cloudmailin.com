@@ -23,7 +23,8 @@ compile '*' do
     when 'markdown', 'md'
       filter :erb unless item.attributes[:skip_erb]
       filter :algolia, preview: false unless ENV['NANOC_ENV'] == 'development' ||
-        item.attributes[:no_index] || item.attributes[:redirect_to]
+        item.attributes[:no_index] ||
+        (item.attributes[:redirect_to] && !item.attributes[:force_index])
       filter :common_marker
       layout 'application'
     when 'scss'
