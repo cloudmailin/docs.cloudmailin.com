@@ -66,9 +66,11 @@
           %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
 
           - if redirect_to
-            %p Redirecting to #{link_to redirect_to, redirect_to}.
+            .warning
+              %p Redirecting to #{link_to redirect_to, redirect_to}.
+              %p Content below will now render!!!
 
-          - unless redirect_to
+          - unless redirect_to && false # always show the content for now
             -# Show the main content for this page
             = find_and_preserve(yield)
 

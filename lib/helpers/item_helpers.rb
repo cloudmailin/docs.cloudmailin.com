@@ -42,6 +42,7 @@ module ItemHelpers
   def redirect_to(item = @item)
     link = item.attributes[:redirect_to]
     return if link.nil?
+    return link if link.start_with?('http')
 
     candidate = find_item(link)
     raise ArgumentError, "Cannot find item #{link.inspect}" unless candidate
