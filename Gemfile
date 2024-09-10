@@ -12,9 +12,6 @@ gem 'nokogiri'
 gem 'rouge'
 gem 'ruby-jq', '~> 0.1', require: 'jq'
 gem 'sass'
-
-# Versions before this have potential security issue although it doesn't affect us really
-# it's better not to install vulnerable versions.
 gem 'yajl-ruby', '>= 1.3.1'
 
 group :developement do
@@ -25,16 +22,15 @@ group :developement do
   gem 'mime-types'
   gem 'rake'
   gem 'w3c_validators'
+  gem 'webrick'
 end
 
 group :nanoc do
   gem 'nanoc-live'
 end
 
+# VSCode
 group :vscode do
-  # VSCode
-  gem 'debase'
+  gem 'debug'
   gem 'rubocop'
-  gem 'ruby-debug-ide'
-  gem 'solargraph'
 end
