@@ -35,7 +35,7 @@ module OpenapiHelpers
   end
 
   def fetch_spec
-    return File.read(PATH) if File.exists?(PATH)
+    return File.read(PATH) if File.exist?(PATH)
 
     uri = URI(SPEC_LOCATION)
     spec = Net::HTTP.get_response(uri)&.body

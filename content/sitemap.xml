@@ -1,6 +1,7 @@
 <%=
   items = @items.reject do |item|
-    item.identifier =~ %r{^/assets|^/sitemap|^/robots} || item.binary?
+    item.identifier =~ %r{^/assets|^/sitemap|^/robots} || item.binary? ||
+      item[:no_index] == true
   end
   xml_sitemap items: items
 %>

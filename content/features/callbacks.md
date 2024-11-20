@@ -9,7 +9,7 @@ CloudMailin has the ability to make additional callbacks as well as just sending
 | Callback Type             | Information                                                           |
 |---------------------------|-----------------------------------------------------------------------|
 | `Authorization Callbacks` | Authorization callbacks allow you to interact with the authorization of messages before any content is transmitted. They let your app act like the mail server and decide who is and isn't allowed in the sender and to fields. |
-| `Error Callbacks`         | Error callbacks fire whenever CloudMailin receives a [HTTP status code](/receiving_email/http_status_codes) that isn't in the `2xx` range. They can be used to alert you whenever something isn't right. |
+| `Error Callbacks`         | Error callbacks fire whenever CloudMailin receives a [HTTP status code](/receiving_email/http_status_codes/) that isn't in the `2xx` range. They can be used to alert you whenever something isn't right. |
 
 ## Authorization Callbacks
 

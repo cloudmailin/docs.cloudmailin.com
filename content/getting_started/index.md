@@ -9,7 +9,8 @@ CloudMailin allows you to receive any volume of incoming email via a Webhook. Yo
 
 In this guide we're going to cover the basics of receiving your first email with CloudMailin. The first step is to head to [https://www.cloudmailin.com](https://www.cloudmailin.com) and [signup](https://www.cloudmailin.com/plans).
 
-As soon as you sign up, you will be presented with the option to create your first CloudMailin address. Here you can enter the URL that CloudMailin should send your email to. We call this url the target or destination. CloudMailin will use an HTTP POST to deliver all of your email to this URL. This target URL must be a URL that CloudMailin can access over the public internet, don't worry though, it supports HTTPS and you can pass basic authentication to keep things secure. If you're developing locally you can also see our [Local Development and Testing Guide](/receiving_email/localhost_debugger) once you're done here.
+As soon as you sign up, you will be presented with the option to create your first CloudMailin address. Here you can enter the URL that CloudMailin should send your email to. We call this url the target or destination. CloudMailin will use an HTTP POST to deliver all of your email to this URL. This target URL must be a URL that CloudMailin can access over the public internet, don't worry though, it supports HTTPS and you can pass basic authentication to keep things secure. If you're developing locally you can also see our [HTTP POST Format](/http_post_formats/#testing-a-format) guide once you're done here.
+This includes some information about debugging locally or using Postman.
 
 ![Create CloudMailin Email to Webhook Address]
 
