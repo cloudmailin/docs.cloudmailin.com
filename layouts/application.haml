@@ -78,7 +78,7 @@
             %pre.warning>= @item.attributes.map { |k, v| "#{k}: #{v.inspect}"}.join("\n")
 
           #comments
-            = render 'comments' unless disable_comments?
+          -#  = render 'comments' unless disable_comments?
 
         = render('sidebar')
 
