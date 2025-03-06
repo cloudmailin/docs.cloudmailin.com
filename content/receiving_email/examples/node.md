@@ -260,4 +260,4 @@ we receive a URL to the location of the uploaded file.
 [Status Codes]: <%= url_to_item('/receiving_email/http_status_codes/') %>
 [HTTP POST Formats]: <%= url_to_item('/http_post_formats/') %>
 [Attachment Store]: <%= url_to_item('/receiving_email/attachments/') %>
-[Body Parser]: http://expressjs.com/en/resources/middleware/body-parser.html
+[Body Parser]: https://expressjs.com/en/resources/middleware/body-parser.html
