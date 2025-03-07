@@ -77,10 +77,12 @@ checks:
   external_links:
     exclude:
       - http://localhost:3000
-      - http://www.cloudmailin.com/target/404
-      - http://www.cloudmailin.com/target/500
+      - https://www.cloudmailin.com/target/404
+      - https://www.cloudmailin.com/target/500
       # Redirect is allowed
       - https://www.attachmentscanner.com/documentation
+      - https://docs.cloudmailin.com/receiving_email/examples/receiving-email-with-python-django-and-flask/
+      - https://www.godaddy.com/
 
 # Deploy using fog
 deploy:
