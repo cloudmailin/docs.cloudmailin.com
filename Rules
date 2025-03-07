@@ -7,9 +7,8 @@ ignore '*/_*'
 preprocess do
   next if ENV['NANOC_ENV'] == 'development'
 
-  puts "Preprocessing"
+  warn "Preprocessing"
   Nanoc::Filters::AlgoliaFilter.new(config: config).destroy_index
-  puts "Index destroyed"
 end
 
 compile '*' do

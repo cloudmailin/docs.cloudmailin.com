@@ -55,7 +55,7 @@ module Nanoc::Filters
       return if @skip_index
 
       @index.clear_objects
-      puts "Index #{@index.name} cleared"
+      warn "Index #{@index.name} cleared"
     end
 
     def run(content, params = {})
@@ -72,7 +72,7 @@ module Nanoc::Filters
           raw: content
         ).wait
 
-        puts "Indexed #{item.identifier} in Algolia"
+        warn "Indexed #{item.identifier} in Algolia"
       end
 
       params[:preview] ? extract_text(content) : content
