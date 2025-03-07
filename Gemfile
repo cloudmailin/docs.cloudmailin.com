@@ -17,7 +17,6 @@ gem 'yajl-ruby', '>= 1.3.1'
 group :developement do
   gem 'adsf'
   gem 'adsf-live'
-  gem 'fog-aws'
   gem 'guard-nanoc'
   gem 'mime-types'
   gem 'rake'

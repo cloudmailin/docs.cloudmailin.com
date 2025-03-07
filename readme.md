@@ -34,7 +34,7 @@ docker-compose run docs bash -c "bundle exec nanoc check"
 ## Deploying
 
 ```bash
-docker-compose run docs bash -c "rm -rf ./output && bundle exec nanoc compile -e staging && FOG_RC=.fog bundle exec nanoc deploy --target staging"
+docker-compose run docs bash -c "rm -rf ./output && bundle exec nanoc compile -e staging && aws s3 sync ./output s3://docs-staging.cloudmailin.com --delete"
 ```
 
 ## Generating Rouge CSS Files
