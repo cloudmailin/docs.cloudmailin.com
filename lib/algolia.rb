@@ -11,9 +11,12 @@ module Nanoc::Filters
     def initialize(hash = {})
       super
 
-      app_id = @config.dig(:algolia, :application_id)
-      api_key = ENV['ALGOLIA_API_KEY'] || @config.dig(:algolia, :api_key)
-      index = @config.dig(:algolia, :index)
+      index = @config.dig(:algolia, :index) || ENV['ALGOLIA_INDEX']
+      @skip_index = index.nil? || index.empty?
+      return if @skip_index
+
+      app_id = @config.dig(:algolia, :application_id) || ENV['ALGOLIA_APPLICATION_ID']
+      api_key = @config.dig(:algolia, :api_key) || ENV['ALGOLIA_API_KEY']
 
       raise ArgumentError, 'Missing algolia:application_id' unless app_id
       raise ArgumentError, 'Missing algolia:api_key' unless api_key
@@ -49,24 +52,28 @@ module Nanoc::Filters
     end
 
     def destroy_index
+      return if @skip_index
+
       @index.clear_objects
       puts "Index #{@index.name} cleared"
     end
 
     def run(content, params = {})
-      title = item[:title] || item.identifier
-      description = item[:description] || preview(item)
-      @index.save_object(
-        objectID: item.identifier,
-        title: title,
-        description: description,
-        content: extract_text(content),
-        deprecated: !!item[:deprecated],
-        no_index: !!item[:no_index],
-        raw: content
-      ).wait
+      unless @skip_index
+        title = item[:title] || item.identifier
+        description = item[:description] || preview(item)
+        @index.save_object(
+          objectID: item.identifier,
+          title: title,
+          description: description,
+          content: extract_text(content),
+          deprecated: !!item[:deprecated],
+          no_index: !!item[:no_index],
+          raw: content
+        ).wait
 
-      puts "Indexed #{item.identifier} in Algolia"
+        puts "Indexed #{item.identifier} in Algolia"
+      end
 
       params[:preview] ? extract_text(content) : content
     end
