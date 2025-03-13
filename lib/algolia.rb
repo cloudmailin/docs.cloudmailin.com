@@ -13,7 +13,7 @@ module Nanoc::Filters
 
       index = @config.dig(:algolia, :index) || ENV['ALGOLIA_INDEX']
       @skip_index = index.nil? || index.empty?
-      return if @skip_index
+      puts 'Skipping indexing' && return if @skip_index
 
       app_id = @config.dig(:algolia, :application_id) || ENV['ALGOLIA_APPLICATION_ID']
       api_key = @config.dig(:algolia, :api_key) || ENV['ALGOLIA_API_KEY']
@@ -72,7 +72,7 @@ module Nanoc::Filters
           raw: content
         ).wait
 
-        warn "Indexed #{item.identifier} in Algolia"
+        puts "Indexed #{item.identifier} in Algolia"
       end
 
       params[:preview] ? extract_text(content) : content
