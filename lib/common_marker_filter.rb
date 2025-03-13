@@ -44,12 +44,20 @@ module Nanoc::Filters
 
       def image(node)
         url = node.url.sub(%r{^/content}, '')
-        out('<img src="', escape_href(url), '"')
-        plain do
-          out(' alt="', :children, '"')
+
+        # Create a temporary renderer to get plain text of children
+        alt = ''
+        node.each do |child|
+          if child.type == :text
+            alt += child.string_content
+          end
         end
+
+        out('<img src="', escape_href(url), '"')
+        out(' alt="', escape_html(alt), '"')
         out(' title="', escape_html(node.title), '"') if node.title && !node.title.empty?
         out(" />")
+        out('<span class="image-caption">', escape_html(alt), '</span>') if ENV['NANOC_ENV'] == 'development'
       end
     end
 

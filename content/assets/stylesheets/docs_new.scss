@@ -221,6 +221,16 @@ a.search-result, a.search-result:hover {
     margin: 20px 0px;
     padding: 10px;
   }
+
+  .image-caption {
+    color: #666;
+    border: 1px solid $pre-border-color;
+    background-color: #f8f8f8;
+    margin-top: -20px;
+    margin-bottom: 0;
+    padding: 5px;
+    display: block;
+  }
 }
 
 #footer {
