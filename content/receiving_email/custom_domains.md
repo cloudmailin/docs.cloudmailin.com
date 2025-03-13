@@ -4,6 +4,8 @@ title: Custom Domains
 
 # Custom Domains
 
+> A new version of this documentation is available [here](/receiving_email/using-your-own-domain/).
+
 The Custom Domain feature allows you to use CloudMailin to receive all email for your domain. With Custom Domains you can create a DNS entry in your own domain name to allow CloudMailin to accept all email on that domain and forward it onto your website just like your regular CloudMailin address.
 
 Each of your CloudMailin addresses can have its own custom domain allowing you to use the feature for any number of websites and domains.
