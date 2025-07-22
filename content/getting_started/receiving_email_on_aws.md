@@ -31,13 +31,14 @@ See the section on [Attachment Stores](/receiving_email/attachments/) for more d
 
 ## AWS Regions
 
-Because CloudMailin makes a standard HTTP POST request with the content of your email it's able to
-work from any AWS region without the need for specific changes.
+Because CloudMailin makes a standard HTTP POST request with the content of your
+email it's able to work from any AWS region without the need for specific
+changes.
 
 ### Custom Domains
 
-By default CloudMailin operates two clouds, when you setup incoming email on your own domain you can
-include one or both or these regions:
+By default CloudMailin operates two clouds, when you setup incoming email on
+your own domain you can include one or both or these regions:
 
 | Cloud  | Location        |
 |--------|-----------------|
@@ -46,9 +47,10 @@ include one or both or these regions:
 
 ### Dedicated Servers
 
-[Dedicated servers](https://www.cloudmailin.com/plans) offer additional flexiblity.
-This can be especially useful if you want to restrict traffic so that it never leaves the EU for
-example. Dedicated servers can be placed into any of the following regions:
+[Dedicated servers](https://www.cloudmailin.com/plans-and-pricing) offer
+additional flexiblity. This can be especially useful if you want to restrict
+traffic so that it never leaves the EU for example. Dedicated servers can be
+placed into any of the following regions:
 
 | AWS Region                | Region Name    |
 |:--------------------------|:---------------|
@@ -67,15 +69,18 @@ example. Dedicated servers can be placed into any of the following regions:
 | EU (London)               | eu-west-2      |
 | South America (São Paulo) | sa-east-1      |
 
-We also recommend you look at our general [Getting Started Guide](/getting_started/) as it explains
-in more detail how you will be sent messages, how the HTTP Status codes you respond with affect the
+We also recommend you look at our general
+[Getting Started Guide](/getting_started/) as it explains in more detail how you
+will be sent messages, how the HTTP Status codes you respond with affect the
 message delivery and walks you through receiving your first email.
 
 ## Adding Some Code
 
-We recommend taking a look at our [HTTP POST Formats](/http_post_formats/). These show the format
-of the webhook POST to your website and some sample code to get started.
+We recommend taking a look at our [HTTP POST Formats](/http_post_formats/).
+These show the format of the webhook POST to your website and some sample code
+to get started.
 
 ## Contact Us
-If you need any help [contact us] and we can help you
-get setup receiving email on the Amazon Web Services platform.
+
+If you need any help [contact us] and we can help you get setup receiving email
+on the Amazon Web Services platform.
