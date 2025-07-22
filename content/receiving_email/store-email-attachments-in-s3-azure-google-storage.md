@@ -19,6 +19,11 @@ CloudMailin allows sending email attachments to:
 * [Microsoft Azure Blob Storage]
 * [Google Cloud Platform Cloud Storage]
 
+> Bucket names are now forced to DNS-safe form (lower-case letters, digits,
+> hyphens). S3 no longer accepts underscores and GCS buckets with underscores
+> break TLS-based hostname access, CloudMailin no longer supports underscores in
+> bucket names.
+
 ## Why send email attachments to Cloud Storage?
 
 When a large attachment, or multiple attachments, are included within an email
