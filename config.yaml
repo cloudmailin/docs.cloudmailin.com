@@ -83,6 +83,7 @@ checks:
       - https://www.attachmentscanner.com/documentation
       - https://docs.cloudmailin.com/receiving_email/examples/receiving-email-with-python-django-and-flask/
       - https://www.godaddy.com/
+      - https://www.npmjs.com/package/cloudmailin # cloudflare protection raises 403
 
 # Deploy using fog
 deploy:
