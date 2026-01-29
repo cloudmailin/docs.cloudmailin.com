@@ -35,6 +35,8 @@
             %li= link_to 'Authorization Callbacks', '/features/callbacks/#authorization-callbacks'
             %li= link_to 'Error Callbacks', '/features/callbacks/#error-callbacks'
         %li= link_to 'SPF (Sender Policy Framework)', '/features/spf/'
+        %li= link_to 'DKIM Verification', '/features/dkim/'
+        %li= link_to 'DMARC Verification', '/features/dmarc/'
         %li= link_to 'Delivery Status API', '/features/delivery_status_api/'
         %li= link_to 'Securing HTTP Posts', '/receiving_email/securing_your_email_url_target/'
         %li= link_to 'IMAP Polling (Legacy Systems)', '/features/imap_collectors/'
@@ -58,6 +60,7 @@
       %ul
         %li= link_to 'Introduction', '/outbound/'
         %li= link_to 'Getting Started', '/outbound/getting_started/'
+        %li= link_to 'DKIM Signing', '/outbound/dkim/'
         %li= link_to 'Priorities and Tagging', '/outbound/priorities_and_tags/'
         %li= link_to 'Email Layouts', '/outbound/email-layouts/'
         %li= link_to 'Sending Email via API', '/outbound/sending_email_via_json_api/'
@@ -69,3 +72,8 @@
                 %li= link_to title(item), item
             - else
               %li= link_to 'Examples', '/outbound/sending_email_with_smtp/#examples'
+
+    %li
+      Guides
+      %ul
+        %li= link_to 'Verify DKIM is Working', '/guides/verify-dkim/'

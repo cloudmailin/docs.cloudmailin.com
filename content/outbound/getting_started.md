@@ -21,8 +21,7 @@ This will mainly consist of:
 
 ### DNS Records
 
-We currently require DNS records for SPF, DKIM and to handle bounces. This can all be set using two
-records.
+We require DNS records for SPF, DKIM and to handle bounces.
 
 Normally we will ask to send on a subdomain of your primary domain. For example if your domain is
 `example.com` then we will send from `mta.example.com`.
@@ -30,15 +29,18 @@ Normally we will ask to send on a subdomain of your primary domain. For example 
 The SMTP conversation will send the message from `bounces+12345@mta.example.com` whilst the
 message headers remain as `user@example.com`.
 
-We need to set the following DNS records (these are just examples):
+You need to set the following DNS records (these are just examples):
 
-| Record | Example                        | Description                                           |
-|--------|--------------------------------|-------------------------------------------------------|
-| CNAME  | `mta.example.com`              | A CNAME used to set MX servers for bounces and SPF    |
-| TXT    | `1234._domainkeys.example.com` | The DKIM record placed on the root example.com domain.|
+| Record | Example                              | Description                                           |
+|--------|--------------------------------------|-------------------------------------------------------|
+| CNAME  | `mta.example.com`                    | A CNAME used to set MX servers for bounces and SPF.   |
+| CNAME or TXT | `{selector}._domainkey.example.com` | The [DKIM record](/outbound/dkim/) for email signing. |
 
-Details for your domain specifically cen be found on the domain's
-[detail page](https://www.cloudmailin.com/outbound/domains/).
+We recommend using CNAME for DKIM as it's simpler and CloudMailin manages the key for you. See the
+[DKIM Signing documentation](/outbound/dkim/) for details on both options.
+
+Details for your domain specifically can be found on the domain's
+[settings page](https://www.cloudmailin.com/outbound/domains/).
 
 ### SMTP Settings
 
