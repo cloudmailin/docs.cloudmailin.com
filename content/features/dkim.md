@@ -160,7 +160,7 @@ func dkimPassed(envelope map[string]interface{}) bool {
 
 ## Combining with SPF and DMARC
 
-For the strongest email authentication, combine DKIM verification with [SPF](/features/spf/) and [DMARC](/features/dmarc/) checking. Together, these form the standard email authentication stack.
+For the strongest email authentication, combine DKIM verification with [SPF](/features/spf/) and [DMARC](/features/dmarc-verification/) checking. Together, these form the standard email authentication stack.
 
 A message should ideally pass both SPF and DKIM to be considered fully authenticated. However, legitimate emails sometimes fail one check due to forwarding or mailing list processing, so consider your use case when deciding how strictly to enforce these checks.
 
