@@ -51,7 +51,7 @@ Your DMARC policy tells receiving servers what action to take when messages fail
 | `p=quarantine` | Failing messages are treated as suspicious (typically marked as spam) |
 | `p=reject` | Failing messages are blocked and not delivered |
 
-> **Recommendation:** Start with `p=none` to monitor without affecting delivery. See our [Complete DMARC Guide](/guides/dmarc/) for guidance on policy progression.
+> **Recommendation:** Start with `p=none` to monitor without affecting delivery. See our [Complete DMARC Guide](https://www.cloudmailin.com/blog/dmarc-email-authentication-complete-guide-2026#policy-progression-strategy) for guidance on policy progression.
 
 ## Recommended: SPF Alignment
 
@@ -73,4 +73,4 @@ DMARC reports are sent daily by receiving servers. Wait 24-48 hours after adding
 
 ## Learn More
 
-For a complete guide to DMARC policies, alignment, report interpretation, and best practices, see our [Complete DMARC Guide](/guides/dmarc/).
+For a complete guide to DMARC policies, alignment, report interpretation, and best practices, see our [Complete DMARC Guide](https://www.cloudmailin.com/blog/dmarc-email-authentication-complete-guide-2026).
