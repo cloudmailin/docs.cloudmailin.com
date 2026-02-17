@@ -53,7 +53,7 @@ please [contact us].
 | Recipients   | Messages are currently limited to a maximum of `20 recipients`. |
 | Message Size | The maximum message size (unless otherwise agreed) is `10 MB` this should include all message content and encoding. |
 | Attachments  | Attachments are limited to safe formats. We do not allow executables or those often associated with viruses. Although not exhaustive the following attachments are **not permitted** ` vbs, exe, bin, bat, chm, com, hta, pif, reg, vbe, vba, msc, msi`.
-| SPAM         | We will run automated SPAM checks against messages. Those with a high score will be rejected. |
+| SPAM         | We will run automated SPAM checks against messages. Those with a high score will be rejected. See [Email Health & Deliverability](/outbound/email-health/) for details. |
 | Max Volumes  | We will help you to automatically ramp up sending volumes, starting small and growing the number of emails you can send per day. Please [contact us] if you have any questions about this. |
 | Bounce Rate  | Bounces and supressions will be monitored. Because we're sending transactional email we don't expect this rate to rise above `2%`. We can help you to ensure this is successful. |
 | BCC          | We do not support BCC by default as it is not commonly used for transactional emails [contact us] if your use case requires it. |

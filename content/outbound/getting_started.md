@@ -81,7 +81,7 @@ The list of fields currently POSTed for each entry is as follows:
 
 | Field         | Description                                           |
 |---------------|-------------------------------------------------------|
-| `kind`        | The type of event raised. This is one of `delivery`, `bounce`, `soft_bounce`, `open`, `click`, `complaint`, `blocked`. |
+| `kind`        | The type of event raised. See [Event Webhook](/outbound/sending_email_events_webhook/) for the full list of event types. |
 | `recipient`   | The recipient of the message.                         |
 | `message_id`  | The message ID as returned by the SMTP transaction.   |
 | `details`     | Additional details if present related to the event.   |
