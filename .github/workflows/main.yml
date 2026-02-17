@@ -73,7 +73,7 @@ jobs:
       # Only deploy if on main or staging branch
       - name: Configure AWS credentials
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
-        uses: aws-actions/configure-aws-credentials@v5
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActions-docs-github-oidc
           role-session-name: GitHubActions-docs-deploy
