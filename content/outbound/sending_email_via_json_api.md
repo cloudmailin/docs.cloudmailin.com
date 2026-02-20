@@ -6,16 +6,15 @@ image: http
 
 # CloudMailin Send Email Message API
 
-In order to send an email via API you can create a POST request to the Email
-Message endpoint:
+To send an email via the API, create a POST request to the Email Message endpoint:
 
 `POST`: `https://api.cloudmailin.com/api/v0.1/{SMTP_USERNAME}/messages`.
 
-Sending email via HTTP POST can be done via one of two methods:
+There are several ways to send email:
 
-* If a [client library] is available for your Programming Language / Framework
-  you can use a client library; Alternatively;
-* you can make an HTTP POST to our API manually to send the email
+* Use a [client library] if one is available for your language or framework
+* Make an HTTP POST with a [JSON message](#json-message) — CloudMailin will construct the email for you
+* Make an HTTP POST with a [raw RFC822 message](#raw-message) — useful if you're building the email yourself or migrating from another provider
 
 ## Client Libraries
 
@@ -38,101 +37,61 @@ development.
 
 ## Sending Email with an API Call
 
-If your Language / Framework isn't listed above then you can always make a
+If your language or framework isn't listed above you can make a
 request directly to the Outbound Email API.
 
-You can also use any language / framework via [SMTP].
+You can also send email using any language or framework via [SMTP].
 
 ### Authentication
 
-Authentication relies on your username and password from you SMTP credentials.
+Authentication relies on your username and password from your SMTP credentials.
 You can find your SMTP credentials for both live and test accounts on the
 [SMTP Accounts] page. Your SMTP username is part of the path used to make the
-SMTP request: `POST`:
+request: `POST`:
 `https://api.cloudmailin.com/api/v0.1/[SMTP_USERNAME]/messages`
 
 You then need to send your SMTP API Token.
 Authentication is via the Bearer token in the Authorization header as follows:
 `Authorization: Bearer API_TOKEN`.
 
-> This documentation is currently a work in progress. If you need help sending
-> via the API please feel free to contact us, alternatively you may wish to use
-> [SMTP], which is fully functional.
+## JSON Message
 
-## Email Messages Endpoint Example
+The simplest way to send email is to POST a JSON object with the message fields.
+CloudMailin will construct the email for you.
 
-A full example POST can be seen below:
+### Example
 
 ```json
-{
-  "from": "Sender Name <sender@example.com>",
-  "to": [
-    "Recipient <recipient@example.com>",
-    "Another <another@example.com>"
-  ],
-  "test_mode": false,
-  "subject": "Hello from CloudMailin 😃",
-  "tags": [
-    "api-tag",
-    "cloudmailin-tag"
-  ],
-  "plain": "Hello Plain Text",
-  "html": "<h1>Hello Html</h1>",
-  "headers": {
-    "x-api-test": "Test",
-    "x-additional-header": "Value"
-  },
-  "attachments": [
-    {
-      "file_name": "pixel.png",
-      "content": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0rdr1HwAFHwKCk87e6gAAAABJRU5ErkJggg==",
-      "content_type": "image/png",
-      "content_id": null
-    }
-  ]
-}
+<%= render_api_example("components/schemas/Message") %>
 ```
-
-Below you can see an explanation of the [fields](#fields), how to add
-[attachments](#attachments) and how to set custom [headers](#headers).
 
 ### Fields
 
-The API allows sending with the following fields:
-
 | Field         | Type    | Description                                                         |
 |---------------|---------|---------------------------------------------------------------------|
-<%= render_api_fields("components/schemas/MessageCommon/properties/", include_readonly: false) %>
-<%= render_api_fields("components/schemas/Message/allOf/1/properties", 'plain', 'html') %>
+<%= render_api_fields("components/schemas/Message", include_readonly: false, except: %w[headers attachments]) %>
 | `headers`     | object  | See the [headers section](#headers)
-| `attachments` | Arrary of attachment objects | See the [attachments section](#attachments)
+| `attachments` | array of attachment objects | See the [attachments section](#attachments)
 
 ### Attachments
 
-Attachments are slightly more complicated and require the following fields
+Attachments require the following fields:
 
 | Field         | Type    | Description                                                         |
 |---------------|---------|---------------------------------------------------------------------|
-<%= render_api_fields("components/schemas/MessageAttachment/properties/") %>
+<%= render_api_fields("components/schemas/MessageAttachment") %>
 
-For example this attaches a one-pixel image (Base64 encoded):
+For example:
 
 ```json
-"attachments": [
-  {
-    "file_name": "pixel.png",
-    "content": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0rdr1HwAFHwKCk87e6gAAAABJRU5ErkJggg==",
-    "content_type": "image/png",
-    "content_id": null
-  }
-]
+<%= render_api_example("components/schemas/MessageAttachment") %>
 ```
 
 ### Headers
 
-Headers are not required as the subject, to and from headers will be set. However, if you need to
-specify additional headers you can pass them as  an object.
-The key is the header name and the value is expected to be a string a string value:
+Headers are not required as the subject, to and from headers will be set automatically.
+If you need to specify additional headers you can pass them as an object.
+The key is the header name and the value is expected to be a string:
 
 ```json
 "headers": {
@@ -140,6 +99,24 @@ The key is the header name and the value is expected to be a string a string val
   "x-additional-header": "Value"
 }
 ```
+
+## Raw Message
+
+If you already have a constructed RFC822 email you can send it directly using
+the `raw` field instead of `plain`/`html`. This is useful if you're generating
+emails with your own library or migrating from another provider.
+
+### Example
+
+```json
+<%= render_api_example("components/schemas/RawMessage") %>
+```
+
+### Fields
+
+| Field         | Type    | Description                                                         |
+|---------------|---------|---------------------------------------------------------------------|
+<%= render_api_fields("components/schemas/RawMessage", include_readonly: false, except: %w[headers attachments]) %>
 
 [Client Library]: #client-libraries
 [SMTP Accounts]: https://www.cloudmailin.com/outbound/senders
