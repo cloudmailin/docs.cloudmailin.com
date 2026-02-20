@@ -102,7 +102,7 @@ The API allows sending with the following fields:
 
 | Field         | Type    | Description                                                         |
 |---------------|---------|---------------------------------------------------------------------|
-<%= render_api_fields("components/schemas/MessageCommon/properties/", 'from', 'to', 'test_mode', 'subject', 'tags') %>
+<%= render_api_fields("components/schemas/MessageCommon/properties/", include_readonly: false) %>
 <%= render_api_fields("components/schemas/Message/allOf/1/properties", 'plain', 'html') %>
 | `headers`     | object  | See the [headers section](#headers)
 | `attachments` | Arrary of attachment objects | See the [attachments section](#attachments)
