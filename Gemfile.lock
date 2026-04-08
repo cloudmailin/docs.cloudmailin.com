@@ -1,8 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.7)
-      public_suffix (>= 2.0.2, < 7.0)
+    addressable (2.9.0)
+      public_suffix (>= 2.0.2, < 8.0)
     adsf (1.4.6)
       rack (>= 1.0.0, < 3.0.0)
     adsf-live (1.4.6)
@@ -155,7 +155,7 @@ GEM
       method_source (~> 1.0)
     psych (5.1.2)
       stringio
-    public_suffix (6.0.1)
+    public_suffix (7.0.5)
     racc (1.8.1)
     rack (2.2.22)
     rack-livereload (0.3.17)
