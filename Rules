@@ -11,6 +11,12 @@ preprocess do
   Nanoc::Filters::AlgoliaFilter.new(config: config).destroy_index
 end
 
+postprocess do
+  next if ENV['NANOC_ENV'] == 'development'
+
+  AlgoliaExternalIndexer.new(config: config).run
+end
+
 compile '*' do
   if item.identifier == '/_common_links/'
     nil

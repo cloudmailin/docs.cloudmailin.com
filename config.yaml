@@ -86,6 +86,17 @@ checks:
       - https://www.npmjs.com/package/cloudmailin # cloudflare protection raises 403
       - https://docs.cloudmailin.com/features/dmarc-verification/ # self-referential redirect
 
+# Algolia search: pages from the main website fetched and indexed at
+# build time alongside the docs content (see lib/algolia_external.rb).
+# Application ID, API key and index name come from the ALGOLIA_* env vars.
+algolia:
+  external_pages:
+    - https://www.cloudmailin.com/legal/security-and-privacy-policy
+    - https://www.cloudmailin.com/legal/terms-of-service
+    - https://www.cloudmailin.com/legal/acceptable-use-policy
+    - https://www.cloudmailin.com/legal/refund-policy
+    - https://www.cloudmailin.com/plans-and-pricing
+
 # Deploy using fog
 deploy:
   default:
