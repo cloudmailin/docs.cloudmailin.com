@@ -119,5 +119,5 @@ emails with your own library or migrating from another provider.
 <%= render_api_fields("components/schemas/RawMessage", include_readonly: false, except: %w[headers attachments]) %>
 
 [Client Library]: #client-libraries
-[SMTP Accounts]: https://www.cloudmailin.com/outbound/senders
+[SMTP Accounts]: https://www.cloudmailin.com/outbound/sources
 [SMTP]: <%= url_to_item('/outbound/sending_email_with_smtp/') %>
