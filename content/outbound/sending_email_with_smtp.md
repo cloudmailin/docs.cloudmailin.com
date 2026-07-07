@@ -48,4 +48,4 @@ email over SMTP:
   * <%= link_to_item(item) %><% end %>
 
 
-[account page]: https://www.cloudmailin.com/outbound/senders
+[account page]: https://www.cloudmailin.com/outbound/sources
