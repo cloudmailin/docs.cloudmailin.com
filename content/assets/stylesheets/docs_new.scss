@@ -150,6 +150,23 @@ a.search-result, a.search-result:hover {
     color: var(--search-result-prevew-color);
     margin-bottom: 0px;
   }
+
+  .search-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0px 6px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    font-size: x-small;
+    font-weight: normal;
+    vertical-align: middle;
+    color: var(--search-result-prevew-color);
+
+    &::after {
+      // north-east arrow, forced text presentation (no emoji rendering)
+      content: ' \2197\FE0E';
+    }
+  }
 }
 
 #middle {

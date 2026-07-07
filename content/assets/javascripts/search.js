@@ -38,7 +38,8 @@ autocomplete({
           },
           item({ item, components, html }) {
             return html`<a href="${item.objectID}" class="search-result">
-              <h4>${item.title}</h4>
+              <h4>${item.title}${item.external
+                ? html`<span class="search-badge">cloudmailin.com</span>` : ''}</h4>
               <p>${components.Highlight({ hit: item, attribute: 'description' })}</p>
             </a>`;
           }
