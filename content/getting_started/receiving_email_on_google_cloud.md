@@ -1,69 +1,161 @@
 ---
-title: Receiving Email on Google Cloud
+title: Receiving Email on Google Cloud (GCP)
 name: Getting Started on Google Cloud Platform
+description:
+  How to receive email on Google Cloud (GCP). CloudMailin delivers inbound
+  messages as an HTTP POST to Cloud Functions, Cloud Run, or Compute Engine,
+  and can store attachments or full messages directly in Cloud Storage.
 ---
 
-# Receiving email within the Google Cloud Platform
+# Receiving Email on Google Cloud Platform (GCP)
 
-Google has an amazing history in Cloud computing and their Cloud Platform is no different.
-From compute to machine learning Google has some really interesting offerings.
+[CloudMailin](https://www.cloudmailin.com/) receives email on your behalf
+and delivers each message to your application as an HTTP POST. There's no
+mail server to run, patch, or scale anywhere on Google Cloud.
 
-[CloudMailin](https://www.cloudmailin.com/) is a tool for developers to make it easy to receive
-email via an API WebHook.
-You send CloudMailin an email and it will come as an HTTP POST to your site. Leaving you free
-to do what you do best and not having to worry about managing email servers.
+## Receiving Email into Serverless Google Cloud Compute
 
-CloudMailin was designed from the ground up to work well with Cloud and allows you to easily scale
-up email receiving needs as demand increases.
+Because delivery is a standard HTTPS POST, the target can be any publicly
+reachable endpoint in your GCP project, including:
 
-## Storing Email Attachments in Google Cloud Storage
+* A [Cloud Functions](https://cloud.google.com/functions) HTTP-triggered
+  function
+* A Cloud Run service
+* A Compute Engine instance behind a load balancer
 
-CloudMailin can automatically send message attachments to Google Cloud Storage. We call this
-feature [Attachment Stores](/receiving_email/attachments/).
-This offloads the handling of attachments and can really reduce the burden on your API.
-The rest of the email is sent to your website, without having to receive the attachment as well.
+No CloudMailin-specific SDK or library is required. Your endpoint just needs
+to return an HTTP status code, see [HTTP Status Codes](/receiving_email/http_status_codes/)
+for how each code affects delivery, and [HTTP POST Formats](/http_post_formats/)
+for the request body itself.
 
-This can help improve performance but also makes it much faster to get started with CloudMailin.
+## Storing Attachments and Full Messages in Google Cloud Storage
 
-In addition we have the ability to store the entire email, either RAW or in JSON form in
-Google Cloud Storage.
+CloudMailin can write message attachments, or the entire message in raw or
+JSON form, directly to a Cloud Storage bucket instead of, or as well as,
+posting them to your endpoint. This keeps large attachments off your
+webhook, and because Cloud Storage can emit an event through Eventarc, it
+also lets you trigger a Cloud Function or Cloud Run service directly from
+the object being created rather than from the webhook.
 
-In order to enable this feature or if you want more details please [contact us].
+* [Sending attachments to Google Cloud Storage](/receiving_email/store-email-attachments-in-s3-azure-google-storage/#sending-email-attachments-to-google-cloud-storage)
+* [Sending the full message to Google Cloud Storage](/receiving_email/store-full-email-in-aws-cloud-storage/#send-the-full-email-to-google-cloud-storage)
 
-## Regions and Setup
+## Regions, Latency, and Data Residency
 
-CloudMailin contacts your servers via HTTP POST, making it fully independent of the Cloud used.
-It is however, possible to create dedicated servers within the Google infrastructure in order to
-reduce latency or to prevent content leaving a specific region if your application requires it.
+### Where Your Email Is Received
 
-Google Cloud Storage is available in the following regions, we can support placing attachments or
-dedicated servers into the following zones.
+When you receive email on your own custom domain, the MX records point at
+CloudMailin's shared, multi-tenant clusters. These run on AWS rather than
+Google Cloud, split across three regions:
 
-| Region                  | Name            |
-|:------------------------|:----------------|
-| Council Bluffs, IA      | us-central1     |
-| Berkeley County, SC     | us-east1        |
-| The Dalles, OR          | us-west1        |
-| St. Ghislain, Belgium   | europe-west1    |
-| Changhua County, Taiwan | asia-east1      |
-| Tokyo, Japan            | asia-northeast1 |
+| Cluster | AWS Region     | MX Record                 |
+|---------|----------------|---------------------------|
+| US      | us-east-1      | `client1.cloudmailin.net` |
+| EU      | eu-west-1      | `client2.cloudmailin.net` |
+| AP      | ap-southeast-2 | `client3.cloudmailin.net` |
 
-### Other regions
+By default all three clusters are used, with MX priority weighted toward
+the cluster closest to your DNS resolver. If you need your email handled in
+a specific region — for example, entirely within the EU — set your domain's
+MX records to point only at that cluster (`client2.cloudmailin.net` for the
+EU). This works on the shared clusters at no extra cost; no dedicated
+server is required.
+See [Selecting the Region](/receiving_email/using-your-own-domain/#selecting-the-region)
+for the MX record setup.
 
-We're quickly adding support for other regions so [contact us] if your preferred region isn't
-available.
+The cross-cloud hop isn't something you need to worry about: delivery is a
+standard HTTPS POST over the public internet rather than a private in-cloud
+call, so it adds a few milliseconds at most — negligible next to your own
+application's response time.
 
-## Getting Started
+### Google Cloud Regions
 
-We also recommend you look at our general [Getting Started Guide](/getting_started/) as it explains
-in more detail how you will be sent messages, how the HTTP Status codes you respond with affect the
-message delivery and walks you through receiving your first email.
+CloudMailin's delivery infrastructure reaches your application over HTTPS,
+so it works exactly the same regardless of which Google Cloud region your
+application runs in, including all of the following:
+
+#### Americas
+
+| Region                  | Location                    |
+|:------------------------|:-----------------------------|
+| us-central1             | Council Bluffs, Iowa         |
+| us-east1                | Moncks Corner, South Carolina|
+| us-east4                | Ashburn, Virginia            |
+| us-east5                | Columbus, Ohio               |
+| us-south1               | Dallas, Texas                |
+| us-west1                | The Dalles, Oregon           |
+| us-west2                | Los Angeles, California      |
+| us-west3                | Salt Lake City, Utah         |
+| us-west4                | Las Vegas, Nevada            |
+| northamerica-northeast1 | Montréal, Canada             |
+| northamerica-northeast2 | Toronto, Canada              |
+| southamerica-east1      | São Paulo, Brazil            |
+| southamerica-west1      | Santiago, Chile               |
+
+#### Europe
+
+| Region            | Location             |
+|:-------------------|:--------------------|
+| europe-west1       | St. Ghislain, Belgium |
+| europe-west2       | London, UK           |
+| europe-west3       | Frankfurt, Germany   |
+| europe-west4       | Eemshaven, Netherlands |
+| europe-west6       | Zurich, Switzerland  |
+| europe-west8       | Milan, Italy         |
+| europe-west9       | Paris, France        |
+| europe-west10      | Berlin, Germany      |
+| europe-west12      | Turin, Italy         |
+| europe-north1      | Hamina, Finland      |
+| europe-central2    | Warsaw, Poland       |
+| europe-southwest1  | Madrid, Spain        |
+
+#### Middle East and Africa
+
+| Region        | Location             |
+|:---------------|:--------------------|
+| me-central1    | Doha, Qatar          |
+| me-central2    | Dammam, Saudi Arabia |
+| me-west1       | Tel Aviv, Israel     |
+| africa-south1  | Johannesburg, South Africa |
+
+#### Asia Pacific
+
+| Region                  | Location                     |
+|:------------------------|:------------------------------|
+| asia-east1              | Changhua County, Taiwan       |
+| asia-east2              | Hong Kong                     |
+| asia-northeast1         | Tokyo, Japan                  |
+| asia-northeast2         | Osaka, Japan                  |
+| asia-northeast3         | Seoul, South Korea            |
+| asia-south1             | Mumbai, India                 |
+| asia-south2             | Delhi, India                  |
+| asia-southeast1         | Jurong West, Singapore        |
+| asia-southeast2         | Jakarta, Indonesia            |
+| australia-southeast1    | Sydney, Australia             |
+| australia-southeast2    | Melbourne, Australia          |
+
+### Dedicated Servers
+
+[Dedicated servers](https://www.cloudmailin.com/plans-and-pricing) provide
+a single-tenant CloudMailin instance. Like the shared clusters, dedicated
+servers run on AWS — see the
+[available AWS regions](/getting_started/receiving_email_on_aws/#dedicated-servers)
+for the full list. If your application runs on Google Cloud and you'd like
+one, [contact us] and we'll set it up in the AWS region closest to your GCP
+deployment.
+
+We also recommend you look at our general
+[Getting Started Guide](/getting_started/) as it explains in more detail how
+you will be sent messages, how the HTTP Status codes you respond with affect
+message delivery, and walks you through receiving your first email.
 
 ## Adding Some Code
 
-We recommend taking a look at our [HTTP POST Formats](/http_post_formats/). These show the format
-of the webhook POST to your website and some sample code to get started.
+We recommend taking a look at our [HTTP POST Formats](/http_post_formats/).
+These show the format of the webhook POST to your website and some sample
+code to get started.
 
 ## Contact Us
-If you need any help [contact us] and we can help you get setup receiving email with the
-Google Cloud Platform.
+
+If you need any help [contact us] and we can help you get set up receiving
+email with Google Cloud Platform.

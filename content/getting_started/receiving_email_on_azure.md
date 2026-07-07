@@ -1,75 +1,125 @@
 ---
 title: Receiving Email on Azure
 name: Getting Started on Azure
+description:
+  How to receive email in Azure. CloudMailin delivers inbound messages as an
+  HTTP POST to Azure Functions, Container Apps, or App Service, and can
+  store attachments or full messages directly in Blob Storage.
 ---
 
-# Receiving email within the Azure Cloud
+# Receiving Email on Azure
 
-[Azure](https://azure.microsoft.com/en-us) provides a number of Cloud Services but it can be difficult
-to receive email within a Cloud environment.
+[CloudMailin](https://www.cloudmailin.com) receives email on your behalf and
+delivers each message to your application as an HTTP POST. There's no mail
+server to run, patch, or scale anywhere in Azure.
 
-Many of the on-premise options aren't available in the Cloud and scale can become more of an issue.
+## Receiving Email into Serverless Azure Compute
 
-[CloudMailin](https://www.cloudmailin.com) is a Cloud solution for developers that allows you to
-receive any volume of incoming email, directly to your website in the Cloud via HTTP POST.
+Because delivery is a standard HTTPS POST, the target can be any publicly
+reachable endpoint in your Azure subscription, including:
 
-CloudMailin was designed from the ground up to work well with Cloud and allows you to easily scale
-up email receiving needs as demand increases.
+* An [Azure Functions HTTP trigger](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger)
+* A Container App or an App Service Web App
+* A Logic App with an HTTP request trigger
 
-## Storing Email Attachments in Azure Storage
+No CloudMailin-specific SDK or library is required. Your endpoint just needs
+to return an HTTP status code, see [HTTP Status Codes](/receiving_email/http_status_codes/)
+for how each code affects delivery, and [HTTP POST Formats](/http_post_formats/)
+for the request body itself.
 
-CloudMailin can automatically send message attachments to Azure's Cloud Storage. We call this
-feature [Attachment Stores](/receiving_email/attachments/).
-This offloads the handling of attachments and can really reduce the burden on your API.
-The rest of the email is sent to your website, without having to receive the attachment as well.
+## Storing Attachments and Full Messages in Azure Blob Storage
 
-This can help improve performance but also makes it much faster to get started with CloudMailin.
+CloudMailin can write message attachments, or the entire message in raw or
+JSON form, directly to an Azure Blob Storage container instead of, or as
+well as, posting them to your endpoint. This keeps large attachments off
+your webhook, and because Blob Storage events can be routed through Event
+Grid, it also lets you trigger an Azure Function directly from the blob
+being created rather than from the webhook.
 
-In addition we have the ability to store the entire email, either RAW or in JSON form in
-Azure Storage.
+* [Sending attachments to Azure Blob Storage](/receiving_email/store-email-attachments-in-s3-azure-google-storage/#sending-email-attachments-to-azure-storage)
+* [Sending the full message to Azure Blob Storage](/receiving_email/store-full-email-in-aws-cloud-storage/#send-the-full-email-to-azure-blob-storage)
 
-In order to enable this feature or if you want more details please
-[contact us].
+## Regions, Latency, and Data Residency
 
-## Regions and Setup
+### Where Your Email Is Received
 
-CloudMailin isn't specific to a single region. Because CloudMailin makes an HTTP POST to your site
-it will work with any Azure Cloud region ([HTTP POST Formats](/http_post_formats/)).
+When you receive email on your own custom domain, the MX records point at
+CloudMailin's shared, multi-tenant clusters. These run on AWS rather than
+Azure, split across three regions:
 
-We also know that sometimes jurisdictions require that data doesn't pass across certain borders.
-The CloudMailin system can be configured to enable this, a key example being keeping data
-within the EU.
+| Cluster | AWS Region     | MX Record                 |
+|---------|----------------|---------------------------|
+| US      | us-east-1      | `client1.cloudmailin.net` |
+| EU      | eu-west-1      | `client2.cloudmailin.net` |
+| AP      | ap-southeast-2 | `client3.cloudmailin.net` |
 
-In order to allow this we have the ability to create dedicated servers in the following locations:
+By default all three clusters are used, with MX priority weighted toward
+the cluster closest to your DNS resolver. If you need your email handled in
+a specific region — for example, entirely within the EU — set your domain's
+MX records to point only at that cluster (`client2.cloudmailin.net` for the
+EU). This works on the shared clusters at no extra cost; no dedicated
+server is required.
+See [Selecting the Region](/receiving_email/using-your-own-domain/#selecting-the-region)
+for the MX record setup.
+
+The cross-cloud hop isn't something you need to worry about: delivery is a
+standard HTTPS POST over the public internet rather than a private in-cloud
+call, so it adds a few milliseconds at most — negligible next to your own
+application's response time.
+
+### Azure Regions
+
+CloudMailin's delivery infrastructure reaches your application over HTTPS,
+so it works exactly the same regardless of which Azure region your
+application runs in, including all of the following:
 
 #### Americas
 
-| Region           | Location        |
-|------------------|-----------------|
-| East US          | Virginia        |
-| East US 2        | Virginia        |
-| Central US       | Iowa            |
-| North Central US | Illinois        |
-| South Central US | Texas           |
-| West Central US  | West Central US |
-| West US          | California      |
-| West US 2        | West US 2       |
-| Canada East      | Quebec City     |
-| Canada Central   | Toronto         |
-| Brazil South     | Sao Paulo State |
+| Region           | Location    |
+|-------------------|------------|
+| East US           | Virginia          |
+| East US 2         | Virginia          |
+| Central US        | Iowa              |
+| North Central US  | Illinois          |
+| South Central US  | Texas             |
+| West Central US   | Wyoming           |
+| West US           | California        |
+| West US 2         | Washington        |
+| West US 3         | Phoenix           |
+| Canada Central    | Toronto           |
+| Canada East       | Quebec            |
+| Mexico Central    | Querétaro State   |
+| Brazil South      | Sao Paulo State   |
+| Chile Central     | Santiago          |
 
 #### Europe
 
-| Region            | Location       |
-|-------------------|----------------|
-| North Europe      | Ireland        |
-| West Europe       | Netherlands    |
-| Germany Central   | Frankfurt      |
-| Germany Northeast | Magdeburg      |
-| UK West           | Cardiff        |
-| UK South          | London         |
-| France Central    | France Central |
-| France South      | France South   |
+| Region            | Location    |
+|-------------------|-------------|
+| North Europe      | Ireland     |
+| West Europe       | Netherlands |
+| UK South          | London      |
+| UK West           | Cardiff     |
+| Germany West Central | Frankfurt |
+| France Central    | Paris       |
+| Italy North       | Milan       |
+| Spain Central     | Madrid      |
+| Poland Central    | Warsaw      |
+| Sweden Central    | Gävle       |
+| Norway East       | Norway      |
+| Switzerland North | Zurich      |
+| Austria East      | Vienna      |
+| Belgium Central   | Brussels    |
+| Denmark East      | Copenhagen  |
+
+#### Middle East and Africa
+
+| Region         | Location    |
+|----------------|-------------|
+| UAE North      | Dubai       |
+| Qatar Central  | Doha        |
+| Israel Central | Israel      |
+| South Africa North | Johannesburg |
 
 #### Asia Pacific
 
@@ -79,38 +129,40 @@ In order to allow this we have the ability to create dedicated servers in the fo
 | East Asia           | Hong Kong       |
 | Australia East      | New South Wales |
 | Australia Southeast | Victoria        |
-| China East          | Shanghai        |
-| China North         | Beijing         |
 | Central India       | Pune            |
-| West India          | Mumbai          |
 | South India         | Chennai         |
+| West India          | Mumbai          |
 | Japan East          | Tokyo, Saitama  |
 | Japan West          | Osaka           |
 | Korea Central       | Seoul           |
 | Korea South         | Busan           |
+| Malaysia West       | Kuala Lumpur    |
+| Indonesia Central   | Jakarta         |
+| New Zealand North   | Auckland        |
+| Australia Central  | Canberra         |
 
-### Other regions
+### Dedicated Servers
 
-We're quickly adding support for other regions so [contact us] if your preferred region isn't
-available.
+[Dedicated servers](https://www.cloudmailin.com/plans-and-pricing) provide
+a single-tenant CloudMailin instance. Like the shared clusters, dedicated
+servers run on AWS — see the
+[available AWS regions](/getting_started/receiving_email_on_aws/#dedicated-servers)
+for the full list. If your application runs on Azure and you'd like one,
+[contact us] and we'll set it up in the AWS region closest to your Azure
+deployment.
 
-## Security in the Cloud
-
-Security in the Cloud can be a big worry for some customers. Our pioneering technology allows us
-to place security at the forefront of everything that CloudMailin does.
-
-If you want more details about the security of CloudMailin please just [contact us].
-
-## Getting Started
-
-We also recommend you look at our general [Getting Started Guide](/getting_started/) as it explains
-in more detail how you will be sent messages, how the HTTP Status codes you respond with affect the
-message delivery and walks you through receiving your first email.
+We also recommend you look at our general
+[Getting Started Guide](/getting_started/) as it explains in more detail how
+you will be sent messages, how the HTTP Status codes you respond with affect
+message delivery, and walks you through receiving your first email.
 
 ## Adding Some Code
 
-We recommend taking a look at our [HTTP POST Formats](/http_post_formats/). These show the format
-of the webhook POST to your website and some sample code to get started.
+We recommend taking a look at our [HTTP POST Formats](/http_post_formats/).
+These show the format of the webhook POST to your website and some sample
+code to get started.
 
 ## Contact Us
-If you need any help [contact us] and we can help you get setup receiving email in Azure.
+
+If you need any help [contact us] and we can help you get set up receiving
+email in Azure.
