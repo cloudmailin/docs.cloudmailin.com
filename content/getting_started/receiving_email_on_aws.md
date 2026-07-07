@@ -18,7 +18,7 @@ server to run, patch, or scale on EC2 or anywhere else in AWS.
 Because delivery is a standard HTTPS POST, the target can be any publicly
 reachable endpoint in your AWS account, including:
 
-* A [Lambda function URL](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html)
+* A [Lambda function URL](https://docs.aws.amazon.com/lambda/latest/dg/urls-configuration.html)
   or a route behind API Gateway
 * A container on ECS, Fargate, or App Runner
 * An EC2 instance behind a load balancer
