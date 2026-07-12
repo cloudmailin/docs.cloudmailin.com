@@ -6,7 +6,7 @@
   %details.sidebar-group{open: sidebar_section_open?('getting_started')}
     %summary.sidebar-group-summary
       %span Getting Started (Receiving)
-      %i.fas.fa-chevron-right.sidebar-group-chevron
+      = icon(:chevron_right, 'sidebar-group-chevron')
     %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
       %li= link_to 'Introduction', '/getting_started/', class: sidebar_link_class('/getting_started/')
       - for item in items_for_section('getting_started/receiving_email')
@@ -17,7 +17,7 @@
   %details.sidebar-group{open: sidebar_section_open?('http_post_formats')}
     %summary.sidebar-group-summary
       %span HTTP POST Formats
-      %i.fas.fa-chevron-right.sidebar-group-chevron
+      = icon(:chevron_right, 'sidebar-group-chevron')
     %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
       %li= link_to 'Introduction to POST Formats', '/http_post_formats/', class: sidebar_link_class('/http_post_formats/')
       %li= link_to 'JSON (Normalized)', '/http_post_formats/json_normalized/', class: sidebar_link_class('/http_post_formats/json_normalized/')
@@ -30,7 +30,7 @@
   %details.sidebar-group{open: sidebar_section_open?('receiving_email')}
     %summary.sidebar-group-summary
       %span Receiving Email
-      %i.fas.fa-chevron-right.sidebar-group-chevron
+      = icon(:chevron_right, 'sidebar-group-chevron')
     %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
       %li= link_to 'HTTP Status Codes', '/receiving_email/http_status_codes/', class: sidebar_link_class('/receiving_email/http_status_codes/')
       %li= link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/', class: sidebar_link_class('/receiving_email/forwarding_and_custom_domains/')
@@ -61,7 +61,7 @@
   %details.sidebar-group{open: sidebar_section_open?('local_dev')}
     %summary.sidebar-group-summary
       %span Local Development and Testing
-      %i.fas.fa-chevron-right.sidebar-group-chevron
+      = icon(:chevron_right, 'sidebar-group-chevron')
     %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
       %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/', class: sidebar_link_class('/receiving_email/localhost_debugger/')
       %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/', class: sidebar_link_class('/receiving_email/test_driven_development/')
@@ -69,7 +69,7 @@
   %details.sidebar-group{open: sidebar_section_open?('outbound')}
     %summary.sidebar-group-summary
       %span Outbound (Sending)
-      %i.fas.fa-chevron-right.sidebar-group-chevron
+      = icon(:chevron_right, 'sidebar-group-chevron')
     %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
       %li= link_to 'Introduction', '/outbound/', class: sidebar_link_class('/outbound/')
       %li= link_to 'Getting Started', '/outbound/getting_started/', class: sidebar_link_class('/outbound/getting_started/')
@@ -91,6 +91,6 @@
   %details.sidebar-group{open: sidebar_section_open?('guides')}
     %summary.sidebar-group-summary
       %span Guides
-      %i.fas.fa-chevron-right.sidebar-group-chevron
+      = icon(:chevron_right, 'sidebar-group-chevron')
     %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
       %li= link_to 'Verify DKIM is Working', '/guides/verify-dkim/', class: sidebar_link_class('/guides/verify-dkim/')

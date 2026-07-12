@@ -10,7 +10,6 @@
     %link{rel: "preconnect", href: "https://fonts.googleapis.com"}
     %link{rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous"}
     %link{href: "https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap", rel: "stylesheet"}
-    %link{rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"}
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic"/>
     <link rel='stylesheet' href='/assets/stylesheets/docs_new.css' type='text/css' />
@@ -62,7 +61,7 @@
 
             %a.docs-nav-external-link.items-center{class: "gap-1.5 pl-3 border-l border-white/20 text-sm shrink-0", href: "https://www.cloudmailin.com"}
               cloudmailin.com
-              %i.fas.fa-arrow-up-right-from-square{class: "text-[10px]"}
+              = icon(:external_link, 'text-[10px]')
 
     -# Mobile "Contents" toggle — same sidebar partial as the desktop aside,
        just presented as a collapsible drawer above the article on narrow
@@ -70,9 +69,9 @@
     %details.docs-mobile-toc{class: "border-b border-gray-100 bg-gray-50"}
       %summary.list-none{class: "flex items-center justify-between px-4 py-3 cursor-pointer select-none"}
         %span.flex.items-center.text-gray-700{class: "gap-2 text-sm font-medium"}
-          %i.fas.fa-bars-staggered.text-gray-400
+          = icon(:bars_staggered, 'text-gray-400')
           Contents
-        %i.fas.fa-chevron-down.docs-mobile-toc-chevron{class: "text-xs text-gray-400 transition-transform"}
+        = icon(:chevron_down, 'docs-mobile-toc-chevron text-xs text-gray-400 transition-transform')
       .px-4{class: "pb-4 max-h-[60vh] overflow-y-auto"}
         = render('sidebar')
 

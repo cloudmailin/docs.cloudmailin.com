@@ -9,6 +9,7 @@ use_helper Nanoc::Helpers::XMLSitemap
 use_helper ItemHelpers
 use_helper SectionHelpers
 use_helper OpenapiHelpers
+use_helper IconHelpers
 
 def image_tag(path, options)
   full_path = image_path(path)

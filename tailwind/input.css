@@ -275,6 +275,13 @@ code, kbd, pre, samp {
 
 .sidebar-group-summary:hover { color: #6b7280; }
 
+/* Inline SVG icons (lib/helpers/icon_helpers.rb): 1em box sized by the
+   surrounding font-size, aligned like an icon-font glyph. */
+.docs-icon {
+  display: inline-block;
+  vertical-align: -0.125em;
+}
+
 /* Chevron points right when collapsed, rotates down when the group is open. */
 .sidebar-group-chevron {
   font-size: 0.625rem;
