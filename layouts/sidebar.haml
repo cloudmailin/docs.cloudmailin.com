@@ -1,5 +1,5 @@
-.space-y-4{class: "text-[0.9rem]"}
-  .flex.items-center.justify-between
+.sidebar-nav
+  .sidebar-top-row
     = link_to 'Home', '/', class: sidebar_link_class('/')
     %button.sidebar-expand-toggle{type: 'button', data: { sidebar_toggle: true }}= sidebar_expand_all? ? 'Collapse all' : 'Expand all'
 
@@ -7,7 +7,7 @@
     %summary.sidebar-group-summary
       %span Getting Started (Receiving)
       = icon(:chevron_right, 'sidebar-group-chevron')
-    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+    %ul.sidebar-items
       %li= link_to 'Introduction', '/getting_started/', class: sidebar_link_class('/getting_started/')
       - for item in items_for_section('getting_started/receiving_email')
         %li= link_to title(item), item, class: sidebar_link_class(item)
@@ -18,7 +18,7 @@
     %summary.sidebar-group-summary
       %span HTTP POST Formats
       = icon(:chevron_right, 'sidebar-group-chevron')
-    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+    %ul.sidebar-items
       %li= link_to 'Introduction to POST Formats', '/http_post_formats/', class: sidebar_link_class('/http_post_formats/')
       %li= link_to 'JSON (Normalized)', '/http_post_formats/json_normalized/', class: sidebar_link_class('/http_post_formats/json_normalized/')
       %li= link_to 'Multipart (Normalized)', '/http_post_formats/multipart_normalized/', class: sidebar_link_class('/http_post_formats/multipart_normalized/')
@@ -31,7 +31,7 @@
     %summary.sidebar-group-summary
       %span Receiving Email
       = icon(:chevron_right, 'sidebar-group-chevron')
-    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+    %ul.sidebar-items
       %li= link_to 'HTTP Status Codes', '/receiving_email/http_status_codes/', class: sidebar_link_class('/receiving_email/http_status_codes/')
       %li= link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/', class: sidebar_link_class('/receiving_email/forwarding_and_custom_domains/')
       %li= link_to 'Store Attachments in Cloud Storage', '/receiving_email/store-email-attachments-in-s3-azure-google-storage/', class: sidebar_link_class('/receiving_email/store-email-attachments-in-s3-azure-google-storage/')
@@ -39,7 +39,7 @@
       %li= link_to 'Reply Parsing', '/features/extracting_replies_from_email/', class: sidebar_link_class('/features/extracting_replies_from_email/')
       %li
         = link_to 'Callbacks', '/features/callbacks/', class: sidebar_link_class('/features/callbacks/')
-        %ul.list-none.p-0{class: "space-y-0.5 pl-3 mt-0.5"}
+        %ul.sidebar-items.sidebar-items--nested
           %li= link_to 'Authorization Callbacks', '/features/callbacks/#authorization-callbacks', class: sidebar_link_class('/features/callbacks/#authorization-callbacks')
           %li= link_to 'Error Callbacks', '/features/callbacks/#error-callbacks', class: sidebar_link_class('/features/callbacks/#error-callbacks')
       %li= link_to 'SPF (Sender Policy Framework)', '/features/spf/', class: sidebar_link_class('/features/spf/')
@@ -54,7 +54,7 @@
       %li
         = link_to 'Examples', '/receiving_email/examples/', class: sidebar_link_class('/receiving_email/examples/')
         - if in_section?('receiving_email/examples', include_self: true)
-          %ul.list-none.p-0{class: "space-y-0.5 pl-3 mt-0.5"}
+          %ul.sidebar-items.sidebar-items--nested
             - items_for_section('receiving_email/examples').each do |item|
               %li= link_to title(item), item, class: sidebar_link_class(item)
 
@@ -62,7 +62,7 @@
     %summary.sidebar-group-summary
       %span Local Development and Testing
       = icon(:chevron_right, 'sidebar-group-chevron')
-    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+    %ul.sidebar-items
       %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/', class: sidebar_link_class('/receiving_email/localhost_debugger/')
       %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/', class: sidebar_link_class('/receiving_email/test_driven_development/')
 
@@ -70,7 +70,7 @@
     %summary.sidebar-group-summary
       %span Outbound (Sending)
       = icon(:chevron_right, 'sidebar-group-chevron')
-    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+    %ul.sidebar-items
       %li= link_to 'Introduction', '/outbound/', class: sidebar_link_class('/outbound/')
       %li= link_to 'Getting Started', '/outbound/getting_started/', class: sidebar_link_class('/outbound/getting_started/')
       %li= link_to 'DKIM Signing', '/outbound/dkim/', class: sidebar_link_class('/outbound/dkim/')
@@ -81,7 +81,7 @@
       %li= link_to 'Sending Email via API', '/outbound/sending_email_via_json_api/', class: sidebar_link_class('/outbound/sending_email_via_json_api/')
       %li
         = link_to 'Sending Email with SMTP', '/outbound/sending_email_with_smtp/', class: sidebar_link_class('/outbound/sending_email_with_smtp/')
-        %ul.list-none.p-0{class: "space-y-0.5 pl-3 mt-0.5"}
+        %ul.sidebar-items.sidebar-items--nested
           - if in_section?('outbound/', include_self: true)
             - items_for_section('outbound/examples').each do |item|
               %li= link_to title(item), item, class: sidebar_link_class(item)
@@ -92,5 +92,5 @@
     %summary.sidebar-group-summary
       %span Guides
       = icon(:chevron_right, 'sidebar-group-chevron')
-    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+    %ul.sidebar-items
       %li= link_to 'Verify DKIM is Working', '/guides/verify-dkim/', class: sidebar_link_class('/guides/verify-dkim/')

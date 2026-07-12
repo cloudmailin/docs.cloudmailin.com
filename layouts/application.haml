@@ -45,45 +45,43 @@
     %meta{name: 'twitter:creator', content: '@cloudmailin'}
     %meta{name: 'twitter:card', content: 'summary_large_image'}
   %body#documentation
-    .sticky.top-0{class: "z-50"}
-      %nav{class: "bg-cm-blue-500 border-b border-cm-blue-600 shadow-nav"}
-        -# px-6 (1.5rem) matches the rail's padding-left so the logo and the
-           sidebar content share a left edge.
-        .w-full.px-6{class: "flex items-center justify-between gap-3 py-2"}
-          .flex.items-center.shrink-0{class: "gap-3"}
-            %a.flex.items-center{href: "https://www.cloudmailin.com"}
-              = image_tag('cloudmailin-lockup-nav.svg', alt: 'CloudMailin logo, incoming email for your web app', style: 'height:36px;width:auto', class: 'block')
-            %span.docs-badge.items-center.rounded-md.border.text-white{class: "border-white/30 px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider text-white/80"}
+    .docs-topbar
+      %nav.docs-topbar-nav
+        .docs-topbar-row
+          .docs-topbar-brand
+            %a.docs-topbar-logo{href: "https://www.cloudmailin.com"}
+              = image_tag('cloudmailin-lockup-nav.svg', alt: 'CloudMailin logo, incoming email for your web app', style: 'height:36px;width:auto')
+            %span.docs-badge
               Docs
 
-          .flex.items-center.justify-end{class: "gap-3 flex-1"}
-            #searchbox.relative{class: "w-full max-w-[10rem] sm:max-w-[14rem] lg:max-w-xs"}
+          .docs-topbar-tools
+            #searchbox
 
-            %a.docs-nav-external-link.items-center{class: "gap-1.5 pl-3 border-l border-white/20 text-sm shrink-0", href: "https://www.cloudmailin.com"}
+            %a.docs-nav-external-link{href: "https://www.cloudmailin.com"}
               cloudmailin.com
-              = icon(:external_link, 'text-[10px]')
+              = icon(:external_link, 'docs-nav-external-icon')
 
     -# Mobile "Contents" toggle — same sidebar partial as the desktop aside,
        just presented as a collapsible drawer above the article on narrow
        screens (no JS beyond the browser's native <details>).
-    %details.docs-mobile-toc{class: "border-b border-gray-100 bg-gray-50"}
-      %summary.list-none{class: "flex items-center justify-between px-4 py-3 cursor-pointer select-none"}
-        %span.flex.items-center.text-gray-700{class: "gap-2 text-sm font-medium"}
-          = icon(:bars_staggered, 'text-gray-400')
+    %details.docs-mobile-toc
+      %summary.docs-mobile-toc-summary
+        %span.docs-mobile-toc-label
+          = icon(:bars_staggered, 'docs-mobile-toc-icon')
           Contents
-        = icon(:chevron_down, 'docs-mobile-toc-chevron text-xs text-gray-400 transition-transform')
-      .px-4{class: "pb-4 max-h-[60vh] overflow-y-auto"}
+        = icon(:chevron_down, 'docs-mobile-toc-chevron')
+      .docs-mobile-toc-body
         = render('sidebar')
 
     -# Docs frame: nav rail docked to the viewport's left edge (tinted panel,
        full column height), article centered in the remaining width — the
        established docs-site layout (ReadTheDocs, MDN, Stripe).
-    #docs-content{class: "lg:flex lg:items-stretch"}
+    #docs-content
       %aside.docs-desktop-aside
         .docs-sidebar-sticky
           = render('sidebar')
 
-      %main.docs-main{class: "min-w-0 flex-1"}
+      %main.docs-main
         -if ENV['NANOC_ENV'] == 'development'
           .info Development Mode
           - if description.nil?
@@ -111,30 +109,30 @@
           #comments
           -#  = render 'comments' unless disable_comments?
 
-    %footer{class: "bg-cm-blue-500"}
-      .container{class: "py-12"}
-        .grid{class: "grid-cols-2 sm:grid-cols-4 gap-8"}
-          .col-span-2{class: "sm:col-span-1"}
-            %a.docs-footer-brand.inline-block{class: "mb-3 text-xl", href: "https://www.cloudmailin.com"}
+    %footer.docs-footer
+      .container.docs-footer-body
+        .docs-footer-grid
+          .docs-footer-about
+            %a.docs-footer-brand{href: "https://www.cloudmailin.com"}
               CloudMailin
-            %p.text-white{class: "text-sm leading-relaxed text-white/60"}
+            %p.docs-footer-tagline
               Developer-friendly email API for inbound and outbound email processing.
           %div
             %h3.docs-footer-heading Documentation
-            %ul.list-none.p-0.m-0{class: "space-y-2"}
+            %ul.docs-footer-links
               %li= link_to 'Getting Started', '/getting_started/', class: 'docs-footer-link'
               %li= link_to 'HTTP POST Formats', '/http_post_formats/', class: 'docs-footer-link'
               %li= link_to 'Receiving Email', '/receiving_email/http_status_codes/', class: 'docs-footer-link'
               %li= link_to 'Outbound (Sending)', '/outbound/', class: 'docs-footer-link'
           %div
             %h3.docs-footer-heading CloudMailin
-            %ul.list-none.p-0.m-0{class: "space-y-2"}
+            %ul.docs-footer-links
               %li= link_to 'cloudmailin.com', 'https://www.cloudmailin.com', class: 'docs-footer-link'
               %li= link_to 'Plans and Pricing', 'https://www.cloudmailin.com/plans-and-pricing', class: 'docs-footer-link'
               %li= link_to 'Contact Support', 'https://www.cloudmailin.com/contact_us', class: 'docs-footer-link'
-      .border-t.border-white{class: "border-white/15"}
-        .container{class: "py-4"}
-          %p.text-center.m-0.text-white{class: "text-xs text-white/40"}
+      .docs-footer-divider
+        .container.docs-footer-legal
+          %p.docs-footer-copyright
             &copy; #{Time.now.year} CloudMailin.com
 
     -# Sidebar "Expand all / Collapse all" toggle. The sidebar partial renders
