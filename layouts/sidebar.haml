@@ -1,81 +1,96 @@
-#sidebar
-  %h2.hidden-md.hidden-lg Navigation
-  %ul
-    %li= link_to 'Home', '/'
-    %li
-      Getting Started (Receiving)
-      %ul
-        %li= link_to 'Introduction', '/getting_started/'
-        - for item in items_for_section('getting_started/receiving_email')
-          %li= link_to title(item), item
-        %li= link_to 'FAQs', '/getting_started/faqs/'
-        %li= link_to 'Getting Started Sending Email', '/outbound/'
-    %li
-      HTTP POST Formats
-      %ul
-        %li= link_to 'Introduction to POST Formats', '/http_post_formats/'
-        %li= link_to 'JSON (Normalized)', '/http_post_formats/json_normalized/'
-        %li= link_to 'Multipart (Normalized)', '/http_post_formats/multipart_normalized/'
-        %li= link_to 'Raw Message Format', '/http_post_formats/raw/'
-        %li= link_to 'JSON Format', '/http_post_formats/json/', class: 'deprecated'
-        %li= link_to 'Multipart Format', '/http_post_formats/multipart/', class: 'deprecated'
-        %li= link_to 'Original Format', '/http_post_formats/original/', class: 'deprecated'
-        -# %li= link_to 'Examples', '/receiving_email/examples/'
-    %li
-      Receiving Email
-      %ul
-        %li= link_to 'HTTP Status Codes', '/receiving_email/http_status_codes/'
-        %li= link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/'
-        %li= link_to 'Store Attachments in Cloud Storage', '/receiving_email/store-email-attachments-in-s3-azure-google-storage/'
-        %li= link_to 'Store Full Email in Cloud Storage', '/receiving_email/store-full-email-in-aws-cloud-storage/'
-        %li= link_to 'Reply Parsing', '/features/extracting_replies_from_email/'
-        %li
-          = link_to 'Callbacks', '/features/callbacks/'
-          %ul
-            %li= link_to 'Authorization Callbacks', '/features/callbacks/#authorization-callbacks'
-            %li= link_to 'Error Callbacks', '/features/callbacks/#error-callbacks'
-        %li= link_to 'SPF (Sender Policy Framework)', '/features/spf/'
-        %li= link_to 'DKIM Verification', '/features/dkim/'
-        %li= link_to 'DMARC Verification', '/features/dmarc-verification/'
-        %li= link_to 'Delivery Status API', '/features/delivery_status_api/'
-        %li= link_to 'Securing HTTP Posts', '/receiving_email/securing_your_email_url_target/'
-        %li= link_to 'IMAP Polling (Legacy Systems)', '/features/imap_collectors/'
-        %li= link_to 'SPAM Filtering', '/features/spam_filtering/'
-        %li= link_to 'Virus Scanning', '/features/virus_scanning/'
-        %li= link_to 'IP Address List', '/receiving_email/ip_addresses/'
-        %li
-          = link_to 'Examples', '/receiving_email/examples/'
-          - if in_section?('receiving_email/examples', include_self: true)
-            %ul
-              - items_for_section('receiving_email/examples').each do |item|
-                %li= link_to title(item), item
-    %li
-      Local Development and Testing
-      %ul
-        %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/'
-        %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/'
+.space-y-4{class: "text-[0.9rem]"}
+  .flex.items-center.justify-between
+    = link_to 'Home', '/', class: sidebar_link_class('/')
+    %button.sidebar-expand-toggle{type: 'button', data: { sidebar_toggle: true }}= sidebar_expand_all? ? 'Collapse all' : 'Expand all'
 
-    %li
-      Outbound (Sending)
-      %ul
-        %li= link_to 'Introduction', '/outbound/'
-        %li= link_to 'Getting Started', '/outbound/getting_started/'
-        %li= link_to 'DKIM Signing', '/outbound/dkim/'
-        %li= link_to 'DMARC Setup', '/outbound/dmarc/'
-        %li= link_to 'Priorities and Tagging', '/outbound/priorities_and_tags/'
-        %li= link_to 'Email Layouts', '/outbound/email-layouts/'
-        %li= link_to 'Email Health', '/outbound/email-health/'
-        %li= link_to 'Sending Email via API', '/outbound/sending_email_via_json_api/'
-        %li
-          = link_to 'Sending Email with SMTP', '/outbound/sending_email_with_smtp/'
-          %ul
-            - if in_section?('outbound/', include_self: true)
-              - items_for_section('outbound/examples').each do |item|
-                %li= link_to title(item), item
-            - else
-              %li= link_to 'Examples', '/outbound/sending_email_with_smtp/#examples'
+  %details.sidebar-group{open: sidebar_section_open?('getting_started')}
+    %summary.sidebar-group-summary
+      %span Getting Started (Receiving)
+      %i.fas.fa-chevron-right.sidebar-group-chevron
+    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+      %li= link_to 'Introduction', '/getting_started/', class: sidebar_link_class('/getting_started/')
+      - for item in items_for_section('getting_started/receiving_email')
+        %li= link_to title(item), item, class: sidebar_link_class(item)
+      %li= link_to 'FAQs', '/getting_started/faqs/', class: sidebar_link_class('/getting_started/faqs/')
+      %li= link_to 'Getting Started Sending Email', '/outbound/', class: sidebar_link_class('/outbound/')
 
-    %li
-      Guides
-      %ul
-        %li= link_to 'Verify DKIM is Working', '/guides/verify-dkim/'
+  %details.sidebar-group{open: sidebar_section_open?('http_post_formats')}
+    %summary.sidebar-group-summary
+      %span HTTP POST Formats
+      %i.fas.fa-chevron-right.sidebar-group-chevron
+    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+      %li= link_to 'Introduction to POST Formats', '/http_post_formats/', class: sidebar_link_class('/http_post_formats/')
+      %li= link_to 'JSON (Normalized)', '/http_post_formats/json_normalized/', class: sidebar_link_class('/http_post_formats/json_normalized/')
+      %li= link_to 'Multipart (Normalized)', '/http_post_formats/multipart_normalized/', class: sidebar_link_class('/http_post_formats/multipart_normalized/')
+      %li= link_to 'Raw Message Format', '/http_post_formats/raw/', class: sidebar_link_class('/http_post_formats/raw/')
+      %li= link_to 'JSON Format', '/http_post_formats/json/', class: sidebar_link_class('/http_post_formats/json/', 'deprecated')
+      %li= link_to 'Multipart Format', '/http_post_formats/multipart/', class: sidebar_link_class('/http_post_formats/multipart/', 'deprecated')
+      %li= link_to 'Original Format', '/http_post_formats/original/', class: sidebar_link_class('/http_post_formats/original/', 'deprecated')
+
+  %details.sidebar-group{open: sidebar_section_open?('receiving_email')}
+    %summary.sidebar-group-summary
+      %span Receiving Email
+      %i.fas.fa-chevron-right.sidebar-group-chevron
+    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+      %li= link_to 'HTTP Status Codes', '/receiving_email/http_status_codes/', class: sidebar_link_class('/receiving_email/http_status_codes/')
+      %li= link_to 'Using your own Domain', '/receiving_email/forwarding_and_custom_domains/', class: sidebar_link_class('/receiving_email/forwarding_and_custom_domains/')
+      %li= link_to 'Store Attachments in Cloud Storage', '/receiving_email/store-email-attachments-in-s3-azure-google-storage/', class: sidebar_link_class('/receiving_email/store-email-attachments-in-s3-azure-google-storage/')
+      %li= link_to 'Store Full Email in Cloud Storage', '/receiving_email/store-full-email-in-aws-cloud-storage/', class: sidebar_link_class('/receiving_email/store-full-email-in-aws-cloud-storage/')
+      %li= link_to 'Reply Parsing', '/features/extracting_replies_from_email/', class: sidebar_link_class('/features/extracting_replies_from_email/')
+      %li
+        = link_to 'Callbacks', '/features/callbacks/', class: sidebar_link_class('/features/callbacks/')
+        %ul.list-none.p-0{class: "space-y-0.5 pl-3 mt-0.5"}
+          %li= link_to 'Authorization Callbacks', '/features/callbacks/#authorization-callbacks', class: sidebar_link_class('/features/callbacks/#authorization-callbacks')
+          %li= link_to 'Error Callbacks', '/features/callbacks/#error-callbacks', class: sidebar_link_class('/features/callbacks/#error-callbacks')
+      %li= link_to 'SPF (Sender Policy Framework)', '/features/spf/', class: sidebar_link_class('/features/spf/')
+      %li= link_to 'DKIM Verification', '/features/dkim/', class: sidebar_link_class('/features/dkim/')
+      %li= link_to 'DMARC Verification', '/features/dmarc-verification/', class: sidebar_link_class('/features/dmarc-verification/')
+      %li= link_to 'Delivery Status API', '/features/delivery_status_api/', class: sidebar_link_class('/features/delivery_status_api/')
+      %li= link_to 'Securing HTTP Posts', '/receiving_email/securing_your_email_url_target/', class: sidebar_link_class('/receiving_email/securing_your_email_url_target/')
+      %li= link_to 'IMAP Polling (Legacy Systems)', '/features/imap_collectors/', class: sidebar_link_class('/features/imap_collectors/')
+      %li= link_to 'SPAM Filtering', '/features/spam_filtering/', class: sidebar_link_class('/features/spam_filtering/')
+      %li= link_to 'Virus Scanning', '/features/virus_scanning/', class: sidebar_link_class('/features/virus_scanning/')
+      %li= link_to 'IP Address List', '/receiving_email/ip_addresses/', class: sidebar_link_class('/receiving_email/ip_addresses/')
+      %li
+        = link_to 'Examples', '/receiving_email/examples/', class: sidebar_link_class('/receiving_email/examples/')
+        - if in_section?('receiving_email/examples', include_self: true)
+          %ul.list-none.p-0{class: "space-y-0.5 pl-3 mt-0.5"}
+            - items_for_section('receiving_email/examples').each do |item|
+              %li= link_to title(item), item, class: sidebar_link_class(item)
+
+  %details.sidebar-group{open: sidebar_section_open?('local_dev')}
+    %summary.sidebar-group-summary
+      %span Local Development and Testing
+      %i.fas.fa-chevron-right.sidebar-group-chevron
+    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+      %li= link_to 'Local Development / Debugger', '/receiving_email/localhost_debugger/', class: sidebar_link_class('/receiving_email/localhost_debugger/')
+      %li= link_to 'Test Driven Development', '/receiving_email/test_driven_development/', class: sidebar_link_class('/receiving_email/test_driven_development/')
+
+  %details.sidebar-group{open: sidebar_section_open?('outbound')}
+    %summary.sidebar-group-summary
+      %span Outbound (Sending)
+      %i.fas.fa-chevron-right.sidebar-group-chevron
+    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+      %li= link_to 'Introduction', '/outbound/', class: sidebar_link_class('/outbound/')
+      %li= link_to 'Getting Started', '/outbound/getting_started/', class: sidebar_link_class('/outbound/getting_started/')
+      %li= link_to 'DKIM Signing', '/outbound/dkim/', class: sidebar_link_class('/outbound/dkim/')
+      %li= link_to 'DMARC Setup', '/outbound/dmarc/', class: sidebar_link_class('/outbound/dmarc/')
+      %li= link_to 'Priorities and Tagging', '/outbound/priorities_and_tags/', class: sidebar_link_class('/outbound/priorities_and_tags/')
+      %li= link_to 'Email Layouts', '/outbound/email-layouts/', class: sidebar_link_class('/outbound/email-layouts/')
+      %li= link_to 'Email Health', '/outbound/email-health/', class: sidebar_link_class('/outbound/email-health/')
+      %li= link_to 'Sending Email via API', '/outbound/sending_email_via_json_api/', class: sidebar_link_class('/outbound/sending_email_via_json_api/')
+      %li
+        = link_to 'Sending Email with SMTP', '/outbound/sending_email_with_smtp/', class: sidebar_link_class('/outbound/sending_email_with_smtp/')
+        %ul.list-none.p-0{class: "space-y-0.5 pl-3 mt-0.5"}
+          - if in_section?('outbound/', include_self: true)
+            - items_for_section('outbound/examples').each do |item|
+              %li= link_to title(item), item, class: sidebar_link_class(item)
+          - else
+            %li= link_to 'Examples', '/outbound/sending_email_with_smtp/#examples', class: sidebar_link_class('/outbound/sending_email_with_smtp/#examples')
+
+  %details.sidebar-group{open: sidebar_section_open?('guides')}
+    %summary.sidebar-group-summary
+      %span Guides
+      %i.fas.fa-chevron-right.sidebar-group-chevron
+    %ul.list-none.p-0.m-0{class: "space-y-0.5 mt-2"}
+      %li= link_to 'Verify DKIM is Working', '/guides/verify-dkim/', class: sidebar_link_class('/guides/verify-dkim/')

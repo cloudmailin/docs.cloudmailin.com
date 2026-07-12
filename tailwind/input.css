@@ -1,0 +1,797 @@
+/*
+ * Tailwind CSS build for docs.cloudmailin.com
+ *
+ * Compiled by the Tailwind CLI (Node, no Rails/Sprockets involved) into
+ * content/assets/stylesheets/tailwind_built.css, which nanoc then copies
+ * straight through to output/ like any other static content CSS file
+ * (see Rules — the `css` filetype case just runs `:erb` and routes it).
+ *
+ * This is the PRIMARY stylesheet for the site. Bootstrap 3 was removed in
+ * the Tailwind redesign; Tailwind v4's Preflight (below) is now the CSS
+ * reset. content/assets/stylesheets/docs_new.scss still loads before this
+ * one but is now Bootstrap-free — it holds only a few unlayered rules
+ * (.container, the dev-mode .info/.warning callouts, a.deprecated, and the
+ * Algolia autocomplete-theme :root vars). See that file's header for why.
+ *
+ * Why so much hand-written CSS instead of Tailwind utility classes: nearly
+ * all of this site is markdown compiled to HTML with ZERO classes on the
+ * generated tags (h1-h6, p, a, ul, table, pre…), so utilities can't be
+ * applied inline — the styling has to hang off element selectors scoped
+ * under `.docs-article`. This is the intended pattern, not a workaround.
+ * Tailwind utility classes are used directly in the HAML layout files
+ * (nav, footer, sidebar) where we author the markup ourselves.
+ *
+ * One cascade note worth keeping in mind: `@import "tailwindcss"` wraps
+ * Tailwind's utilities in `@layer utilities`, and per the CSS Cascade
+ * Layers spec an UNLAYERED rule beats any layered rule for a contested
+ * property regardless of specificity. The handful of unlayered rules left
+ * in docs_new.scss (e.g. `.container`) therefore win over a Tailwind
+ * utility of the same name — which is deliberate there — so keep any new
+ * rules in docs_new.scss uniquely named to avoid clobbering utilities used
+ * in the templates. Rules in THIS file live in the normal (unlayered)
+ * cascade too, so element selectors here beat bare-tag Preflight defaults
+ * on specificity as expected.
+ */
+
+@import "tailwindcss";
+
+/* Explicit source scanning — this is a Ruby/HAML/Markdown project, not a
+   JS one, so make sure Tailwind's Oxide scanner walks the right trees for
+   utility classes used in templates and content. */
+@source "../layouts";
+@source "../content";
+@source "../lib";
+
+@theme {
+  /* Brand blue scale — matches app/assets/tailwind/application.css in the
+     main cloudmailin repo exactly (cm-blue-500 #4d7aba is primary). */
+  --color-cm-blue-50: #f0f4fa;
+  --color-cm-blue-100: #dce5f3;
+  --color-cm-blue-200: #b9cce7;
+  --color-cm-blue-300: #8eadd6;
+  --color-cm-blue-400: #638ac3;
+  --color-cm-blue-500: #4d7aba;
+  --color-cm-blue-600: #4470af;
+  --color-cm-blue-700: #3a5f9a;
+  --color-cm-blue-800: #2f4d7a;
+  --color-cm-blue-900: #243c5f;
+
+  --color-cm-warning: #f0ad4e;
+
+  /* Terminal code-block motif */
+  --color-cm-terminal-bg: #3d629a;
+  --color-cm-terminal-border: #8ab0d8;
+  --color-cm-terminal-dots: #345285;
+  --color-cm-code-bg: rgba(77, 122, 186, 0.02);
+
+  --shadow-nav: 0px 1px 0px #638ac3;
+
+  --font-family-display: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-family-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-logo: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Base typography — every markdown page renders through the same shared
+   layout with zero classes on its generated tags, so set the brand type
+   here rather than editing every content file.
+   ========================================================================== */
+
+html {
+  font-family: var(--font-family-display);
+  /* Bootstrap 3's scaffolding sets `html { font-size: 10px }` (its own
+     rem-basis convention). Nothing above contested the `font-size`
+     property specifically, so that 10px value won by default and every
+     rem-sized rule in this file — headings, spacing, the terminal code
+     blocks, tables — was silently rendering at 62.5% of its intended
+     size. Restore the standard 16px root so 1rem means 1rem again. */
+  font-size: 16px;
+}
+
+body#documentation {
+  font-family: var(--font-family-display);
+  background-color: #fff;
+}
+
+code, kbd, pre, samp {
+  font-family: var(--font-family-mono);
+}
+
+/* ==========================================================================
+   Nav bar & footer links/headings — real CSS classes rather than Tailwind
+   utilities, since these are <a>/<h3> tags Bootstrap also styles (see the
+   cascade-layers note at the top of this file).
+   ========================================================================== */
+
+/* Bootstrap 3's responsive-utilities partial ALSO defines an unlayered
+   `.hidden { display: none }` class (same name as Tailwind's own `hidden`
+   utility) — it always wins over Tailwind's layered `hidden`/`lg:block`
+   combo regardless of viewport, so that pattern can't be used here for
+   "hidden on mobile, visible at a breakpoint". These custom, uniquely-
+   named, unlayered pairs do the same job without the name collision. */
+.docs-badge { display: none; }
+.docs-nav-external-link { display: none; }
+.docs-desktop-aside { display: none; }
+
+@media (width >= 40rem) {
+  .docs-badge { display: inline-flex; }
+}
+
+@media (width >= 64rem) {
+  .docs-nav-external-link { display: inline-flex; }
+  .docs-desktop-aside { display: block; }
+}
+
+/* The docs frame: nav rail docked to the viewport's left edge as a tinted,
+   bordered panel spanning the full column height, with the article centered
+   in the remaining width (the established docs layout — ReadTheDocs, MDN,
+   Stripe). The rail keeps the page frame even when content is short. */
+#docs-content {
+  min-height: calc(100vh - 3.5rem);
+}
+
+.docs-desktop-aside {
+  /* 18rem up to ~1500px viewports, then grows with the screen to a 24rem
+     cap (~2560px) so the rail doesn't look skinny on very wide displays. */
+  width: clamp(18rem, 12vw + 6rem, 24rem);
+  flex-shrink: 0;
+  /* White rail — the gray-200 hairline border alone defines the panel.
+     padding-top matches .docs-main's so both columns start level. */
+  background-color: #fff;
+  border-right: 1px solid var(--color-gray-200);
+  padding: 2.75rem 1.25rem 2.5rem 1.5rem;
+}
+
+.docs-main {
+  padding: 1.5rem 1rem 4rem;
+}
+
+@media (width >= 64rem) {
+  .docs-main { padding: 2.75rem 3rem 5rem; }
+}
+
+.docs-main .docs-article,
+.docs-main .info,
+.docs-main .warning {
+  /* ~95 chars of body text; docs pages are code-fence-heavy so err wider
+     than pure-prose measure. */
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Two sidebar modes. Collapsed (one section open) is reading mode: the nav
+   fits the viewport, so pin it alongside the article. Expanded (two or more
+   sections open — the home page default, or after "Expand all") is browsing
+   mode: let the nav flow at full height with the page instead of adding a
+   second scrollbar. :has() picks the mode from the DOM state itself, so the
+   same rule covers server-rendered defaults and the client-side toggle. */
+.docs-sidebar-sticky {
+  position: sticky;
+  top: 5.5rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+}
+
+.docs-sidebar-sticky:has(.sidebar-group[open] ~ .sidebar-group[open]) {
+  position: static;
+  max-height: none;
+  overflow-y: visible;
+}
+
+.docs-nav-external-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+.docs-nav-external-link:hover { color: rgba(255, 255, 255, 0.9); }
+
+.docs-footer-brand {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-family-logo);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.docs-footer-heading {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 0.75rem;
+}
+
+.docs-footer-link {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.docs-footer-link:hover { color: #fff; }
+
+/* ==========================================================================
+   Sidebar links — see layout/sidebar.haml + lib/helpers/section_helpers.rb.
+   Plain classes (not Tailwind utility strings) for the same cascade-layers
+   reason as above.
+   ========================================================================== */
+
+.sidebar-link {
+  display: block;
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  color: #4b5563;
+  text-decoration: none;
+  font-size: inherit;
+}
+
+.sidebar-link:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.sidebar-link--active {
+  background-color: var(--color-cm-blue-50);
+  color: var(--color-cm-blue-700);
+  font-weight: 500;
+}
+
+.sidebar-link--active:hover {
+  background-color: var(--color-cm-blue-50);
+  color: var(--color-cm-blue-700);
+}
+
+/* --------------------------------------------------------------------------
+   Collapsible sidebar sections (native <details>/<summary>). Only the active
+   section is `open` by default (see active_sidebar_section in section_helpers)
+   so the nav is short enough to fit without an internal scroll; the "Expand
+   all" toggle (data-sidebar-toggle, handled by the inline script in
+   application.haml) opens every group for customers who want to scan them all.
+   -------------------------------------------------------------------------- */
+
+/* The <summary> IS the section header — remove the native disclosure triangle
+   and restyle it as the old mono/uppercase label, now clickable. */
+.sidebar-group-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  padding: 0.2rem 0;
+  color: #9ca3af;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.sidebar-group-summary::-webkit-details-marker { display: none; }
+.sidebar-group-summary::marker { content: ""; }
+
+.sidebar-group-summary:hover { color: #6b7280; }
+
+/* Chevron points right when collapsed, rotates down when the group is open. */
+.sidebar-group-chevron {
+  font-size: 0.625rem;
+  color: #cbd5e1;
+  transition: transform 0.15s ease;
+}
+
+.sidebar-group[open] > .sidebar-group-summary .sidebar-group-chevron {
+  transform: rotate(90deg);
+}
+
+/* "Expand all" / "Collapse all" toggle — a quiet mono text button. */
+.sidebar-expand-toggle {
+  background: none;
+  border: none;
+  padding: 0.15rem 0.25rem;
+  cursor: pointer;
+  color: #9ca3af;
+  font-family: var(--font-family-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.sidebar-expand-toggle:hover { color: var(--color-cm-blue-600); }
+
+/* ==========================================================================
+   Search box (#searchbox mount point + Algolia Autocomplete's own markup)
+   search.js / lib/algolia.rb are untouched — only visuals below.
+   ========================================================================== */
+
+#searchbox .aa-Autocomplete {
+  width: 100%;
+}
+
+#searchbox .aa-Form {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 0.5rem;
+  box-shadow: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+#searchbox .aa-Form:focus-within {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+}
+
+#searchbox .aa-InputWrapperPrefix .aa-SubmitButton {
+  width: 2.25rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#searchbox .aa-Input {
+  padding-left: 0.25rem;
+  color: #fff;
+  font-family: var(--font-family-display);
+  font-size: 0.875rem;
+}
+
+#searchbox .aa-Input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+#searchbox .aa-InputWrapperSuffix .aa-ClearButton,
+#searchbox .aa-InputWrapperSuffix .aa-LoadingIndicator {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#searchbox .aa-Panel {
+  margin-top: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.35);
+  overflow: hidden;
+}
+
+#searchbox .aa-PanelLayout {
+  padding: 0.5rem 0;
+}
+
+#searchbox .aa-Source {
+  padding: 0;
+}
+
+.aa-Item {
+  margin-bottom: 0;
+  border-radius: 0.5rem;
+}
+
+.aa-Item[aria-selected="true"] {
+  background-color: var(--color-cm-blue-50);
+}
+
+a.search-result,
+a.search-result:hover {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+a.search-result h4 {
+  margin: 0 0 0.2rem;
+  font-family: var(--font-family-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+a.search-result p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+a.search-result mark {
+  background-color: var(--color-cm-blue-100);
+  color: var(--color-cm-blue-700);
+  border-radius: 0.15em;
+  padding: 0 0.1em;
+}
+
+.search-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--color-cm-blue-50);
+  color: var(--color-cm-blue-600);
+  font-family: var(--font-family-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+
+.search-badge::after {
+  /* north-east arrow, forced text presentation (no emoji rendering) */
+  content: ' \2197\FE0E';
+}
+
+/* ==========================================================================
+   Sidebar mobile <details> chevron
+   ========================================================================== */
+
+/* Bootstrap's HTML5-elements normalize shim sets `details { display: block }`
+   as an unlayered rule (same collision as .hidden above) — Tailwind's
+   layered `lg:hidden` utility can't beat it, so hide it here instead. */
+@media (width >= 64rem) {
+  .docs-mobile-toc { display: none; }
+}
+
+.docs-mobile-toc summary { list-style: none; }
+.docs-mobile-toc summary::-webkit-details-marker { display: none; }
+
+.docs-mobile-toc[open] .docs-mobile-toc-chevron {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Article content — every compiled markdown page lands here with bare,
+   class-free tags (h1-h4, p, ul/ol, table, blockquote, code/pre, img).
+   ========================================================================== */
+
+.docs-article {
+  font-family: var(--font-family-display);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #374151;
+}
+
+.docs-article > *:first-child { margin-top: 0; }
+
+.docs-article h1 {
+  font-family: var(--font-family-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #111827;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+.docs-article h2 {
+  font-family: var(--font-family-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #111827;
+  line-height: 1.3;
+  margin: 2.25rem 0 0.85rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eef0f3;
+}
+
+.docs-article > h2:first-of-type,
+.docs-article h1 + h2 {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 1.25rem;
+}
+
+.docs-article h3 {
+  font-family: var(--font-family-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1.75rem 0 0.65rem;
+}
+
+.docs-article h4 {
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #374151;
+  margin: 1.4rem 0 0.5rem;
+}
+
+.docs-article p { margin: 0 0 1rem; }
+
+.docs-article a {
+  color: var(--color-cm-blue-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.docs-article a:hover { color: var(--color-cm-blue-700); }
+
+.docs-article ul, .docs-article ol {
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+}
+
+/* Restore list markers. Tailwind v4's Preflight resets `ol, ul, menu` to
+   `list-style: none` (it lives in @layer base, so it beats the browser's
+   default). Bootstrap's unlayered UA-style used to leave markers alone, but
+   with Bootstrap removed nothing puts them back — so set them explicitly
+   here or every bulleted/numbered list in the docs renders flat. */
+.docs-article ul { list-style: disc; }
+.docs-article ol { list-style: decimal; }
+.docs-article ul ul { list-style: circle; }
+.docs-article ul ul ul { list-style: square; }
+.docs-article ol ol { list-style: lower-alpha; }
+.docs-article ol ol ol { list-style: lower-roman; }
+
+/* GitHub-style task lists (commonmarker `tasklist` extension) carry their
+   own checkbox <input>, so suppress the redundant bullet on those items. */
+.docs-article li.task-list-item { list-style: none; }
+
+.docs-article li { margin-bottom: 0.4rem; }
+.docs-article li > ul, .docs-article li > ol { margin-top: 0.4rem; margin-bottom: 0; }
+
+.docs-article strong { color: #1f2937; font-weight: 600; }
+
+.docs-article hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 2rem 0;
+}
+
+/* Inline code (not inside a <pre>) */
+.docs-article code {
+  background-color: var(--color-cm-blue-50);
+  color: var(--color-cm-blue-700);
+  border-radius: 0.3rem;
+  padding: 0.15em 0.4em;
+  font-size: 0.85em;
+}
+
+.docs-article pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/* Blockquote callouts */
+.docs-article blockquote {
+  margin: 1.5rem 0;
+  padding: 0.9rem 1.25rem;
+  border-left: 4px solid var(--color-cm-blue-500);
+  border-radius: 0.5rem;
+  background-color: rgba(77, 122, 186, 0.05);
+  color: #374151;
+}
+
+.docs-article blockquote p { margin: 0; }
+.docs-article blockquote p + p { margin-top: 0.6rem; }
+
+/* Tables */
+.docs-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0 1.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.docs-article thead { background-color: #f9fafb; }
+
+.docs-article th {
+  text-align: left;
+  font-family: var(--font-family-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9ca3af;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.docs-article td {
+  padding: 0.6rem 1rem;
+  border-top: 1px solid #f1f2f4;
+  color: #374151;
+  vertical-align: top;
+}
+
+.docs-article tbody tr:hover { background-color: #fafbfc; }
+
+/* Images */
+.docs-article img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  margin: 1.25rem 0;
+  padding: 0.5rem;
+  background: #fff;
+}
+
+.docs-article .image-caption {
+  display: block;
+  margin-top: -1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background-color: #f9fafb;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Code blocks + multi-language tab bar.
+
+   content/assets/javascripts/code.js groups adjacent <pre> blocks and
+   inserts a `.language_list` tab bar directly before the first <pre> of
+   each group, tagging every <pre> in the group with a `data-language`
+   attribute and showing one at a time via `display: block`. That JS is
+   untouched — we do NOT wrap the <pre>s in a container (it would break the
+   adjacency grouping). Instead the bar is connected to the code purely with
+   CSS: the bar rounds its TOP corners and drops its bottom margin/radius,
+   and every grouped <pre> (`[data-language]`) rounds only its BOTTOM corners
+   with no top margin — so whichever language is visible sits flush beneath
+   the bar as a single card. Standalone <pre> blocks keep full rounding.
+
+   lib/common_marker_filter.rb emits Rouge's class-based token spans (not
+   inline styles) so the palette below can colour them for the dark surface.
+   ========================================================================== */
+
+/* The code surface — a neutral near-black, no faux terminal-window chrome.
+   #1f2937 / #111827 are Tailwind gray-800 / gray-900, the same neutral scale
+   the rest of the site uses (h1 is gray-900), so code blocks sit in the same
+   colour family rather than introducing a separate blue. */
+.docs-article pre:not(.warning) {
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: #1f2937;
+  padding: 0;
+}
+
+.docs-article pre:not(.warning) code {
+  display: block;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-family-mono);
+  font-size: 0.83rem;
+  line-height: 1.65;
+  white-space: pre;
+  /* Base colour for plain identifiers (.n/.nx), whitespace and anything not
+     recoloured below — a soft near-white. */
+  color: #e5e7eb;
+}
+
+/* Grouped blocks (data-language set by code.js): square the top corners and
+   drop the top margin so they butt flush against the tab bar above; keep the
+   rounded bottom. Applies to every <pre> in the group, so it holds whichever
+   language is currently shown. */
+.docs-article pre:not(.warning)[data-language] {
+  margin: 0 0 1.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* ------------------------------------------------------------------------
+   Syntax highlighting palette (Rouge class-based tokens)
+
+   The code surface is now a neutral near-black (#1f2937, relative luminance
+   ~0.02), so these hues read at much higher contrast than they did on the
+   old mid-blue background — most accent tokens now clear WCAG AA, and the
+   differentiation between categories is clearer. Every token stays fairly
+   LIGHT for legibility, with the HUES spread across the wheel (gold, green,
+   coral, cyan, orchid, lavender) so categories are told apart by hue.
+   Buckets follow Rouge's own token abbreviations; grouped by role:
+
+     keyword        gold      def/class/if/return/const/var
+     type/class     orchid    class + type + constant names, exceptions
+     string         green     every string flavour + regex + interpolation
+     number/const   coral     ints/floats/hex + true/false/null/nil + symbol
+     function/key   cyan      method & fn names, builtins, JSON/XML keys+tags
+     variable       lavender  $var / @ivar / @@cvar / globals
+     comment        slate     muted + italic, meant to recede
+     punct/operator quiet     brackets, commas, operators — structural
+   ------------------------------------------------------------------------ */
+.docs-article pre:not(.warning) code {
+  /* Comments — muted slate, italic; low emphasis by design */
+  .c, .c1, .cm, .cs, .cd, .ch, .cpf { color: #9fb2ce; font-style: italic; }
+  /* Preprocessor / meta lines (<?php, shebangs, #define) — orchid meta */
+  .cp { color: #d0a9e6; }
+
+  /* Keywords — warm gold, the structural backbone of the snippet */
+  .k, .kd, .kn, .kp, .kr, .kv { color: #f4c67a; }
+
+  /* Type / class / constant names + exceptions — orchid */
+  .kt, .nc, .nn, .no, .ne { color: #e7abdf; }
+
+  /* Strings (all flavours) + regex + interpolation delimiters — green */
+  .s, .s1, .s2, .sb, .sc, .sd, .sh, .sx, .sa, .dl, .si, .sr { color: #9fd894; }
+  .se { color: #c8ecb2; }   /* escape sequences: brighter within a string */
+
+  /* Numbers + literal constants (true/false/null/nil) + symbols — coral */
+  .m, .mi, .mf, .mh, .mo, .mb, .il, .kc, .ss { color: #f7b498; }
+
+  /* Function / method / decorator names, builtins, and property / tag /
+     attribute / JSON-key names — cyan, the "callable / label" colour */
+  .nf, .fm, .nd, .nb, .bp, .nt, .na, .nl, .py { color: #89d0f1; }
+
+  /* Variables ($foo, @ivar, @@cvar, globals) — light lavender */
+  .nv, .vi, .vg, .vc, .vm { color: #c9bdf2; }
+
+  /* Operators & punctuation — quiet and structural so they recede */
+  .o, .ow { color: #cdd8ec; }
+  .p, .pi { color: #b4c2dc; }
+
+  /* Errors — soft red with a wavy underline */
+  .err { color: #ff9d9d; text-decoration: underline wavy rgba(255, 120, 120, 0.55); }
+
+  /* Generic tokens (diffs / REPL output / headings) */
+  .gd { color: #f2a3a3; }               /* deletion */
+  .gi { color: #a7dca9; }               /* insertion */
+  .gh, .gu { color: #9fb2ce; font-weight: 600; }  /* heading */
+  .gp { color: #f4c67a; }               /* prompt */
+  .go { color: #b4c2dc; }               /* output */
+  .gs { font-weight: 600; }             /* strong */
+  .ge { font-style: italic; }           /* emphasis */
+}
+
+/* Multi-language tab bar — the top of the same card as the code block. It
+   rounds only its top corners and butts directly onto the <pre> below with
+   no bottom margin/radius, so bar + code read as one connected surface. A
+   slightly darker strip (gray-900) sits above the gray-800 code area. */
+.docs-article .language_list {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0 0;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background-color: #111827;
+}
+
+.docs-article .languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.docs-article .languages a {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.3rem;
+  color: #9ca3af;
+  font-family: var(--font-family-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 0.12s ease, background-color 0.12s ease;
+}
+
+.docs-article .languages a:hover {
+  color: #f9fafb;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* The clicked/selected tab keeps focus, so this doubles as the "active"
+   indicator (code.js sets no active class of its own). */
+.docs-article .languages a:focus {
+  color: #f9fafb;
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+/* Plain (non-fenced) <pre> blocks — the dev-mode attribute dump uses
+   class="warning" (Bootstrap alert styling), explicitly excluded above. */

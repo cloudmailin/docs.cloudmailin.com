@@ -6,8 +6,15 @@
     %link{href: '/favicon.svg', rel: "icon", type: "image/svg+xml"}
     %link{href: '/favicon_old.png', rel: "alternate icon", type: "image/png"}
     %meta{"http-equiv": "Content-Type", content: "text/html; charset=utf-8"}
+
+    %link{rel: "preconnect", href: "https://fonts.googleapis.com"}
+    %link{rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous"}
+    %link{href: "https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap", rel: "stylesheet"}
+    %link{rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"}
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic"/>
     <link rel='stylesheet' href='/assets/stylesheets/docs_new.css' type='text/css' />
+    <link rel='stylesheet' href='/assets/stylesheets/tailwind_built.css' type='text/css' />
     -# <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" defer integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="/assets/javascripts/code.js" defer></script>
     <script src="https://www.cloudmailin.com/assets/signup.js" defer></script>
@@ -39,19 +46,45 @@
     %meta{name: 'twitter:creator', content: '@cloudmailin'}
     %meta{name: 'twitter:card', content: 'summary_large_image'}
   %body#documentation
-    %nav#nav
-      #nav-content
-        %header#header
-          #header_image
-            = link_to image_tag('logo_trans_no_com.png', alt: 'cloudmailin logo, incoming email for your web app', style: 'height: 30px'), 'https://www.cloudmailin.com'
-          %ul.home-nav
-            %li= link_to 'Return to CloudMailin.com', 'https://www.cloudmailin.com'
-          %ul#search-nav
-            %li#search-area
-              #searchbox
+    .sticky.top-0{class: "z-50"}
+      %nav{class: "bg-cm-blue-500 border-b border-cm-blue-600 shadow-nav"}
+        -# px-6 (1.5rem) matches the rail's padding-left so the logo and the
+           sidebar content share a left edge.
+        .w-full.px-6{class: "flex items-center justify-between gap-3 py-2"}
+          .flex.items-center.shrink-0{class: "gap-3"}
+            %a.flex.items-center{href: "https://www.cloudmailin.com"}
+              = image_tag('cloudmailin-lockup-nav.svg', alt: 'CloudMailin logo, incoming email for your web app', style: 'height:36px;width:auto', class: 'block')
+            %span.docs-badge.items-center.rounded-md.border.text-white{class: "border-white/30 px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider text-white/80"}
+              Docs
 
-    #middle
-      #container
+          .flex.items-center.justify-end{class: "gap-3 flex-1"}
+            #searchbox.relative{class: "w-full max-w-[10rem] sm:max-w-[14rem] lg:max-w-xs"}
+
+            %a.docs-nav-external-link.items-center{class: "gap-1.5 pl-3 border-l border-white/20 text-sm shrink-0", href: "https://www.cloudmailin.com"}
+              cloudmailin.com
+              %i.fas.fa-arrow-up-right-from-square{class: "text-[10px]"}
+
+    -# Mobile "Contents" toggle — same sidebar partial as the desktop aside,
+       just presented as a collapsible drawer above the article on narrow
+       screens (no JS beyond the browser's native <details>).
+    %details.docs-mobile-toc{class: "border-b border-gray-100 bg-gray-50"}
+      %summary.list-none{class: "flex items-center justify-between px-4 py-3 cursor-pointer select-none"}
+        %span.flex.items-center.text-gray-700{class: "gap-2 text-sm font-medium"}
+          %i.fas.fa-bars-staggered.text-gray-400
+          Contents
+        %i.fas.fa-chevron-down.docs-mobile-toc-chevron{class: "text-xs text-gray-400 transition-transform"}
+      .px-4{class: "pb-4 max-h-[60vh] overflow-y-auto"}
+        = render('sidebar')
+
+    -# Docs frame: nav rail docked to the viewport's left edge (tinted panel,
+       full column height), article centered in the remaining width — the
+       established docs-site layout (ReadTheDocs, MDN, Stripe).
+    #docs-content{class: "lg:flex lg:items-stretch"}
+      %aside.docs-desktop-aside
+        .docs-sidebar-sticky
+          = render('sidebar')
+
+      %main.docs-main{class: "min-w-0 flex-1"}
         -if ENV['NANOC_ENV'] == 'development'
           .info Development Mode
           - if description.nil?
@@ -62,9 +95,8 @@
           - else
             .info
               %p= description
-        .documentation_content{id: identifier }
-          %a.hidden-md.hidden-lg{href: '#sidebar'} Jump To Navigation
 
+        .docs-article{id: identifier}
           - if redirect_to
             .warning
               %p Redirecting to #{link_to redirect_to, redirect_to}.
@@ -80,15 +112,54 @@
           #comments
           -#  = render 'comments' unless disable_comments?
 
-        = render('sidebar')
+    %footer{class: "bg-cm-blue-500"}
+      .container{class: "py-12"}
+        .grid{class: "grid-cols-2 sm:grid-cols-4 gap-8"}
+          .col-span-2{class: "sm:col-span-1"}
+            %a.docs-footer-brand.inline-block{class: "mb-3 text-xl", href: "https://www.cloudmailin.com"}
+              CloudMailin
+            %p.text-white{class: "text-sm leading-relaxed text-white/60"}
+              Developer-friendly email API for inbound and outbound email processing.
+          %div
+            %h3.docs-footer-heading Documentation
+            %ul.list-none.p-0.m-0{class: "space-y-2"}
+              %li= link_to 'Getting Started', '/getting_started/', class: 'docs-footer-link'
+              %li= link_to 'HTTP POST Formats', '/http_post_formats/', class: 'docs-footer-link'
+              %li= link_to 'Receiving Email', '/receiving_email/http_status_codes/', class: 'docs-footer-link'
+              %li= link_to 'Outbound (Sending)', '/outbound/', class: 'docs-footer-link'
+          %div
+            %h3.docs-footer-heading CloudMailin
+            %ul.list-none.p-0.m-0{class: "space-y-2"}
+              %li= link_to 'cloudmailin.com', 'https://www.cloudmailin.com', class: 'docs-footer-link'
+              %li= link_to 'Plans and Pricing', 'https://www.cloudmailin.com/plans-and-pricing', class: 'docs-footer-link'
+              %li= link_to 'Contact Support', 'https://www.cloudmailin.com/contact_us', class: 'docs-footer-link'
+      .border-t.border-white{class: "border-white/15"}
+        .container{class: "py-4"}
+          %p.text-center.m-0.text-white{class: "text-xs text-white/40"}
+            &copy; #{Time.now.year} CloudMailin.com
 
-    %footer#footer
-      #details
-        &copy; cloudmailin.com
+    -# Sidebar "Expand all / Collapse all" toggle. The sidebar partial renders
+       in both the desktop aside and the mobile drawer, so there can be two
+       toggles and two sets of <details.sidebar-group> — operate on all of them.
+    :plain
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var buttons = document.querySelectorAll('[data-sidebar-toggle]');
+          if (!buttons.length) return;
+          function groups() { return document.querySelectorAll('details.sidebar-group'); }
+          function apply(open) {
+            groups().forEach(function (d) { d.open = open; });
+            buttons.forEach(function (b) { b.textContent = open ? 'Collapse all' : 'Expand all'; });
+          }
+          buttons.forEach(function (b) {
+            b.addEventListener('click', function () {
+              var anyClosed = Array.prototype.some.call(groups(), function (d) { return !d.open; });
+              apply(anyClosed);
+            });
+          });
+        });
+      </script>
 
-    -# <a href="https://github.com/cloudmailin/docs.cloudmailin.com" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-    / Thanks to https://github.com/tholman/github-corners
-    <a href="https://github.com/cloudmailin/docs.cloudmailin.com" class="hidden-xs github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     - unless ENV['NANOC_ENV'] == 'development'
       = render 'clickcease'
       = render 'analytics'

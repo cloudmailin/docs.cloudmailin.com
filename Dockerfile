@@ -3,7 +3,7 @@ FROM ruby:3.3
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-RUN apt-get update -qq && apt-get install -qq -y build-essential nodejs libjq-dev
+RUN apt-get update -qq && apt-get install -qq -y build-essential nodejs npm libjq-dev
 
 WORKDIR /app
 
