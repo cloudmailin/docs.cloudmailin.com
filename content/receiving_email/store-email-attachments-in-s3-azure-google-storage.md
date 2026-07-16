@@ -167,6 +167,13 @@ is unlikely it is theoretically possible that we could generate the same
 filename twice. If this is a concern you should move the files once you receive
 the url from our servers.
 
+Attachments are uploaded as part of receiving the message, before your HTTP
+endpoint is called. If you go on to reject the message (see
+[HTTP Status Codes](/receiving_email/http_status_codes/)), the attachment will
+already be in your storage. Rejecting the message doesn't remove it. If you
+don't want to retain attachments for rejected messages, write incoming files to
+a separate folder or container and clean it up with lifecycle rules.
+
 Once this is configured correctly you will see an additional attachments
 parameter being passed with the content type, url and original file name of your
 attachments. For more details about the attachment format see the documentation
