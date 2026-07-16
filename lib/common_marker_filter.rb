@@ -6,8 +6,6 @@ module Nanoc::Filters
     requires 'commonmarker'
 
     class CustomHtmlRenderer < ::CommonMarker::HtmlRenderer
-      STYLE = 'pastie'.freeze
-
       def header(node)
         block do
           id = node.first.string_content.downcase.gsub(/[^\w]/, '-')
@@ -35,7 +33,10 @@ module Nanoc::Filters
         # lang = CGI.escapeHTML(node.fence_info)
         lang = node.fence_info.split(/\s+/)[0]
         lexer = ::Rouge::Lexer.find_fancy(node.fence_info) || ::Rouge::Lexers::PlainText.new
-        formatter = ::Rouge::Formatters::HTMLInline.new(STYLE)
+        # Class-based (not inline-styled) output so the docs Tailwind CSS
+        # can recolor tokens for the dark terminal-motif code blocks. See
+        # tailwind/input.css for the token color rules.
+        formatter = ::Rouge::Formatters::HTML.new
 
         out("<pre#{sourcepos(node)}><code class=\"language-#{lang}\">")
         out(formatter.format(lexer.lex(source)))
