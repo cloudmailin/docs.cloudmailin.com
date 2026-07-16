@@ -25,6 +25,20 @@ Any other status and we will consider the message delayed and tell the mail serv
 
 You can send a custom error message when you reject a message by making sure the content type of your response is set to text/plain. This text will then be sent as part of the error message given by the server. This error message will also be stored within the Delivery Status of the message. You can use this to debug any problems that might occur at your server along with your own server logs.
 
+## Rejected Messages and Stored Attachments
+
+If you've configured [attachment storage](/receiving_email/store-email-attachments-in-s3-azure-google-storage/), attachments are uploaded to your bucket or container as part of receiving the message, before your HTTP endpoint is called. Rejecting the message with an HTTP `4xx` status afterwards doesn't undo that upload. The files will already be there. If you don't want to retain attachments for messages you go on to reject, write incoming files to a separate folder or container and use lifecycle rules to clean it up.
+
+CloudMailin doesn't retry the HTTP POST itself. Your response is sent while the SMTP conversation with the sending server is still open, so the HTTP status you return is translated into an SMTP reply code for that server. Any retry is the sending server sending the message again, which arrives as a new request to your endpoint.
+
+> An HTTP `404` tells CloudMailin that you're rejecting the message
+> permanently. We reply to the sending server with an SMTP `554` and it
+> generates the bounce back to the original sender. An HTTP `5xx` is different:
+> we reply with an SMTP `450` instead, which asks the sending server to try the
+> message again later.
+
 ## Custom Maximum Size Message
 
-Since sending a message larger than the allowed maximum size doesn't send a request to your web server you can set the message that's returned to your users as their email is bounced. Clicking on the 'Customize Message' button within the address page allows you to change this message.
+A message larger than your plan's maximum size is rejected during the SMTP conversation, before it's ever sent to your web server. No HTTP status code applies, and the message isn't queued or held anywhere by CloudMailin. As with any other SMTP rejection, the sending server is responsible for generating the bounce back to the original sender.
+
+You can set the message that's returned to the sending server as their email is bounced. Clicking on the 'Customize Message' button within the address page allows you to change this message.
