@@ -1,8 +1,8 @@
 ---
 title: Securely receiving email via HTTP POST
 description:
-  CloudMailin allows you to Securely receive email via Webhook (HTTP POST)
-  Basic authentication allows you to prevent impersonation.
+  CloudMailin allows you to Securely receive email via Webhook (HTTP POST).
+  An Authorization header allows you to prevent impersonation.
 ---
 
 # Ensuring that Email Webhooks come from CloudMailin
@@ -13,39 +13,52 @@ attempting to send messages on our behalf?
 
 CloudMailin provides two solutions to ensure your Email to HTTP POST is secure:
 
-| Type                   | Availability      | Description                     |
-|------------------------|-------------------|---------------------------------|
-| [Basic Authentication] | `All Formats`     | When used with HTTPS this provides a simple and effective way to secure your target and ensure that only CloudMailin has permission to post to it
-| [Signed Requests]      | `Original Format` | Provided for the Original Format but **now Deprecated**.
+| Type                     | Availability      | Description                     |
+|--------------------------|-------------------|---------------------------------|
+| [Authorization Header]   | `All Formats`     | When used with HTTPS this provides a simple and effective way to secure your target and ensure that only CloudMailin has permission to post to it
+| [Signed Requests]        | `Original Format` | Provided for the Original Format but **now Deprecated**.
 
-[Basic Authentication]: #basic-authentication-and-https
+[Authorization Header]: #the-authorization-header
 [Signed Requests]: /receiving_email/signed_http_requests/
 
-## Basic Authentication and HTTPS
+## The Authorization Header
 
 We recommend that all requests CloudMailin makes to your target URL are over
-HTTPS using basic authentication. This ensures that only CloudMailin is able to
-POST requests to this URL.
+HTTPS with an Authorization header. This ensures that only CloudMailin is able
+to POST requests to this URL.
 
-Unlike the Signed requests using Basic Authentication to secure your request is really simple. You simply pass a username and password within your target URL as you set it. We will then extract this username and password and add it the headers of each request that we make. For example:
+To set one, open your address, choose **Authorization Settings** and enter the
+header value you want us to send. We will add it to every request we make to
+your target. Any value works, so all of the following are valid:
 
 ```
-https://user:mypass@cloudmailin.com/target/200
+Bearer my-token
+Basic dXNlcjpteXBhc3M=
+my-api-key
 ```
 
-The example above would pass along the username and password would pass `user` and `mypass` along to the application. This would add the following HTTP header to the request:
+Leave the field blank to send no Authorization header at all.
+
+> Note: Because the value is sent in the headers it's important to use HTTPS if
+> you wish for this secret to remain secure.
+
+## Basic Authentication
+
+Basic authentication is a good default and most frameworks handle it for you.
+The header value is the word `Basic`, a space, and then a Base64 encoded
+representation of your username and password joined by a colon. For the
+username `user` and the password `mypass`, `user:mypass` encodes to
+`dXNlcjpteXBhc3M=`, making the header:
 
 ```
 Authorization: Basic dXNlcjpteXBhc3M=
 ```
 
-The string `dXNlcjpteXBhc3M=` is simply a Base64 encoded representation of `user:mypass`.
+You don't need to work the encoding out yourself. The Authorization Settings
+page has a tool that takes a username and password and builds the header for
+you in your browser.
 
-> Note: Because the string is sent in the headers it's important to use HTTPS if you wish for
-> this secret to remain secure.
-
-Most frameworks will handle basic authentication for you.
-As an example Rails you can use the following method to check Basic Authentication:
+As an example, in Rails you can check Basic Authentication like this:
 
 ```ruby
 class MyController < ApplicationController
@@ -53,31 +66,38 @@ class MyController < ApplicationController
 end
 ```
 
+Because the username and password are encoded together, characters like `@`
+and `%` need no special treatment. If you previously had to URL encode them,
+that is no longer the case.
 
-### URL Encoding Usernames and Passwords
+## Credentials in the target URL
 
-It's important to remember that you're specifying your username and password as part of a URL. Therefore if you want to use usernames and passwords that contain certain symbols (such as the `@` symbol) you'll need to URL encode them.
+CloudMailin used to accept basic authentication credentials as part of the
+target URL itself, in the form `https://user:mypass@example.com/incoming`.
+That is no longer supported, and setting a target URL in that format will now
+show an error.
 
-For example `youremail@yourdomain.com` should be encoded as `youremail%40yourdomain.com`. This would make the URL something like the following:
+Any credentials that were set that way have been converted into an
+Authorization header for you. The header CloudMailin sends is exactly the same
+as it was before, so there was nothing to change at your end. Your target URLs
+no longer contain the username and password, which keeps them out of logs and
+referrer headers.
 
+## Setting the header over the API
+
+The address API accepts the header as `auth_header` when you create or update
+an address:
+
+```json
+{
+  "target": "https://example.com/incoming",
+  "target_format": "json+n",
+  "auth_header": "Bearer my-token"
+}
 ```
-https://youremail%40yourdomain.com:password@yourdomain.com/incoming_mails/
-```
 
-Note that the actual `@` character is used to show that we're passing credentials and the `:` is used to seperate the username and password. If you need help converting to the URL encoded format checkout [this converter](http://meyerweb.com/eric/tools/dencoder/) by Eric Meyer. We've also included a few common characters in the table below:
+The value is never returned when you read an address back. Send an empty value
+to remove it. See [using the CloudMailin API] for more on managing addresses
+this way.
 
-| Character | URL Encoded Version |
-|-----------|---------------------|
-| `!`       | `%21`               |
-| `[space]` | `%20`               |
-| `@`       | `%40`               |
-| `$`       | `%24`               |
-| `%`       | `%25`               |
-| `^`       | `%5E`               |
-| `&`       | `%26`               |
-| `*`       | `%2A`               |
-| `(`       | `%28`               |
-| `)`       | `%29`               |
-| `?`       | `%3F`               |
-| `,`       | `%2C`               |
-| `=`       | `%3D`               |
+[using the CloudMailin API]: /features/using_the_cloudmailin_email_api/
