@@ -8,8 +8,14 @@ output/
 tmp/
 vendor/bundle
 crash.log
+output.diff
 
 content/robots.txt
 
 /examples/
 *.sketch
+
+# Tailwind build (Node.js deps + generated CSS — rebuilt in dev and in CI)
+node_modules/
+content/assets/stylesheets/tailwind_built.css
+content/assets/stylesheets/tailwind_built.css.map
