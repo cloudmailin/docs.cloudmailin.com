@@ -290,7 +290,7 @@ documentation.
 #### Preventing CSRF errors
 
 Because CloudMailin's post will be stateless, and we recommend you use
-[Basic Auth](https://laravel.com/docs/8.x/authentication#stateless-http-basic-authentication)
+[Basic Auth](https://laravel.com/framework/docs/8.x/authentication#stateless-http-basic-authentication)
 and HTTPS to protect your endpoint, we can disable CSRF for this route.
 This allows us to prevent the `419 Page Expired` status code occuring when
 the HTTP POST is sent.

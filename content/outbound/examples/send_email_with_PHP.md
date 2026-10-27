@@ -125,5 +125,5 @@ at the [Queueing Mail] documentation for more information.
 [Pear Mail]: https://pear.php.net/manual/en/package.mail.mail.send.php
 [SwiftMailer]: https://swiftmailer.symfony.com/docs
 [SwiftMailer encrypted SMTP]: https://swiftmailer.symfony.com/docs/sending.html#encrypted-smtp
-[make:mail]: https://laravel.com/docs/7.x/mail#generating-mailables
-[Queueing Mail]: https://laravel.com/docs/7.x/mail#queueing-mail
+[make:mail]: https://laravel.com/framework/docs/7.x/mail#generating-mailables
+[Queueing Mail]: https://laravel.com/framework/docs/7.x/mail#queueing-mail
