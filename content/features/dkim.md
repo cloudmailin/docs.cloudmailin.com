@@ -6,7 +6,7 @@ title: DKIM Verification for Inbound Email
 
 DKIM (DomainKeys Identified Mail) verification checks that incoming emails have a valid cryptographic signature from the sending domain. This helps confirm that the message hasn't been altered in transit and that it genuinely originated from the claimed sender's mail server.
 
-> **Experimental Feature:** DKIM verification for inbound email is available on request. Please [contact us] to enable this feature for your account.
+> **Beta Feature:** DKIM verification for inbound email is available on request. Please [contact us] to enable this feature for your account. As this is a beta feature, the format may change. If it does, we'll email you to let you know.
 
 ## How DKIM Verification Works
 
@@ -17,17 +17,19 @@ When DKIM verification is enabled, CloudMailin will:
 3. Verify the signature against the message content
 4. Pass the result to your webhook in the envelope
 
+CloudMailin only adds this information to the envelope. We never reject, bounce or hold a message because of its DKIM result, so it's up to you to decide what to do with it.
+
 ## DKIM Results
 
-The DKIM verification result is included in the `envelope` parameter of the HTTP POST. Unlike SPF which returns a single result, DKIM can return multiple results if the message has multiple signatures.
+The DKIM verification result is included in the `envelope` parameter of the HTTP POST. Unlike SPF which returns a single result, DKIM can return multiple results if the message has multiple signatures. A message with no DKIM signature has an empty `result` array.
 
 | Result | Description |
 |--------|-------------|
 | `pass` | The DKIM signature was verified successfully. The message is authentic and unaltered. |
-| `fail` | The signature verification failed. The message may have been altered, or the signature is invalid. |
-| `neutral` | The message has no DKIM signature, or the check could not be performed. |
+| `fail` | The signature verification failed, for example the signature doesn't match the public key. |
+| `neutral` | The signature couldn't be used, for example it has expired, the body has changed since signing, or the signature header couldn't be parsed. |
 | `temperror` | A temporary error occurred (e.g., DNS timeout when fetching the public key). |
-| `permerror` | A permanent error occurred (e.g., malformed signature or missing DNS record). |
+| `permerror` | A permanent error occurred (e.g., the public key isn't published in DNS). |
 
 ## Envelope Format
 
@@ -63,8 +65,40 @@ Each entry in the `result` array contains:
 | Field | Description |
 |-------|-------------|
 | `result` | The verification result (`pass`, `fail`, `neutral`, `temperror`, `permerror`). |
-| `domain` | The domain that signed the message (from the `d=` tag in the signature). |
-| `selector` | The DKIM selector used (from the `s=` tag in the signature). |
+| `error_message` | Only present when the result is not `pass`, a short reason such as `Signature expired`. |
+| `domain` | The domain that signed the message (from the `d=` tag in the signature). Missing if the signature couldn't be parsed. |
+| `selector` | The DKIM selector used (from the `s=` tag in the signature). Missing if the signature couldn't be parsed. |
+
+For example, a message whose signature has expired:
+
+```json
+"dkim": {
+  "success": true,
+  "result": [
+    {
+      "result": "neutral",
+      "error_message": "Signature expired",
+      "domain": "example.com",
+      "selector": "selector1"
+    }
+  ]
+}
+```
+
+The `error_message` is there to help with debugging. Its wording comes from the underlying library and may change, so we recommend not matching on it.
+
+If verification couldn't be run at all, for example because the message couldn't be parsed, the envelope contains only `"dkim": { "success": false }`. The message is still delivered as normal.
+
+### Multipart Formats
+
+In the [multipart](/http_post_formats/multipart/) and [raw](/http_post_formats/raw/) formats the same object is sent as form fields. The array is flattened with an index, every value is sent as a string (so `success` is `"true"`), and an empty `result` array is left out:
+
+```
+envelope[dkim][success]=true
+envelope[dkim][result][0][result]=pass
+envelope[dkim][result][0][domain]=example.com
+envelope[dkim][result][0][selector]=selector1
+```
 
 ## Using DKIM Results
 
@@ -82,14 +116,15 @@ function dkimPassed(envelope) {
 ```typescript
 interface DkimResult {
   result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror';
-  domain: string;
-  selector: string;
+  error_message?: string;
+  domain?: string;
+  selector?: string;
 }
 
 interface Envelope {
   dkim?: {
     success: boolean;
-    result: DkimResult[];
+    result?: DkimResult[];
   };
 }
 
@@ -166,6 +201,6 @@ A message should ideally pass both SPF and DKIM to be considered fully authentic
 
 ## Enable DKIM Verification
 
-DKIM verification for inbound email is an experimental feature available on request. Please [contact us] to discuss enabling it for your account.
+DKIM verification for inbound email is a beta feature available on request. Please [contact us] to discuss enabling it for your account.
 
 [contact us]: https://www.cloudmailin.com/contact_us
