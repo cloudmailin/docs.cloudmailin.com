@@ -6,7 +6,7 @@ title: DMARC Verification for Inbound Email
 
 DMARC (Domain-based Message Authentication, Reporting and Conformance) builds on SPF and DKIM to provide a policy framework for email authentication. It tells receiving servers what to do when an email fails authentication checks and provides reporting back to domain owners.
 
-> **Beta Feature:** DMARC verification for inbound email is available on request. Please [contact us] to enable this feature for your account. As this is a beta feature, the format may change. If it does, we'll email you to let you know.
+> **Beta Feature:** DMARC verification for inbound email is available on request. Please [contact us] to enable this feature for your account. As this is a beta feature, the format may change.
 
 ## How DMARC Verification Works
 

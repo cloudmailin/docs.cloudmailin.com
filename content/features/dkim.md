@@ -6,7 +6,7 @@ title: DKIM Verification for Inbound Email
 
 DKIM (DomainKeys Identified Mail) verification checks that incoming emails have a valid cryptographic signature from the sending domain. This helps confirm that the message hasn't been altered in transit and that it genuinely originated from the claimed sender's mail server.
 
-> **Beta Feature:** DKIM verification for inbound email is available on request. Please [contact us] to enable this feature for your account. As this is a beta feature, the format may change. If it does, we'll email you to let you know.
+> **Beta Feature:** DKIM verification for inbound email is available on request. Please [contact us] to enable this feature for your account. As this is a beta feature, the format may change.
 
 ## How DKIM Verification Works
 
