@@ -67,28 +67,60 @@ files in your S3 Bucket. The simplest is to use the AWS website.
 > AWS Canonical ID: `83fec836f8a832fae9c46e100739b635be3b3636d14887e1c7616e2dba1a88c0`
 
 You should now have granted CloudMailin permission to add files to your S3
-bucket. You can now [Setup CloudMailin] to receive the emails in it's Webhook.
+bucket. You can now [Setup CloudMailin] to receive the emails in its Webhook.
 
 ## Send the full email to Azure Blob Storage
 
-It's possible to configure CloudMailin to send attachments directly to Azure
-storage.
+It's possible to configure CloudMailin to send the full email directly to an
+Azure Blob Storage container. CloudMailin writes to the container using a
+Shared Access Signature (SAS) URL that you generate, so we never need your
+storage account keys.
 
-You'll need to give us your storage credentials so that we can create a file
-within your storage account.
+### Grant CloudMailin permission to send email to your Azure Container
 
-In order to use Azure file storage [contact us].
+1. Create a new `Container` in the Blob service panel of your Azure Storage
+   Account (or choose an existing one).
+   ![Create Azure blob storage container](/content/assets/images/azure-blob-storage/create_storage_container.png)
+2. Go to Settings and then `Shared Access Signature` (SAS).
+3. Generate a SAS URL for the `Blob` service with `Object` and `Write`
+   permission and select the start and end dates for the signature. You'll need
+   a large enough date range to provide CloudMailin continued access to the
+   container.
+   ![Create a Shared Access Signature URL](/content/assets/images/azure-blob-storage/create_sas_url.png)
+4. Once you've generated the URL save a copy of the full `SAS URL`. CloudMailin
+   needs the whole URL, not just the SAS token.
+
+> Be sure to select a large enough date range for continued use with
+> CloudMailin.
+
+You should now have granted CloudMailin permission to add files to your Azure
+Blob Storage container. You can now [Setup CloudMailin] to receive the emails
+in its Webhook.
 
 ## Send the full email to Google Cloud Storage
 
-It's possible to configure CloudMailin to send attachments directly to Google
-Cloud storage. This helps reduce the burden on your application and improves
-response times.
+It's possible to configure CloudMailin to send the full email directly to a
+Google Cloud Storage bucket. You grant the CloudMailin upload service account
+permission to create objects in your bucket, so there are no credentials to
+share with us.
 
-You'll need to give us your storage credentials so that we can create a file
-within your storage account.
+### Grant CloudMailin permission to send email to your Google Cloud Storage Bucket
 
-In order to use Google Cloud file storage [contact us].
+1. Head to the Google Cloud Platform management page and go to Storage.
+2. Create a new `Bucket` or edit your existing bucket.
+   ![Create a Google Cloud Storage bucket](/content/assets/images/google-cloud-storage/create_google_cloud_storage.png)
+3. Click on the `Permissions Tab` and select `Add` to add a member to the
+   permissions tab.
+4. Grant the CloudMailin Service Account (below) `Storage Object Creator`
+   permission to allow the creation of new Storage Objects.
+   ![Grant the CloudMailin service account upload permission](/content/assets/images/google-cloud-storage/add_upload_permission.png)
+
+> The CloudMailin service account that you need to grant permission is:
+> `uploads@cloudmailin-uploads.iam.gserviceaccount.com`
+
+You should now have granted CloudMailin permission to add files to your Google
+Cloud Storage bucket. You can now [Setup CloudMailin] to receive the emails in
+its Webhook.
 
 ## Setup CloudMailin to Send Emails to Cloud Storage
 
@@ -96,13 +128,24 @@ Now that you've added the permission to upload emails head to CloudMailin and
 enable the feature.
 
 1. Log into your [Address Dashboard] and choose the address you wish to manage.
-2. Select `Add full message storage`.
-3. Enter your AWS S3 bucket name and an optional path prefix to place before
-  each file name (in the format `bucket_name/path_prefix`). You'll also need
-  to add your S3 bucket region.
-4. You will need to select the permission to apply to files when they are
-  created. We recommend using `Bucket owner full control` here.
-5. Finally, you'll need to select the [Format].
+2. Select `Add full message storage` and choose your storage provider.
+3. Enter the details for the provider you set up above:
+   * For AWS S3 enter your bucket name and an optional path prefix to place
+     before each file name (in the format `bucket_name/path_prefix`). You'll
+     also need to add your S3 bucket region and select the permission to apply
+     to files when they are created. We recommend using
+     `Bucket owner full control` here.
+   * For Azure Storage enter the full `SAS URL` you generated above and the
+     name of the container. CloudMailin extracts the storage account domain
+     and SAS token from the URL.
+   * For Google Cloud Storage enter your bucket name and an optional path
+     prefix to place before each file name (in the format
+     `bucket_name/path_prefix`).
+4. Finally, you'll need to select the [Format].
+
+When you save, CloudMailin writes a small test file to your storage to check
+that the permissions are correct. If the test fails the settings are not saved
+and the form will show which field needs attention.
 
 Now when your emails are received you'll still get the regular Webhook but your
 HTTP POST will also include the `store_url` parameter in the `envelope`. For
