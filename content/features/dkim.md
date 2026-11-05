@@ -28,6 +28,7 @@ The DKIM verification result is included in the `envelope` parameter of the HTTP
 | `neutral` | The message has no DKIM signature, or the check could not be performed. |
 | `temperror` | A temporary error occurred (e.g., DNS timeout when fetching the public key). |
 | `permerror` | A permanent error occurred (e.g., malformed signature or missing DNS record). |
+| `none` | No result could be given for the signature. |
 
 ## Envelope Format
 
@@ -51,6 +52,8 @@ When DKIM verification is enabled, the envelope will include a `dkim` object wit
 
 The `dkim.result` field is an array because a single email can have multiple DKIM signatures (e.g., from the original sender and from a mailing list processor).
 
+We verify a limited number of signatures on each message. If a message carries more than that, one extra `neutral` entry is added to the end of the array without a `domain` or `selector`.
+
 ### DKIM Fields
 
 | Field | Description |
@@ -62,7 +65,7 @@ Each entry in the `result` array contains:
 
 | Field | Description |
 |-------|-------------|
-| `result` | The verification result (`pass`, `fail`, `neutral`, `temperror`, `permerror`). |
+| `result` | The verification result (`pass`, `fail`, `neutral`, `temperror`, `permerror`, `none`). |
 | `domain` | The domain that signed the message (from the `d=` tag in the signature). |
 | `selector` | The DKIM selector used (from the `s=` tag in the signature). |
 
@@ -81,9 +84,9 @@ function dkimPassed(envelope) {
 
 ```typescript
 interface DkimResult {
-  result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror';
-  domain: string;
-  selector: string;
+  result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror' | 'none';
+  domain?: string;
+  selector?: string;
 }
 
 interface Envelope {

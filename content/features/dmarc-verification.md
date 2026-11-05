@@ -27,6 +27,8 @@ When DMARC verification is enabled, CloudMailin will:
 | `temperror` | A temporary error occurred during verification. |
 | `permerror` | A permanent error occurred (e.g., malformed DMARC record). |
 
+A `temperror` means the check was inconclusive, for example because a DNS lookup timed out. It is not a failure and shouldn't be treated as a reason to reject the message.
+
 ## Envelope Format
 
 When DMARC verification is enabled, the envelope will include a `dmarc` object:
