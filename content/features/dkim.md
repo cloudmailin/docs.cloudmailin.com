@@ -30,6 +30,7 @@ The DKIM verification result is included in the `envelope` parameter of the HTTP
 | `neutral` | The signature couldn't be used, for example it has expired, the body has changed since signing, or the signature header couldn't be parsed. |
 | `temperror` | A temporary error occurred (e.g., DNS timeout when fetching the public key). |
 | `permerror` | A permanent error occurred (e.g., the public key isn't published in DNS). |
+| `none` | No result could be given for the signature. |
 
 ## Envelope Format
 
@@ -53,6 +54,8 @@ When DKIM verification is enabled, the envelope will include a `dkim` object wit
 
 The `dkim.result` field is an array because a single email can have multiple DKIM signatures (e.g., from the original sender and from a mailing list processor).
 
+We verify a limited number of signatures on each message. If a message carries more than that, one extra `neutral` entry is added to the end of the array without a `domain` or `selector`.
+
 ### DKIM Fields
 
 | Field | Description |
@@ -64,10 +67,10 @@ Each entry in the `result` array contains:
 
 | Field | Description |
 |-------|-------------|
-| `result` | The verification result (`pass`, `fail`, `neutral`, `temperror`, `permerror`). |
+| `result` | The verification result (`pass`, `fail`, `neutral`, `temperror`, `permerror`, `none`). |
 | `error_message` | Only present when the result is not `pass`, a short reason such as `Signature expired`. |
-| `domain` | The domain that signed the message (from the `d=` tag in the signature). Missing if the signature couldn't be parsed. |
-| `selector` | The DKIM selector used (from the `s=` tag in the signature). Missing if the signature couldn't be parsed. |
+| `domain` | The domain that signed the message (from the `d=` tag in the signature). Missing if the signature couldn't be parsed, and on the extra entry for unverified signatures. |
+| `selector` | The DKIM selector used (from the `s=` tag in the signature). Missing if the signature couldn't be parsed, and on the extra entry for unverified signatures. |
 
 For example, a message whose signature has expired:
 
@@ -115,7 +118,7 @@ function dkimPassed(envelope) {
 
 ```typescript
 interface DkimResult {
-  result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror';
+  result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror' | 'none';
   error_message?: string;
   domain?: string;
   selector?: string;

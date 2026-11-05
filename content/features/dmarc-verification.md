@@ -136,7 +136,7 @@ The DMARC record itself isn't included, so a `policy` of `none` can mean either 
 
 ## DNS Errors
 
-If the DNS lookup for the DMARC record fails, `result` is `fail`, `policy` is `none`, and `dmarc_spf_result` and `dmarc_dkim_result` are `temperror` (or `permerror`), each with an error message. Treat this as unknown rather than as a failure by the sender.
+If the DNS lookup for the DMARC record fails, `result` is `fail`, `policy` is `none`, and `dmarc_spf_result` and `dmarc_dkim_result` are `temperror` (or `permerror`), each with an error message. A `temperror` means the check was inconclusive, for example because a DNS lookup timed out. It is not a failure by the sender and shouldn't be treated as a reason to reject the message.
 
 ## Errors
 
@@ -184,7 +184,7 @@ function dmarcPassed(envelope) {
 type DmarcCheckResult = 'pass' | 'fail' | 'none' | 'temperror' | 'permerror';
 
 interface DkimResult {
-  result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror';
+  result: 'pass' | 'fail' | 'neutral' | 'temperror' | 'permerror' | 'none';
   error_message?: string;
   domain?: string;
   selector?: string;
