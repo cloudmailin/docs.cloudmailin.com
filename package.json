@@ -1,0 +1,14 @@
+{
+  "name": "docs-cloudmailin-tailwind",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Tailwind CSS build for docs.cloudmailin.com",
+  "scripts": {
+    "build:css": "tailwindcss -i ./tailwind/input.css -o ./content/assets/stylesheets/tailwind_built.css --minify",
+    "watch:css": "tailwindcss -i ./tailwind/input.css -o ./content/assets/stylesheets/tailwind_built.css --watch=always"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "tailwindcss": "^4.1.11"
+  }
+}

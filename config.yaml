@@ -85,6 +85,11 @@ checks:
       - https://www.godaddy.com/
       - https://www.npmjs.com/package/cloudmailin # cloudflare protection raises 403
       - https://docs.cloudmailin.com/features/dmarc-verification/ # self-referential redirect
+      # rel="preconnect" hints for Google Fonts (layouts/application.haml) —
+      # bare origins with no path, so they 404 on a normal request even
+      # though the preconnect itself is legitimate.
+      - https://fonts.googleapis.com
+      - https://fonts.gstatic.com
 
 # Algolia search: pages from the main website fetched and indexed at
 # build time alongside the docs content (see lib/algolia_external.rb).

@@ -2,7 +2,7 @@ services:
 
   docs:
     build: .
-    command: bash -c "bundle exec guard & bundle exec nanoc live --port 80 --host 0.0.0.0"
+    command: bash -c "npm install && (bundle exec guard &) && (npx @tailwindcss/cli -i ./tailwind/input.css -o ./content/assets/stylesheets/tailwind_built.css --watch=always &) && bundle exec nanoc live --port 80 --host 0.0.0.0"
     volumes:
       - .:/app
     env_file:
