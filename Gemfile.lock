@@ -157,7 +157,7 @@ GEM
       stringio
     public_suffix (7.0.5)
     racc (1.8.1)
-    rack (2.2.23)
+    rack (2.2.25)
     rack-livereload (0.3.17)
       rack
     rainbow (3.0.0)
